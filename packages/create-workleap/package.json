@@ -1,7 +1,7 @@
 {
-  "name": "@foundry-cli/create-example",
+  "name": "@foundry-cli/create-workleap",
   "version": "0.0.0",
-  "description": "Small generator project use as a foundation to create the new ones",
+  "description": "Foundry-CLI Workleap project starter kit",
   "bin": "./dist/bin.js",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

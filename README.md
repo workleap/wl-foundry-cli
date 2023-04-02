@@ -13,7 +13,7 @@
 
 ## Usage
 
-To create a new project base on the WorkLeap starter kit, run:
+To create a new project base on the Workleap starter kit, run:
 
 ### npm
 
@@ -35,4 +35,4 @@ pnpm create @foundry-cli/workleap <your-app-name>
 
 ## 🤝 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.If you're interested, definitely check out our Contributing Guide!
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
