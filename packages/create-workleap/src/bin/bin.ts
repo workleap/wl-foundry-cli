@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import {CreateExample} from "../index";
+import {CreateWorkleap} from "../index";
 import * as process from "process";
 
-const createExample = new CreateExample();
+const createExample = new CreateWorkleap();
 
 createExample.Run()
     .then(() => {

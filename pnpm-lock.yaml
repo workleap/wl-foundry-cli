@@ -29,7 +29,7 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  packages/create-example:
+  packages/create-workleap:
     dependencies:
       '@foundry-cli/generator':
         specifier: workspace:*

@@ -1,4 +1,4 @@
-import {Option, Prompt, Spinner} from "@foundry-cli/prompts";
+import {Color, Option, Output, Prompt, Spinner} from "@foundry-cli/prompts";
 import * as process from "process";
 import {Loader} from "@foundry-cli/loader";
 import {Generator, ReplaceInFile} from "@foundry-cli/generator";
@@ -9,7 +9,7 @@ interface Configuration {
     projectDirectory: string
 }
 
-export class CreateExample {
+export class CreateWorkleap {
     private static readonly DEFAULT_PROJECT_NAME: string = "my-new-project";
     private static readonly NAME_PARAMETER_POSITION: number = 2; // TODO validate position of parameter once ask with `pnpm create`
 
@@ -19,12 +19,10 @@ export class CreateExample {
     private readonly generator: Generator;
 
     constructor() {
-        this.prompt = new Prompt("create-example");
-        this.loaderSpinner = new Spinner("Getting the template...");
+        this.prompt = new Prompt("create-workleap");
+        this.loaderSpinner = new Spinner("Loading the template...");
         this.generatorSpinner = new Spinner("Template configuration...");
         this.generator = new Generator();
-
-        console.dir(process.argv);
     }
 
     async Run(): Promise<void> {
@@ -44,10 +42,14 @@ export class CreateExample {
             {value: "Workleap/static-module", label: "Static Module"}
         ];
 
-        const projectNameFromArgument: string = process.argv[CreateExample.NAME_PARAMETER_POSITION];
+        const projectNameFromArgument: string = process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
+
+        if (projectNameFromArgument) {
+            Output.Write(`${projectNameFromArgument} project setup`, Color.gray);
+        }
 
         return {
-            name: projectNameFromArgument ?? await this.prompt.Text("How should we name the project?", CreateExample.DEFAULT_PROJECT_NAME, CreateExample.DEFAULT_PROJECT_NAME),
+            name: projectNameFromArgument ?? await this.prompt.Text("How should we name the project?", CreateWorkleap.DEFAULT_PROJECT_NAME, CreateWorkleap.DEFAULT_PROJECT_NAME),
             template: await this.prompt.Select<string>("Select the template to download", availableTemplates),
             projectDirectory: await this.prompt.Text("Where do you want the project?", process.cwd(), process.cwd())
         };
@@ -69,7 +71,6 @@ export class CreateExample {
             {
                 src: "package.json",
                 patterns: [
-                    {from: /b/, to: "bee"},
                     {from: /"name": ".*"/, to: `"name": "${config.name}"`}
                 ]
             }
