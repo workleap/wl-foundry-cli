@@ -1,0 +1,9 @@
+{
+  "name": "@foundry-cli/generator",
+  "version": "0.0.0",
+  "description": "Foundry-CLI generator module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+  }
+}

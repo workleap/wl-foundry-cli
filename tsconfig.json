@@ -1,0 +1,27 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "noEmit": false,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "removeComments": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

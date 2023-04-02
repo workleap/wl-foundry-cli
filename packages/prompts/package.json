@@ -1,0 +1,12 @@
+{
+  "name": "@foundry-cli/prompts",
+  "version": "0.0.0",
+  "description": "Foundry-CLI prompt module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@clack/core": "^0.3.2",
+    "@clack/prompts": "^0.6.3",
+    "picocolors": "^1.0.0"
+  }
+}
