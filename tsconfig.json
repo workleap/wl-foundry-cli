@@ -13,15 +13,11 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "noEmit": false,
     "sourceMap": true,
     "resolveJsonModule": true,
     "removeComments": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -5,7 +5,7 @@
 ## Packages
 
 | Package         | Type        | Version                                                                                                                                               |
-|-----------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | prompts         | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/prompts.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/prompts)                 |
 | loader          | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/loader.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/loader)                   |
 | generator       | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/generator.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/generator)             |
