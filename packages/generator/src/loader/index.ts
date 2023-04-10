@@ -1,7 +1,7 @@
 import degit from "degit";
 import { access, mkdir, constants } from "node:fs/promises";
 
-export class Loader {
+export class Index {
   private static readonly DEFAULT_CONFIG: {
     cache: boolean;
     force: boolean;
@@ -15,7 +15,7 @@ export class Loader {
   private readonly runner;
 
   constructor(repo: string) {
-    this.runner = degit(repo, Loader.DEFAULT_CONFIG);
+    this.runner = degit(repo, Index.DEFAULT_CONFIG);
   }
 
   async Clone(dest: string): Promise<void> {

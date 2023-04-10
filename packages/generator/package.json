@@ -4,5 +4,13 @@
   "description": "Foundry-CLI generator module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "@clack/core": "^0.3.2",
+    "@clack/prompts": "^0.6.3",
+    "degit": "^2.8.4",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/degit": "^2.8.3"
+  }
 }
