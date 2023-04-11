@@ -1,4 +1,4 @@
-import { Options } from "./aggregator";
+import { Options } from "./generator";
 
 export interface TemplateInterface {
   name: string;

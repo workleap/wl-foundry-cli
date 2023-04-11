@@ -1,9 +1,9 @@
 import { Loader } from "./loader";
-import { Generator } from "./generate";
+import { Generate } from "./generate";
 
-export * from "./aggregator";
+export * from "./generator";
 export * from "./templates";
 export const LoaderStartCloningEventName = Loader.StartCloningEventName;
 export const LoaderStopCloningEventName = Loader.StopCloningEventName;
-export const GeneratorStartEventName = Generator.StartEventName;
-export const GeneratorStopEventName = Generator.StopEventName;
+export const GeneratorStartEventName = Generate.StartEventName;
+export const GeneratorStopEventName = Generate.StopEventName;

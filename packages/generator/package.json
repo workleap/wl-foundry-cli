@@ -1,5 +1,5 @@
 {
-  "name": "@foundry-cli/generator",
+  "name": "@workleap/foundry",
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
   "bin": "./dist/src/bin/bin.js",

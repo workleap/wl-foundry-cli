@@ -12,7 +12,7 @@ export interface ReplaceInFile {
   patterns: ReplacePattern[];
 }
 
-export class Generator {
+export class Generate {
   public static readonly StartEventName = "start";
   public static readonly StopEventName = "stop";
 
@@ -23,10 +23,10 @@ export class Generator {
   }
 
   async Run(tasks: ReplaceInFile[]): Promise<void> {
-    this.generatorEvent.emit(Generator.StartEventName);
+    this.generatorEvent.emit(Generate.StartEventName);
     for (const task of tasks) {
       await FileSystem.Replace(task.src, task.patterns);
     }
-    this.generatorEvent.emit(Generator.StopEventName);
+    this.generatorEvent.emit(Generate.StopEventName);
   }
 }

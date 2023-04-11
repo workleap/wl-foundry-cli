@@ -4,7 +4,7 @@ import process from "process";
 
 import * as pkg from "../../../package.json";
 import { TemplateInterface } from "../../templates";
-import { Aggregator, Options } from "../../aggregator";
+import { Generator, Options } from "../../generator";
 
 interface CommanderOptions {
   outputFolder?: string;
@@ -39,11 +39,11 @@ export default class CommanderHelper {
     }
 
     command.action(async (options: CommanderOptions) => {
-      const aggregator = new Aggregator({
+      const generator = new Generator({
         template,
         options: CommanderHelper.MapToAggregatorOption(options),
       });
-      await aggregator.Run();
+      await generator.Run();
 
       console.log("Done!");
     });

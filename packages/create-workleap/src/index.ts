@@ -1,6 +1,6 @@
 import * as process from "process";
 import {
-  Aggregator,
+  Generator,
   Templates,
   TemplateInterface,
   Configuration,
@@ -30,11 +30,11 @@ export class CreateWorkleap {
   async Run(): Promise<void> {
     const config = await this.Configure();
 
-    const aggregator = new Aggregator(config);
+    const generator = new Generator(config);
 
-    this.AddListeners(aggregator);
+    this.AddListeners(generator);
 
-    await aggregator.Run();
+    await generator.Run();
 
     this.prompt.Outro("Done!");
   }
@@ -93,20 +93,20 @@ export class CreateWorkleap {
     return config;
   }
 
-  private AddListeners(aggregator: Aggregator): void {
-    aggregator.LoaderEvent.addListener(LoaderStartCloningEventName, () => {
+  private AddListeners(generator: Generator): void {
+    generator.LoaderEvent.addListener(LoaderStartCloningEventName, () => {
       this.loaderSpinner.Start();
     });
 
-    aggregator.LoaderEvent.addListener(LoaderStopCloningEventName, () => {
+    generator.LoaderEvent.addListener(LoaderStopCloningEventName, () => {
       this.loaderSpinner.Stop();
     });
 
-    aggregator.LoaderEvent.addListener(GeneratorStartEventName, () => {
+    generator.LoaderEvent.addListener(GeneratorStartEventName, () => {
       this.generatorSpinner.Start();
     });
 
-    aggregator.LoaderEvent.addListener(GeneratorStopEventName, () => {
+    generator.LoaderEvent.addListener(GeneratorStopEventName, () => {
       this.generatorSpinner.Stop();
     });
   }

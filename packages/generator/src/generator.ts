@@ -2,7 +2,7 @@ import events from "events";
 
 import { TemplateInterface } from "./templates";
 import { Loader } from "./loader";
-import { Generator, ReplaceInFile } from "./generate";
+import { Generate, ReplaceInFile } from "./generate";
 import process from "process";
 import path from "path";
 
@@ -19,10 +19,10 @@ export interface Configuration {
   options: Options;
 }
 
-export class Aggregator {
+export class Generator {
   private readonly _template: TemplateInterface;
   private readonly _loader: Loader;
-  private readonly _generator: Generator;
+  private readonly _generator: Generate;
   private readonly _options: Options;
 
   public readonly LoaderEvent: events.EventEmitter;
@@ -33,7 +33,7 @@ export class Aggregator {
     this._options = configuration.options;
 
     this._loader = new Loader(this._template.repositoryUrl);
-    this._generator = new Generator();
+    this._generator = new Generate();
 
     this.LoaderEvent = this._loader.loaderEvent;
     this.GeneratorEvent = this._generator.generatorEvent;
