@@ -59,7 +59,7 @@ export class CreateWorkleap {
     const outputFolderPromptResult =
       outputFolderFromArgument ??
       (await this.prompt.Text(
-        "How should we name the project?",
+        "Where should we create the project?",
         CreateWorkleap.DEFAULT_OUTPUT_FOLDER,
         CreateWorkleap.DEFAULT_OUTPUT_FOLDER
       ));
