@@ -1,11 +1,14 @@
 {
-  "name": "@foundry-cli/create-workleap",
+  "name": "create-workleap",
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
-  "bin": "./dist/bin.js",
+  "bin": "./dist/bin/bin.js",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@foundry-cli/generator": "workspace:*"
+    "@clack/core": "^0.3.2",
+    "@clack/prompts": "^0.6.3",
+    "@foundry-cli/generator": "workspace:*",
+    "picocolors": "^1.0.0"
   }
 }

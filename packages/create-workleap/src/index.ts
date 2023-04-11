@@ -1,95 +1,113 @@
-import { Color, Option, Output, Prompt, Spinner } from "@foundry-cli/prompts";
 import * as process from "process";
-import { Loader } from "@foundry-cli/loader";
-import { Generator, ReplaceInFile } from "@foundry-cli/generator";
+import {
+  Aggregator,
+  Templates,
+  TemplateInterface,
+  Configuration,
+  LoaderStartCloningEventName,
+  LoaderStopCloningEventName,
+  GeneratorStartEventName,
+  GeneratorStopEventName,
+} from "@foundry-cli/generator";
 
-interface Configuration {
-  name: string;
-  template: string;
-  projectDirectory: string;
-}
+import { Color, Option, Output, Prompt, Spinner } from "./propmts";
+import { ConfigurationBuilder } from "./propmts/helpers/configurationBuilder";
 
 export class CreateWorkleap {
-  private static readonly DEFAULT_PROJECT_NAME: string = "my-new-project";
+  private static readonly DEFAULT_OUTPUT_FOLDER: string = "./my-new-project";
   private static readonly NAME_PARAMETER_POSITION: number = 2; // TODO validate position of parameter once ask with `pnpm create`
 
   private readonly prompt: Prompt;
   private readonly loaderSpinner: Spinner;
   private readonly generatorSpinner: Spinner;
-  private readonly generator: Generator;
 
   constructor() {
     this.prompt = new Prompt("create-workleap");
     this.loaderSpinner = new Spinner("Loading the template...");
     this.generatorSpinner = new Spinner("Template configuration...");
-    this.generator = new Generator();
   }
 
   async Run(): Promise<void> {
     const config = await this.Configure();
 
-    await this.Load(config);
+    const aggregator = new Aggregator(config);
 
-    await this.Generate(config);
+    this.AddListeners(aggregator);
 
-    this.prompt.Outro("That's it for the demo!");
+    await aggregator.Run();
+
+    this.prompt.Outro("Done!");
   }
 
   private async Configure(): Promise<Configuration> {
-    const availableTemplates: Option<string>[] = [
-      { value: "Workleap/host-application", label: "Host Application" },
-      { value: "Workleap/remote-module", label: "Remote Module" },
-      { value: "Workleap/static-module", label: "Static Module" },
-    ];
+    const availableTemplates: Option<string>[] = Templates.map(
+      (x: TemplateInterface): Option<string> => {
+        return {
+          value: x.repositoryUrl,
+          label: x.name,
+        };
+      }
+    );
 
-    const projectNameFromArgument: string =
+    const outputFolderFromArgument: string =
       process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
 
-    if (projectNameFromArgument) {
-      Output.Write(`${projectNameFromArgument} project setup`, Color.gray);
+    if (outputFolderFromArgument) {
+      Output.Write(`${outputFolderFromArgument} project setup`, Color.gray);
     }
 
-    return {
-      name:
-        projectNameFromArgument ??
-        (await this.prompt.Text(
-          "How should we name the project?",
-          CreateWorkleap.DEFAULT_PROJECT_NAME,
-          CreateWorkleap.DEFAULT_PROJECT_NAME
-        )),
-      template: await this.prompt.Select<string>(
-        "Select the template to download",
-        availableTemplates
-      ),
-      projectDirectory: await this.prompt.Text(
-        "Where do you want the project?",
-        process.cwd(),
-        process.cwd()
-      ),
-    };
-  }
+    const outputFolderPromptResult =
+      outputFolderFromArgument ??
+      (await this.prompt.Text(
+        "How should we name the project?",
+        CreateWorkleap.DEFAULT_OUTPUT_FOLDER,
+        CreateWorkleap.DEFAULT_OUTPUT_FOLDER
+      ));
 
-  private async Load(config: Configuration): Promise<void> {
-    this.loaderSpinner.Start();
+    const templatePromptResult = await this.prompt.Select<string>(
+      "Select the template to download",
+      availableTemplates
+    );
 
-    const loader: Loader = new Loader(config.template);
-    await loader.Clone(config.projectDirectory);
+    const template = Templates.find(
+      (x) => x.repositoryUrl === templatePromptResult
+    ) as TemplateInterface;
 
-    this.loaderSpinner.Stop();
-  }
-
-  private async Generate(config: Configuration): Promise<void> {
-    this.generatorSpinner.Start();
-
-    const tasks: ReplaceInFile[] = [
-      {
-        src: "package.json",
-        patterns: [{ from: /"name": ".*"/, to: `"name": "${config.name}"` }],
+    const config: Configuration = {
+      template,
+      options: {
+        outputFolder: outputFolderPromptResult,
+        templateSpecificOptions: {},
+        toReplace: [],
       },
-    ];
+    };
 
-    await this.generator.Run(tasks);
+    for (const option of template.options) {
+      const variableName = ConfigurationBuilder.ExtractVariableName(
+        option.flag
+      );
+      config.options.templateSpecificOptions[variableName] =
+        await this.prompt.Text(option.question);
+    }
 
-    this.generatorSpinner.Start();
+    return config;
+  }
+
+  private AddListeners(aggregator: Aggregator): void {
+    aggregator.LoaderEvent.addListener(LoaderStartCloningEventName, () => {
+      this.loaderSpinner.Start();
+    });
+
+    aggregator.LoaderEvent.addListener(LoaderStopCloningEventName, () => {
+      this.loaderSpinner.Stop();
+    });
+
+    aggregator.LoaderEvent.addListener(GeneratorStartEventName, () => {
+      this.generatorSpinner.Start();
+    });
+
+    aggregator.LoaderEvent.addListener(GeneratorStopEventName, () => {
+      this.generatorSpinner.Stop();
+    });
   }
 }

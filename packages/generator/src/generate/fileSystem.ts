@@ -43,6 +43,6 @@ export class FileSystem {
       newContents = newContents.replace(pattern.from, pattern.to);
     }
 
-    await writeFile(src, content);
+    await writeFile(src, newContents);
   }
 }

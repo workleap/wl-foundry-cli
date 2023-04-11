@@ -2,15 +2,15 @@
   "name": "@foundry-cli/generator",
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "bin": "./dist/src/bin/bin.js",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "dependencies": {
-    "@clack/core": "^0.3.2",
-    "@clack/prompts": "^0.6.3",
-    "degit": "^2.8.4",
-    "picocolors": "^1.0.0"
+    "commander": "^10.0.0",
+    "degit": "^2.8.4"
   },
   "devDependencies": {
+    "@commander-js/extra-typings": "^10.0.3",
     "@types/degit": "^2.8.3"
   }
 }

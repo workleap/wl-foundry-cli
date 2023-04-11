@@ -1,7 +1,8 @@
 import degit from "degit";
-import { access, mkdir, constants } from "node:fs/promises";
+import { access, mkdir, constants } from "fs/promises";
+import events from "events";
 
-export class Index {
+export class Loader {
   private static readonly DEFAULT_CONFIG: {
     cache: boolean;
     force: boolean;
@@ -12,10 +13,17 @@ export class Index {
     verbose: true,
   };
 
+  public static readonly StartCloningEventName = "startCloning";
+  public static readonly StopCloningEventName = "stopCloning";
+
   private readonly runner;
 
+  public readonly loaderEvent: events.EventEmitter;
+
   constructor(repo: string) {
-    this.runner = degit(repo, Index.DEFAULT_CONFIG);
+    this.runner = degit(repo, Loader.DEFAULT_CONFIG);
+
+    this.loaderEvent = new events.EventEmitter();
   }
 
   async Clone(dest: string): Promise<void> {
@@ -27,7 +35,9 @@ export class Index {
         mode: constants.R_OK | constants.W_OK,
       });
     } finally {
+      this.loaderEvent.emit(Loader.StartCloningEventName);
       await this.runner.clone(dest);
+      this.loaderEvent.emit(Loader.StopCloningEventName);
     }
   }
 }
