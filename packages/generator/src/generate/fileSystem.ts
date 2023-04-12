@@ -12,7 +12,6 @@ import { ReplacePattern } from "./index";
 
 export class FileSystem {
   static async Rename(oldPath: string, newPath: string): Promise<void> {
-    await access(oldPath, constants.R_OK | constants.W_OK);
     await rename(oldPath, newPath);
   }
 

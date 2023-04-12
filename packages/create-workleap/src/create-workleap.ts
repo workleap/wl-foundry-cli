@@ -61,7 +61,7 @@ export class CreateWorkleap {
       ));
 
     const templatePromptResult = await this.prompt.Select<string>(
-      "Select the template to download",
+      "Select the template to create",
       availableTemplates
     );
 

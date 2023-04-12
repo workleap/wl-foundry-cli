@@ -16,13 +16,13 @@ const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
 
 export const Templates: {[key:string]: TemplateInterface} = {
   "host-application": {
-    description: "Use the host-application template",
+    description: "use the host-application template",
     repositoryUrl: `${BaseRepositoryAddress}/host-application`,
     options: [
       {
         flag: "--package-scope <string>",
         question: "What should be the host-application scope?",
-        description: "Package scope",
+        description: "package scope",
       },
     ],
     action: async (options) => {
@@ -47,13 +47,13 @@ export const Templates: {[key:string]: TemplateInterface} = {
     },
   },
   "remote-module": {
-    description: "Use the remote-module template",
+    description: "use the remote-module template",
     repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
     options: [
       {
         flag: "--host-scope <string>",
         question: "What should be the remote-module scope?",
-        description: "Host scope",
+        description: "host scope",
       },
     ],
     action: async (options) => {
@@ -74,13 +74,13 @@ export const Templates: {[key:string]: TemplateInterface} = {
     },
   },
   "static-module": {
-    description: "Use the static-module template",
+    description: "use the static-module template",
     repositoryUrl: `${BaseRepositoryAddress}/static-module`,
     options: [
       {
         flag: "--host-scope <string>",
         question: "What should be the static-module scope?",
-        description: "Host scope",
+        description: "host scope",
       },
     ],
     action: async (options) => {
