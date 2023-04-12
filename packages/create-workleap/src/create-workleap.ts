@@ -2,7 +2,6 @@ import * as process from "process";
 import {
   Generator,
   Templates,
-  TemplateInterface,
   Configuration,
   LoaderStartCloningEventName,
   LoaderStopCloningEventName,
@@ -40,14 +39,11 @@ export class CreateWorkleap {
   }
 
   private async Configure(): Promise<Configuration> {
-    const availableTemplates: Option<string>[] = Templates.map(
-      (x: TemplateInterface): Option<string> => {
-        return {
-          value: x.repositoryUrl,
-          label: x.name,
-        };
-      }
-    );
+
+    const availableTemplates: Option<string>[] = [];
+    for(const template in Templates) {
+      availableTemplates.push({value: template, label: template})
+    }
 
     const outputFolderFromArgument: string =
       process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
@@ -69,9 +65,7 @@ export class CreateWorkleap {
       availableTemplates
     );
 
-    const template = Templates.find(
-      (x) => x.repositoryUrl === templatePromptResult
-    ) as TemplateInterface;
+    const template = Templates[templatePromptResult];
 
     const config: Configuration = {
       template,

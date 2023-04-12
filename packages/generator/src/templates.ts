@@ -1,7 +1,6 @@
 import { Options } from "./generator";
 
 export interface TemplateInterface {
-  name: string;
   description: string;
   repositoryUrl: string;
   options: {
@@ -15,9 +14,8 @@ export interface TemplateInterface {
 
 const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
 
-export const Templates: TemplateInterface[] = [
-  {
-    name: "host-application",
+export const Templates: {[key:string]: TemplateInterface} = {
+  "host-application": {
     description: "Use the host-application template",
     repositoryUrl: `${BaseRepositoryAddress}/host-application`,
     options: [
@@ -34,10 +32,10 @@ export const Templates: TemplateInterface[] = [
           {
             from: /<%scope%>\//,
             to: options.templateSpecificOptions["packageScope"]
-              ? `${options.templateSpecificOptions[
-                  "packageScope"
-                ]?.toString()}/`
-              : "",
+                ? `${options.templateSpecificOptions[
+                    "packageScope"
+                    ]?.toString()}/`
+                : "",
           },
         ],
       });
@@ -48,8 +46,7 @@ export const Templates: TemplateInterface[] = [
       return options;
     },
   },
-  {
-    name: "remote-module",
+  "remote-module": {
     description: "Use the remote-module template",
     repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
     options: [
@@ -76,8 +73,7 @@ export const Templates: TemplateInterface[] = [
       return options;
     },
   },
-  {
-    name: "static-module",
+  "static-module": {
     description: "Use the static-module template",
     repositoryUrl: `${BaseRepositoryAddress}/static-module`,
     options: [
@@ -104,4 +100,4 @@ export const Templates: TemplateInterface[] = [
       return options;
     },
   },
-];
+};

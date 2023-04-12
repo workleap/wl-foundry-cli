@@ -23,8 +23,8 @@ export default class CommanderHelper {
       .version(pkg.version);
   }
 
-  public AddPlugin(template: TemplateInterface): void {
-    const command = this.program.command(template.name);
+  public AddPlugin(name: string, template: TemplateInterface): void {
+    const command = this.program.command(name);
 
     if (template.description) {
       command.description(template.description);
