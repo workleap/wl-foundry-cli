@@ -4,12 +4,10 @@
 
 ## Packages
 
-| Package         | Type        | Version                                                                                                                                               |
-| --------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| prompts         | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/prompts.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/prompts)                 |
-| loader          | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/loader.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/loader)                   |
-| generator       | library     | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/generator.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/generator)             |
-| create-workleap | application | [![NPM Version](http://img.shields.io/npm/v/@foundry-cli/create-workleap.svg?style=flat)](https://www.npmjs.org/package/@foundry-cli/create-workleap) |
+| Package           | Type        | Version                                                                                                                         |
+|-------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------|
+| @workleap/foundry | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/foundry.svg?style=flat)](https://www.npmjs.org/package/@workleap/foundry) |
+| create-workleap   | application | [![NPM Version](http://img.shields.io/npm/v/create-workleap.svg?style=flat)](https://www.npmjs.org/package/create-workleap)     |
 
 ## Usage
 
@@ -18,19 +16,19 @@ To create a new project base on the Workleap starter kit, run:
 ### npm
 
 ```cmd
-npm create @foundry-cli/workleap <your-app-name>
+npm create workleap <your-app-folder>
 ```
 
 ### yarn
 
 ```cmd
-yarn create @foundry-cli/workleap <your-app-name>
+yarn create workleap <your-app-folder>
 ```
 
 ### pnpm
 
 ```cmd
-pnpm create @foundry-cli/workleap <your-app-name>
+pnpm create workleap <your-app-folder>
 ```
 
 ## 🤝 Contributing
