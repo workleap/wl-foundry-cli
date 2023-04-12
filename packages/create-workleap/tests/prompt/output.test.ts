@@ -1,15 +1,15 @@
 import { Output } from "../../src/prompts";
 
 describe("Given Output module", () => {
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
-    test("When call write Then work", () => {
-        const consoleMock = jest.spyOn(console, "log").mockImplementation();
+  test("When call write Then work", () => {
+    const consoleMock = jest.spyOn(console, "log").mockImplementation();
 
-        Output.Write("Hello");
+    Output.Write("Hello");
 
-        expect(consoleMock).toHaveBeenCalled();
-    });
+    expect(consoleMock).toHaveBeenCalled();
+  });
 });

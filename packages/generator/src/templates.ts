@@ -14,7 +14,7 @@ export interface TemplateInterface {
 
 const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
 
-export const Templates: {[key:string]: TemplateInterface} = {
+export const Templates: { [key: string]: TemplateInterface } = {
   "host-application": {
     description: "use the host-application template",
     repositoryUrl: `${BaseRepositoryAddress}/host-application`,
@@ -32,10 +32,10 @@ export const Templates: {[key:string]: TemplateInterface} = {
           {
             from: /<%scope%>\//,
             to: options.templateSpecificOptions["packageScope"]
-                ? `${options.templateSpecificOptions[
-                    "packageScope"
-                    ]?.toString()}/`
-                : "",
+              ? `${options.templateSpecificOptions[
+                  "packageScope"
+                ]?.toString()}/`
+              : "",
           },
         ],
       });

@@ -39,10 +39,9 @@ export class CreateWorkleap {
   }
 
   private async Configure(): Promise<Configuration> {
-
     const availableTemplates: Option<string>[] = [];
-    for(const template in Templates) {
-      availableTemplates.push({value: template, label: template})
+    for (const template in Templates) {
+      availableTemplates.push({ value: template, label: template });
     }
 
     const outputFolderFromArgument: string =

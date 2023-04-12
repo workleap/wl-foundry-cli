@@ -13,7 +13,7 @@ export class Cli {
   }
 
   private AddPluginsToCli() {
-    for(const template in Templates) {
+    for (const template in Templates) {
       terminal.AddPlugin(template, Templates[template]);
     }
   }

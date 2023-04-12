@@ -1,7 +1,5 @@
-import {ConfigurationBuilder} from "../../../src/prompts/helpers/configurationBuilder";
+import { ConfigurationBuilder } from "../../../src/prompts/helpers/configurationBuilder";
 
 describe("Given ConfigurationBuilder", () => {
-    test("When Then", () => {
-
-    });
+  test("When Then", () => {});
 });
