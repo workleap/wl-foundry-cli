@@ -3,5 +3,8 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "include": ["src", "test", "tools", "bin"]
+  "include": [
+    "src",
+    "packages/*/tests"
+  ]
 }

@@ -8,10 +8,10 @@ import {
   LoaderStopCloningEventName,
   GeneratorStartEventName,
   GeneratorStopEventName,
-} from "@foundry-cli/generator";
+} from "@workleap/foundry";
 
-import { Color, Option, Output, Prompt, Spinner } from "./propmt";
-import { ConfigurationBuilder } from "./propmt/helpers/configurationBuilder";
+import { Color, Option, Output, Prompt, Spinner } from "./prompts";
+import { ConfigurationBuilder } from "./prompts/helpers/configurationBuilder";
 
 export class CreateWorkleap {
   private static readonly DEFAULT_OUTPUT_FOLDER: string = "./my-new-project";
