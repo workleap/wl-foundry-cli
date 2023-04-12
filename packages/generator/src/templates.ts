@@ -1,4 +1,4 @@
-import { Options } from "./generator";
+import {Options} from "./generator";
 
 export interface TemplateInterface {
   description: string;
@@ -32,9 +32,7 @@ export const Templates: { [key: string]: TemplateInterface } = {
           {
             from: /<%scope%>\//,
             to: options.templateSpecificOptions["packageScope"]
-              ? `${options.templateSpecificOptions[
-                  "packageScope"
-                ]?.toString()}/`
+              ? `${options.templateSpecificOptions["packageScope"]?.toString()}/`
               : "",
           },
         ],
@@ -62,7 +60,9 @@ export const Templates: { [key: string]: TemplateInterface } = {
         patterns: [
           {
             from: /<%scope%>/,
-            to: options.templateSpecificOptions["hostScope"]?.toString() ?? "",
+            to: options.templateSpecificOptions["hostScope"]
+              ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
+              : "",
           },
         ],
       });
@@ -89,7 +89,9 @@ export const Templates: { [key: string]: TemplateInterface } = {
         patterns: [
           {
             from: /<%scope%>/,
-            to: options.templateSpecificOptions["hostScope"]?.toString() ?? "",
+            to: options.templateSpecificOptions["hostScope"]
+              ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
+              : "",
           },
         ],
       });

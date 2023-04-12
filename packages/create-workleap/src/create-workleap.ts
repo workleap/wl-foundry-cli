@@ -13,7 +13,7 @@ import { Color, Option, Output, Prompt, Spinner } from "./prompts";
 import { ConfigurationBuilder } from "./prompts/helpers/configurationBuilder";
 
 export class CreateWorkleap {
-  private static readonly DEFAULT_OUTPUT_FOLDER: string = "./my-new-project";
+  private static readonly DEFAULT_OUTPUT_DIRECTORY: string = "./my-new-project";
   private static readonly NAME_PARAMETER_POSITION: number = 2; // TODO validate position of parameter once ask with `pnpm create`
 
   private readonly prompt: Prompt;
@@ -44,19 +44,19 @@ export class CreateWorkleap {
       availableTemplates.push({ value: template, label: template });
     }
 
-    const outputFolderFromArgument: string =
+    const outputDirectoryFromArgument: string =
       process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
 
-    if (outputFolderFromArgument) {
-      Output.Write(`${outputFolderFromArgument} project setup`, Color.gray);
+    if (outputDirectoryFromArgument) {
+      Output.Write(`${outputDirectoryFromArgument} project setup`, Color.gray);
     }
 
-    const outputFolderPromptResult =
-      outputFolderFromArgument ??
+    const outputDirectoryPromptResult =
+      outputDirectoryFromArgument ??
       (await this.prompt.Text(
         "Where should we create the project?",
-        CreateWorkleap.DEFAULT_OUTPUT_FOLDER,
-        CreateWorkleap.DEFAULT_OUTPUT_FOLDER
+        CreateWorkleap.DEFAULT_OUTPUT_DIRECTORY,
+        CreateWorkleap.DEFAULT_OUTPUT_DIRECTORY
       ));
 
     const templatePromptResult = await this.prompt.Select<string>(
@@ -69,7 +69,7 @@ export class CreateWorkleap {
     const config: Configuration = {
       template,
       options: {
-        outputFolder: outputFolderPromptResult,
+        outDir: outputDirectoryPromptResult,
         templateSpecificOptions: {},
         toReplace: [],
       },
