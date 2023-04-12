@@ -1,19 +1,9 @@
-import {FileSystem} from "./fileSystem";
+import { Loader } from "./loader";
+import { Generate } from "./generate";
 
-export interface ReplacePattern {
-    from: RegExp,
-    to: string
-}
-
-export interface ReplaceInFile {
-    src: string,
-    patterns: ReplacePattern[]
-}
-
-export class Generator {
-    async Run(tasks: ReplaceInFile[]): Promise<void> {
-        for (const task of tasks) {
-            await FileSystem.Replace(task.src, task.patterns);
-        }
-    }
-}
+export * from "./generator";
+export * from "./templates";
+export const LoaderStartCloningEventName = Loader.StartCloningEventName;
+export const LoaderStopCloningEventName = Loader.StopCloningEventName;
+export const GeneratorStartEventName = Generate.StartEventName;
+export const GeneratorStopEventName = Generate.StopEventName;
