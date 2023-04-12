@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { CreateWorkleap } from "../index";
+import { CreateWorkleap } from "../create-workleap";
 import * as process from "process";
 
 const createExample = new CreateWorkleap();

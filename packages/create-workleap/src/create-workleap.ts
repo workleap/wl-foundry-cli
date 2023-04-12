@@ -10,8 +10,8 @@ import {
   GeneratorStopEventName,
 } from "@foundry-cli/generator";
 
-import { Color, Option, Output, Prompt, Spinner } from "./propmts";
-import { ConfigurationBuilder } from "./propmts/helpers/configurationBuilder";
+import { Color, Option, Output, Prompt, Spinner } from "./propmt";
+import { ConfigurationBuilder } from "./propmt/helpers/configurationBuilder";
 
 export class CreateWorkleap {
   private static readonly DEFAULT_OUTPUT_FOLDER: string = "./my-new-project";
