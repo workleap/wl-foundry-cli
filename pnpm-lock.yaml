@@ -54,12 +54,12 @@ importers:
         version: 0.6.3
       '@workleap/foundry':
         specifier: workspace:*
-        version: link:../generator
+        version: link:../foundry
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
 
-  packages/generator:
+  packages/foundry:
     dependencies:
       commander:
         specifier: ^10.0.0
