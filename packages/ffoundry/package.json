@@ -1,0 +1,24 @@
+{
+  "name": "@workleap/foundry",
+  "version": "0.0.0",
+  "description": "Foundry-CLI generator module",
+  "bin": "./dist/src/bin/bin.js",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist coverage",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "degit": "^2.8.4",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {
+    "@commander-js/extra-typings": "^10.0.3",
+    "@types/degit": "^2.8.3",
+    "@types/fs-extra": "^11.0.1"
+  }
+}
