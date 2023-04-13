@@ -7,7 +7,7 @@ import { TemplateInterface } from "../../templates";
 import { Generator, Options } from "../../generator";
 
 interface CommanderOptions {
-  outputFolder?: string;
+  outDir?: string;
 
   [key: string]: string | undefined;
 }
@@ -23,8 +23,8 @@ export default class CommanderHelper {
       .version(pkg.version);
   }
 
-  public AddPlugin(template: TemplateInterface): void {
-    const command = this.program.command(template.name);
+  public AddPlugin(name: string, template: TemplateInterface): void {
+    const command = this.program.command(name);
 
     if (template.description) {
       command.description(template.description);
@@ -55,21 +55,21 @@ export default class CommanderHelper {
 
   private AddDefaultOptions(command: Command): void {
     command.option(
-      "-o, --output-folder <string>",
+      "-o, --out-dir <string>",
       "Where to create the template (default: CWD)",
       process.cwd()
     );
   }
 
   private static MapToAggregatorOption(options: CommanderOptions): Options {
-    const outputFolder =
-      options.outputFolder != null
-        ? path.normalize(options.outputFolder)
+    const outDir =
+      options.outDir != null
+        ? path.normalize(options.outDir)
         : process.cwd();
 
     return {
       toReplace: [],
-      outputFolder,
+      outDir,
       templateSpecificOptions: options,
     };
   }

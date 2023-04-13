@@ -3,12 +3,18 @@
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
   "bin": "./dist/bin/bin.js",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/create-workleap.js",
+  "types": "./dist/create-workleap.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist coverage",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
   "dependencies": {
     "@clack/core": "^0.3.2",
     "@clack/prompts": "^0.6.3",
-    "@foundry-cli/generator": "workspace:*",
+    "@workleap/foundry": "workspace:*",
     "picocolors": "^1.0.0"
   }
 }

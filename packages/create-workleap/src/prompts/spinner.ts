@@ -9,6 +9,8 @@ export class Spinner {
     stop: (message: string) => void;
   };
 
+  private _isStarted = false;
+
   constructor(message?: string) {
     this._message = message ?? Spinner.DEFAULT_SPINNER_MESSAGE;
 
@@ -16,13 +18,25 @@ export class Spinner {
   }
 
   Start(): Spinner {
+    if (this._isStarted) {
+      return this;
+    }
+
     this._spinner.start(this._message);
+
+    this._isStarted = true;
 
     return this;
   }
 
   Stop(): Spinner {
+    if (!this._isStarted) {
+      return this;
+    }
+
     this._spinner.stop(this._message);
+
+    this._isStarted = false;
 
     return this;
   }

@@ -4,3 +4,5 @@ foundry.iml
 node_modules
 
 dist
+
+coverage

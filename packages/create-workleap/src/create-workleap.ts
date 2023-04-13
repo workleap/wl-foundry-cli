@@ -2,19 +2,18 @@ import * as process from "process";
 import {
   Generator,
   Templates,
-  TemplateInterface,
   Configuration,
   LoaderStartCloningEventName,
   LoaderStopCloningEventName,
   GeneratorStartEventName,
   GeneratorStopEventName,
-} from "@foundry-cli/generator";
+} from "@workleap/foundry";
 
-import { Color, Option, Output, Prompt, Spinner } from "./propmt";
-import { ConfigurationBuilder } from "./propmt/helpers/configurationBuilder";
+import { Color, Option, Output, Prompt, Spinner } from "./prompts";
+import { ConfigurationBuilder } from "./prompts/helpers/configurationBuilder";
 
 export class CreateWorkleap {
-  private static readonly DEFAULT_OUTPUT_FOLDER: string = "./my-new-project";
+  private static readonly DEFAULT_OUTPUT_DIRECTORY: string = "./my-new-project";
   private static readonly NAME_PARAMETER_POSITION: number = 2; // TODO validate position of parameter once ask with `pnpm create`
 
   private readonly prompt: Prompt;
@@ -40,43 +39,37 @@ export class CreateWorkleap {
   }
 
   private async Configure(): Promise<Configuration> {
-    const availableTemplates: Option<string>[] = Templates.map(
-      (x: TemplateInterface): Option<string> => {
-        return {
-          value: x.repositoryUrl,
-          label: x.name,
-        };
-      }
-    );
-
-    const outputFolderFromArgument: string =
-      process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
-
-    if (outputFolderFromArgument) {
-      Output.Write(`${outputFolderFromArgument} project setup`, Color.gray);
+    const availableTemplates: Option<string>[] = [];
+    for (const template in Templates) {
+      availableTemplates.push({ value: template, label: template });
     }
 
-    const outputFolderPromptResult =
-      outputFolderFromArgument ??
+    const outputDirectoryFromArgument: string =
+      process.argv[CreateWorkleap.NAME_PARAMETER_POSITION];
+
+    if (outputDirectoryFromArgument) {
+      Output.Write(`${outputDirectoryFromArgument} project setup`, Color.gray);
+    }
+
+    const outputDirectoryPromptResult =
+      outputDirectoryFromArgument ??
       (await this.prompt.Text(
         "Where should we create the project?",
-        CreateWorkleap.DEFAULT_OUTPUT_FOLDER,
-        CreateWorkleap.DEFAULT_OUTPUT_FOLDER
+        CreateWorkleap.DEFAULT_OUTPUT_DIRECTORY,
+        CreateWorkleap.DEFAULT_OUTPUT_DIRECTORY
       ));
 
     const templatePromptResult = await this.prompt.Select<string>(
-      "Select the template to download",
+      "Select the template to create",
       availableTemplates
     );
 
-    const template = Templates.find(
-      (x) => x.repositoryUrl === templatePromptResult
-    ) as TemplateInterface;
+    const template = Templates[templatePromptResult];
 
     const config: Configuration = {
       template,
       options: {
-        outputFolder: outputFolderPromptResult,
+        outDir: outputDirectoryPromptResult,
         templateSpecificOptions: {},
         toReplace: [],
       },

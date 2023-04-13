@@ -5,13 +5,13 @@ import {
   readFile,
   writeFile,
   constants,
-} from "node:fs/promises";
+} from "fs/promises";
 import path from "path";
+
 import { ReplacePattern } from "./index";
 
 export class FileSystem {
   static async Rename(oldPath: string, newPath: string): Promise<void> {
-    await access(oldPath, constants.R_OK | constants.W_OK);
     await rename(oldPath, newPath);
   }
 
@@ -37,12 +37,12 @@ export class FileSystem {
 
     const content: Buffer = await readFile(src);
 
-    let newContents = content.toString();
+    let newContent = content.toString();
 
     for (const pattern of patterns) {
-      newContents = newContents.replace(pattern.from, pattern.to);
+      newContent = newContent.replace(pattern.from, pattern.to);
     }
 
-    await writeFile(src, newContents);
+    await writeFile(src, newContent);
   }
 }

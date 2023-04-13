@@ -7,7 +7,7 @@ import process from "process";
 import path from "path";
 
 export interface Options {
-  outputFolder: string;
+  outDir: string;
   toReplace: ReplaceInFile[];
   templateSpecificOptions: {
     [key: string]: string | boolean | undefined;
@@ -47,14 +47,21 @@ export class Generator {
 
     this.AddDefaultTextToReplace(options);
 
-    await this._loader.Clone(options.outputFolder ?? process.cwd());
+    await this._loader.Clone(options.outDir ?? process.cwd());
     await this._generator.Run(options.toReplace);
   }
 
   private AddDefaultTextToReplace(options: Options) {
+    // package.json
     options.toReplace.push({
       src: "package.json",
-      patterns: [{ from: /<%name%>/, to: path.basename(options.outputFolder) }],
+      patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
+    });
+
+    // README.md
+    options.toReplace.push({
+      src: "README.md",
+      patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
     });
   }
 }
