@@ -9,7 +9,7 @@ You can create a new project interactively by running:
 ```cmd
 npm create workleap@latest <output-directory>
 # or
-npm create-workleap@latest <output-directory>
+npx create-workleap@latest <output-directory>
 # or
 yarn create workleap@latest <output-directory>
 # or
