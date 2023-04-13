@@ -4,6 +4,3 @@ foundry.iml
 node_modules
 
 dist
-
-# Jest
-jest.config.js
