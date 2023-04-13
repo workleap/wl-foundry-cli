@@ -52,8 +52,15 @@ export class Generator {
   }
 
   private AddDefaultTextToReplace(options: Options) {
+    // package.json
     options.toReplace.push({
       src: "package.json",
+      patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
+    });
+
+    // README.md
+    options.toReplace.push({
+      src: "README.md",
       patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
     });
   }

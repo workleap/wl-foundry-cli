@@ -26,16 +26,16 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: async (options) => {
+      const scope = options.templateSpecificOptions["packageScope"]
+        ? `${options.templateSpecificOptions["packageScope"]?.toString()}/`
+        : "";
+
       options.toReplace.push({
-        src: "package.json",
-        patterns: [
-          {
-            from: /<%scope%>\//,
-            to: options.templateSpecificOptions["packageScope"]
-              ? `${options.templateSpecificOptions["packageScope"]?.toString()}/`
-              : "",
-          },
-        ],
+        src: "package.json", patterns: [{from: /<%scope%>\//, to: scope,},],
+      });
+
+      options.toReplace.push({
+        src: "README.md", patterns: [{from: /<%scope%>\//, to: scope,},],
       });
 
       // Fake the async
@@ -55,16 +55,16 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: async (options) => {
+      const scope = options.templateSpecificOptions["hostScope"]
+        ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
+        : "";
+
       options.toReplace.push({
-        src: "package.json",
-        patterns: [
-          {
-            from: /<%scope%>/,
-            to: options.templateSpecificOptions["hostScope"]
-              ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
-              : "",
-          },
-        ],
+        src: "package.json", patterns: [{from: /<%scope%>/, to: scope,},],
+      });
+
+      options.toReplace.push({
+        src: "README.md", patterns: [{from: /<%scope%>/, to: scope,},],
       });
 
       // Fake the async
@@ -84,16 +84,16 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: async (options) => {
+      const scope = options.templateSpecificOptions["hostScope"]
+        ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
+        : "";
+
       options.toReplace.push({
-        src: "package.json",
-        patterns: [
-          {
-            from: /<%scope%>/,
-            to: options.templateSpecificOptions["hostScope"]
-              ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
-              : "",
-          },
-        ],
+        src: "package.json", patterns: [{from: /<%scope%>/, to: scope},],
+      });
+
+      options.toReplace.push({
+        src: "README.md", patterns: [{from: /<%scope%>/, to: scope},],
       });
 
       // Fake the async
