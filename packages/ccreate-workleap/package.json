@@ -2,9 +2,9 @@
   "name": "create-workleap",
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
-  "bin": "./dist/bin/bin.js",
-  "main": "./dist/create-workleap.js",
-  "types": "./dist/create-workleap.d.ts",
+  "bin": "./dist/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist coverage",
