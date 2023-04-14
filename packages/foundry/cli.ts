@@ -1,14 +1,23 @@
-import {Command} from "@commander-js/extra-typings";
+import {Command, OptionValues} from "@commander-js/extra-typings";
 
-import {TemplateInterface, Templates} from "./templates";
+import {Options, TemplateInterface, Templates} from "./templates";
 
 import * as pkg from "./package.json";
 import process from "process";
+import path from "path";
+
+let outputDirectory = "";
+let repositoryUrl: string;
+
+export interface Configuration {
+  outputDirectory: string;
+  repositoryUrl: string
+}
 
 const AddDefaultOptionsToCommand = (command: Command): void => {
   command.option(
     "-o, --out-dir <string>",
-    "Where to create the template (default: CWD)",
+    `Where to create the template (default: ${process.cwd()})`,
     process.cwd()
   );
 }
@@ -28,14 +37,18 @@ const AddCommand = (program: Command, name: string, template: TemplateInterface)
     }
   }
 
-  command.action(() => {
-      // TODO stuff here
-      // maybe just return the cli result
+  command.action((options: OptionValues, command) => {
+      const outDir = options["outDir"]?.toString() ?? process.cwd();
+      outputDirectory = path.resolve(outDir);
+
+      repositoryUrl = Templates[command.name()].repositoryUrl;
+
+      template.action ? template.action(options as Options) : options;
     }
   );
 };
 
-export const Create = async () => {
+export const RunCli = (): Configuration => {
   const program = new Command();
 
   program
@@ -43,17 +56,14 @@ export const Create = async () => {
     .description(pkg.description)
     .version(pkg.version);
 
-  AddDefaultOptionsToCommand(program);
-
-  program.option(
-    "-o, --out-dir <string>",
-    "Where to create the template (default: CWD)",
-    process.cwd()
-  );
-
   for (const template in Templates) {
     AddCommand(program, template, Templates[template]);
   }
 
-  await program.parseAsync(process.argv);
+  program.parse(process.argv);
+
+  return {
+    outputDirectory,
+    repositoryUrl
+  };
 }

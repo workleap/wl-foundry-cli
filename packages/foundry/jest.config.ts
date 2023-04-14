@@ -2,7 +2,7 @@ import type {Config} from 'jest';
 
 const config: Config = {
   testEnvironment: "node",
-  testRegex: "/tests/*/.*\\.test\\.ts$",
+  testRegex: "/test/*/.*\\.test\\.ts$",
   transform: {
     "^.+\\.ts$": "@swc/jest",
   },

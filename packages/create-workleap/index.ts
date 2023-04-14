@@ -61,7 +61,7 @@ const CallFoundryAsync = async (outputDirectory: string, template: string, scope
   return spawnAsPromise(FOUNDRY_CMD, options, {cwd: process.cwd()});
 };
 
-const Run = async (): Promise<void> => {
+const Main = async (): Promise<void> => {
   Intro(pkg.name);
 
   const outputDirectory = await AskForOutputDirectoryAsync();
@@ -77,8 +77,7 @@ const Run = async (): Promise<void> => {
   Outro("Done!")
 };
 
-
-Run()
+Main()
   .then(() => {
     process.exit(0);
   })
