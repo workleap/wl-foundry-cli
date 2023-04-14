@@ -15,7 +15,7 @@ const LoadTemplate = async (config: Configuration): Promise<void> => {
 const Main = async (): Promise<void> => {
   const config: Configuration = RunCli();
 
-  //await LoadTemplate(config);
+  await LoadTemplate(config);
 
   await Generate(config.outputDirectory);
 };
