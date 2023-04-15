@@ -1,6 +1,5 @@
 import * as child_process from "child_process";
 import process from "process";
-import * as util from "util";
 
 import { Intro, Select, Output, Text, Outro } from "./prompts";
 import * as pkg from "./package.json";
@@ -50,7 +49,7 @@ const CallFoundryAsync = async (
   outputDirectory: string,
   template: string,
   scope: string
-): Promise<unknown> => {
+): Promise<number> => {
   const options = [template];
 
   if (outputDirectory) {
@@ -65,8 +64,23 @@ const CallFoundryAsync = async (
     }
   }
 
-  const spawnAsPromise = util.promisify(child_process.spawn);
-  return spawnAsPromise(FOUNDRY_CMD, options, { cwd: process.cwd() });
+  const childProcess = child_process.spawn(FOUNDRY_CMD, options, {
+    cwd: process.cwd(),
+    shell: true,
+  });
+
+  return new Promise((resolve) => {
+    childProcess.stdout.on("data", (x: string): void => {
+      process.stdout.write(x.toString());
+    });
+    childProcess.stderr.on("data", (x: string): void => {
+      process.stderr.write(x.toString());
+      process.exit(1);
+    });
+    childProcess.on("exit", (code?: number): void => {
+      resolve(code ?? 0);
+    });
+  });
 };
 
 const Main = async (): Promise<void> => {
