@@ -1,6 +1,6 @@
-import {Command, OptionValues} from "@commander-js/extra-typings";
+import { Command, OptionValues } from "@commander-js/extra-typings";
 
-import {Options, TemplateInterface, Templates} from "./templates";
+import { Options, TemplateInterface, Templates } from "./templates";
 
 import * as pkg from "./package.json";
 import process from "process";
@@ -11,7 +11,7 @@ let repositoryUrl: string;
 
 export interface Configuration {
   outputDirectory: string;
-  repositoryUrl: string
+  repositoryUrl: string;
 }
 
 const AddDefaultOptionsToCommand = (command: Command): void => {
@@ -20,9 +20,13 @@ const AddDefaultOptionsToCommand = (command: Command): void => {
     `Where to create the template (default: ${process.cwd()})`,
     process.cwd()
   );
-}
+};
 
-const AddCommand = (program: Command, name: string, template: TemplateInterface) => {
+const AddCommand = (
+  program: Command,
+  name: string,
+  template: TemplateInterface
+) => {
   const command = program.command(name);
 
   if (template.description) {
@@ -38,23 +42,19 @@ const AddCommand = (program: Command, name: string, template: TemplateInterface)
   }
 
   command.action((options: OptionValues, command) => {
-      const outDir = options["outDir"]?.toString() ?? process.cwd();
-      outputDirectory = path.resolve(outDir);
+    const outDir = options["outDir"]?.toString() ?? process.cwd();
+    outputDirectory = path.resolve(outDir);
 
-      repositoryUrl = Templates[command.name()].repositoryUrl;
+    repositoryUrl = Templates[command.name()].repositoryUrl;
 
-      template.action ? template.action(options as Options) : options;
-    }
-  );
+    template.action ? template.action(options as Options) : options;
+  });
 };
 
 export const RunCli = (): Configuration => {
   const program = new Command();
 
-  program
-    .name(pkg.name)
-    .description(pkg.description)
-    .version(pkg.version);
+  program.name(pkg.name).description(pkg.description).version(pkg.version);
 
   for (const template in Templates) {
     AddCommand(program, template, Templates[template]);
@@ -64,6 +64,6 @@ export const RunCli = (): Configuration => {
 
   return {
     outputDirectory,
-    repositoryUrl
+    repositoryUrl,
   };
-}
+};

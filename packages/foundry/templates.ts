@@ -1,7 +1,7 @@
 import path from "path";
-import {OptionValues} from "@commander-js/extra-typings";
+import { OptionValues } from "@commander-js/extra-typings";
 
-import {AddToReplace} from "./generator";
+import { AddToReplace } from "./generator";
 
 const BASE_REPOSITORY_ADDRESS = "Workleap/wl-foundry-cli/templates";
 
@@ -27,10 +27,8 @@ const GetName = (outputDirectory: string): string => {
 const GetScope = (options: Options, flagName: string): string => {
   const scope = options[flagName];
 
-  return scope
-    ? `${scope.toString()}/`
-    : "";
-}
+  return scope ? `${scope.toString()}/` : "";
+};
 
 export const Templates: { [key: string]: TemplateInterface } = {
   "host-application": {
@@ -46,8 +44,8 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "packageScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", {scope, name});
-      AddToReplace("README.md", {scope, name});
+      AddToReplace("package.json", { scope, name });
+      AddToReplace("README.md", { scope, name });
 
       return options;
     },
@@ -65,8 +63,8 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "hostScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", {scope, name});
-      AddToReplace("README.md", {scope, name});
+      AddToReplace("package.json", { scope, name });
+      AddToReplace("README.md", { scope, name });
 
       return options;
     },
@@ -84,8 +82,8 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "hostScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", {scope, name});
-      AddToReplace("README.md", {scope, name});
+      AddToReplace("package.json", { scope, name });
+      AddToReplace("README.md", { scope, name });
 
       return options;
     },

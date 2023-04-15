@@ -1,9 +1,9 @@
 import * as process from "process";
-import {ensureDir} from "fs-extra";
+import { ensureDir } from "fs-extra";
 import degit from "degit";
 
-import {Generate} from "./generator";
-import {Configuration, RunCli} from "./cli";
+import { Generate } from "./generator";
+import { Configuration, RunCli } from "./cli";
 
 const LoadTemplate = async (config: Configuration): Promise<void> => {
   await ensureDir(config.outputDirectory);

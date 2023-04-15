@@ -15,15 +15,15 @@ const DEFAULT_CANCEL_MESSAGE = "Operation cancelled.";
 type Primitive = Readonly<string | boolean | number>;
 export type Option<Value> = Value extends Primitive
   ? {
-    value: Value;
-    label?: string;
-    hint?: string;
-  }
+      value: Value;
+      label?: string;
+      hint?: string;
+    }
   : {
-    value: Value;
-    label: string;
-    hint?: string;
-  };
+      value: Value;
+      label: string;
+      hint?: string;
+    };
 
 export const Intro = (title?: string) => {
   if (title) {
@@ -58,7 +58,7 @@ export const Text = async (
 export const Confirm = async (
   message: string,
   initialValue?: boolean,
-  customCancelMessage?: string,
+  customCancelMessage?: string
 ): Promise<boolean> => {
   const value = await confirm({
     message,
@@ -77,7 +77,7 @@ export const Select = async <T>(
   message: string,
   options: Option<T>[],
   initialValue?: T,
-  customCancelMessage?: string,
+  customCancelMessage?: string
 ): Promise<T> => {
   const value = await select<Option<T>[], T>({
     message,
@@ -98,7 +98,7 @@ export const MultiSelect = async <T>(
   options: Option<T>[],
   initialValues?: T[],
   customCancelMessage?: string,
-  required?: boolean,
+  required?: boolean
 ): Promise<T[]> => {
   const values = await multiselect<Option<T>[], T>({
     message,

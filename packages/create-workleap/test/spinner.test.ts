@@ -1,4 +1,4 @@
-import {StartSpinner, StopSpinner} from "../spinner";
+import { StartSpinner, StopSpinner } from "../spinner";
 
 import * as prompts from "@clack/prompts";
 

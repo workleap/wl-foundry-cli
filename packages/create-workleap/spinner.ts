@@ -1,4 +1,4 @@
-import {spinner} from "@clack/prompts";
+import { spinner } from "@clack/prompts";
 
 const DEFAULT_SPINNER_MESSAGE = "Running...";
 let SPINNER_INSTANCE: {

@@ -1,4 +1,13 @@
-import {Option, Intro, Text, Confirm, Select, MultiSelect, Outro, Output} from "../prompts";
+import {
+  Option,
+  Intro,
+  Text,
+  Confirm,
+  Select,
+  MultiSelect,
+  Outro,
+  Output,
+} from "../prompts";
 
 import * as prompts from "@clack/prompts";
 
@@ -38,7 +47,7 @@ describe("Given Prompt.Output", () => {
     Output();
 
     expect(consoleMock).toHaveBeenCalled();
-  })
+  });
 
   test("When message Then work", () => {
     const consoleMock = jest.spyOn(console, "log").mockImplementation();
@@ -286,9 +295,7 @@ describe("Given Prompt.MultiSelect", () => {
       const inputValues = [options[0].value, options[2].value];
       buildMultiSelectResult(inputValues);
 
-      const result = await MultiSelect(message, options, [
-        initialValue?.value,
-      ]);
+      const result = await MultiSelect(message, options, [initialValue?.value]);
 
       expect(prompts.multiselect).toHaveBeenCalledTimes(1);
       expect(prompts.multiselect).toHaveBeenCalledWith({
