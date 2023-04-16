@@ -32,7 +32,7 @@ export const Intro = (title?: string) => {
 };
 
 export const Output = (message?: string): void => {
-  console.log(`|  ${message ?? ""}`);
+  console.log(`│  ${message ?? ""}`);
 };
 
 export const Text = async (
