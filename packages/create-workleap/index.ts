@@ -1,7 +1,7 @@
 import * as child_process from "child_process";
 import process from "process";
 
-import { Intro, Select, Output, Text, Outro } from "./prompts";
+import { Intro, Select, Note, Text, Outro } from "./prompts";
 import * as pkg from "./package.json";
 import { StartSpinner, StopSpinner } from "./spinner";
 
@@ -15,7 +15,7 @@ const AskForOutputDirectoryAsync = async (): Promise<string> => {
     process.argv[NAME_PARAMETER_POSITION];
 
   if (outputDirectoryFromArgument) {
-    Output(`${outputDirectoryFromArgument} project setup`);
+    Note(`${outputDirectoryFromArgument} project setup`);
   }
 
   return (

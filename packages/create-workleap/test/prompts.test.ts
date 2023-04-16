@@ -6,7 +6,7 @@ import {
   Select,
   MultiSelect,
   Outro,
-  Output,
+  Note,
 } from "../prompts";
 
 import * as prompts from "@clack/prompts";
@@ -36,25 +36,21 @@ describe("Given Prompt.Intro", () => {
   });
 });
 
-describe("Given Prompt.Output", () => {
+describe("Given Prompt.Note", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
   test("When no message Then work", () => {
-    const consoleMock = jest.spyOn(console, "log").mockImplementation();
+    Note();
 
-    Output();
-
-    expect(consoleMock).toHaveBeenCalled();
+    expect(prompts.note).toHaveBeenCalled();
   });
 
   test("When message Then work", () => {
-    const consoleMock = jest.spyOn(console, "log").mockImplementation();
+    Note("Hello");
 
-    Output("Hello");
-
-    expect(consoleMock).toHaveBeenCalled();
+    expect(prompts.note).toHaveBeenCalled();
   });
 });
 

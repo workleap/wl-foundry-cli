@@ -7,6 +7,7 @@ import {
   confirm,
   select,
   multiselect,
+  note,
 } from "@clack/prompts";
 import pc from "picocolors";
 
@@ -31,8 +32,8 @@ export const Intro = (title?: string) => {
   }
 };
 
-export const Output = (message?: string): void => {
-  console.log(`│  ${message ?? ""}`);
+export const Note = (message?: string): void => {
+  note(message);
 };
 
 export const Text = async (
