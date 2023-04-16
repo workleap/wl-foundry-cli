@@ -9,24 +9,41 @@
 
 ## Usage
 
-To create a new project base on the Workleap starter kit, run:
+### Interactive
 
-### npm
+You can create a new project interactively by running:
 
 ```cmd
-npm create workleap <your-app-folder>
+npm create workleap@latest <output-directory>
+# or
+npx create-workleap@latest <output-directory>
+# or
+yarn create workleap@latest <output-directory>
+# or
+pnpm create workleap@latest <output-directory>
 ```
 
-### yarn
+After simply follow the prompts.
+
+### Non-interactive
+
+Using `@workleap/foundry`, you can also pass command line arguments to set up a new project non-interactively.
+See `@workleap/foundry --help`:
 
 ```cmd
-yarn create workleap <your-app-folder>
-```
+Usage: @workleap/foundry [options] [command]
 
-### pnpm
+Foundry-CLI generator module
 
-```cmd
-pnpm create workleap <your-app-folder>
+Options:
+  -V, --version               output the version number
+  -h, --help                  display help for command
+
+Commands:
+  host-application [options]  use the host-application template
+  remote-module [options]     use the remote-module template
+  static-module [options]     use the static-module template
+  help [command]              display help for command
 ```
 
 ## 🤝 Contributing

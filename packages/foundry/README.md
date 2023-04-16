@@ -18,6 +18,38 @@ Commands:
   help [command]              display help for command
 ```
 
+## Commands
+
+### host-application
+
+Add and render the template from [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application).
+
+| option                   | description                  |
+| ------------------------ | ---------------------------- |
+| -o, --out-dir <string>   | where to create the template |
+| --package-scope <string> | package scope                |
+| -h, --help               | display help for command     |
+
+### remote-module
+
+Add and render the template from [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module).
+
+| option                 | description                  |
+| ---------------------- | ---------------------------- |
+| -o, --out-dir <string> | where to create the template |
+| --host-scope <string>  | host scope                   |
+| -h, --help             | display help for command     |
+
+### static-module
+
+Add and render the template from [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module).
+
+| option                 | description                  |
+| ---------------------- | ---------------------------- |
+| -o, --out-dir <string> | where to create the template |
+| --host-scope <string>  | host scope                   |
+| -h, --help             | display help for command     |
+
 ## Develop
 
 During development, we are using `pnpm`, this is the recommended tooling.

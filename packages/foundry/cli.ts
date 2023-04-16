@@ -17,7 +17,7 @@ export interface Configuration {
 const AddDefaultOptionsToCommand = (command: Command): void => {
   command.option(
     "-o, --out-dir <string>",
-    `Where to create the template (default: ${process.cwd()})`,
+    `where to create the template`,
     process.cwd()
   );
 };

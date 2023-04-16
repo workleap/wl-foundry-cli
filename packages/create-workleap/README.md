@@ -18,27 +18,6 @@ pnpm create workleap@latest <output-directory>
 
 After simply follow the prompts.
 
-## Non-interactive
-
-Using `@workleap/foundry`, you can also pass command line arguments to set up a new project non-interactively.
-See `@workleap/foundry --help`:
-
-```cmd
-Usage: @workleap/foundry [options] [command]
-
-Foundry-CLI generator module
-
-Options:
-  -V, --version               output the version number
-  -h, --help                  display help for command
-
-Commands:
-  host-application [options]  use the host-application template
-  remote-module [options]     use the remote-module template
-  static-module [options]     use the static-module template
-  help [command]              display help for command
-```
-
 ## Develop
 
 During development, we are using `pnpm`, this is the recommended tooling.
