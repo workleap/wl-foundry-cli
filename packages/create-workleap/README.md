@@ -1,6 +1,6 @@
 # Create-Workleap
 
-A CLI to create new Workleap projects using prompts and your favorite package manager `create` command.
+A CLI to create new Workleap projects using prompts and your favourite package manager `create` command.
 
 ## Interactive
 
@@ -22,7 +22,7 @@ After simply follow the prompts.
 
 During development, we are using `pnpm`, this is the recommended tooling.
 
-To test locally your development version, without need the need to rebuild it and install continually, use this command:
+To test locally your development version, without need the need to rebuild it and install it continually, use this command:
 
 ```cmd
 # first compile the TypeScript to JS

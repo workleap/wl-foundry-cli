@@ -54,7 +54,7 @@ Add and render the template from [static-module](https://github.com/workleap/wl-
 
 During development, we are using `pnpm`, this is the recommended tooling.
 
-To test locally your development version, without need the need to rebuild it and install continually, use this command:
+To test locally your development version, without need the need to rebuild it and install it continually, use this command:
 
 ```cmd
 # first compile the TypeScript to JS
