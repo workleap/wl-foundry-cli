@@ -2,6 +2,8 @@ import path from "path";
 import { readFile, writeFile } from "fs-extra";
 import handlebars from "handlebars";
 
+const MIN_FILE_NAME_SIZE = 2;
+
 const toReplace: { [key: string]: { [key: string]: string } } = {};
 
 const ReplaceInFile = async (
@@ -24,6 +26,10 @@ export const AddToReplace = (
   filePath: string,
   templates: { [key: string]: string }
 ): void => {
+  if (filePath.length < MIN_FILE_NAME_SIZE) {
+    throw new Error(`File name cannot be smaller then ${MIN_FILE_NAME_SIZE}`);
+  }
+
   if (!toReplace[filePath] === undefined) {
     toReplace[filePath] = {};
   }
@@ -31,7 +37,7 @@ export const AddToReplace = (
   toReplace[filePath] = { ...toReplace[filePath], ...templates };
 };
 
-export const Generate = async (outputDirectory: string): Promise<void> => {
+export const Generator = async (outputDirectory: string): Promise<void> => {
   if (!toReplace || Object.keys(toReplace).length === 0) {
     return;
   }
