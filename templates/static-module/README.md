@@ -1,1 +1,1 @@
-# {{scope}}{{name}}
+# {{HOST_SCOPE}}{{NAME}}
