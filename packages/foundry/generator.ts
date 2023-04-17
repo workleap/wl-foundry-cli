@@ -1,25 +1,31 @@
 import path from "path";
 import { readFile, writeFile } from "fs-extra";
 import handlebars from "handlebars";
+import { glob } from "glob";
 
 const MIN_FILE_NAME_SIZE = 2;
+const DEFAULT_GLOB_IGNORE = "node_modules/**";
 
 const toReplace: { [key: string]: { [key: string]: string } } = {};
 
 const ReplaceInFile = async (
-  filePath: string,
+  filePattern: string,
   templates: { [key: string]: string }
 ): Promise<void> => {
   if (!templates || Object.keys(templates).length === 0) {
     return;
   }
 
-  const content: Buffer = await readFile(filePath);
+  const files = await glob(filePattern, { ignore: DEFAULT_GLOB_IGNORE });
 
-  const template = handlebars.compile(content.toString());
-  const newContent = template(templates);
+  for (const file of files) {
+    const content: Buffer = await readFile(file);
 
-  await writeFile(filePath, newContent);
+    const template = handlebars.compile(content.toString());
+    const newContent = template(templates);
+
+    await writeFile(file, newContent);
+  }
 };
 
 export const AddToReplace = (

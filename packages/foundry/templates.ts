@@ -44,7 +44,8 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "packageScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", { PACKAGE_SCOPE: scope, NAME: name });
+      AddToReplace("**/package.json", { PACKAGE_SCOPE: scope, NAME: name });
+      AddToReplace("**/@apps/host", { PACKAGE_SCOPE: scope, NAME: name });
       AddToReplace("README.md", { PACKAGE_SCOPE: scope, NAME: name });
 
       return options;
@@ -63,8 +64,7 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "hostScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", { HOST_SCOPE: scope, NAME: name });
-      AddToReplace("README.md", { HOST_SCOPE: scope, NAME: name });
+      AddToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },
@@ -82,8 +82,7 @@ export const Templates: { [key: string]: TemplateInterface } = {
       const scope = GetScope(options, "hostScope");
       const name = GetName(options.outDir);
 
-      AddToReplace("package.json", { HOST_SCOPE: scope, NAME: name });
-      AddToReplace("README.md", { HOST_SCOPE: scope, NAME: name });
+      AddToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },

@@ -1,8 +1,10 @@
 import handlebars from "handlebars";
 import fse from "fs-extra";
+import * as Glob from "glob";
 
 jest.mock("handlebars");
 jest.mock("fs-extra");
+jest.mock("glob");
 
 import { AddToReplace } from "../generator";
 
@@ -15,12 +17,18 @@ describe("Given Generator", () => {
   test("When called Then work", async () => {
     const { Generator } = require("../generator");
 
-    AddToReplace("foo.bar", {
+    const fileName = "foo.bar";
+
+    AddToReplace(fileName, {
       hello: "world",
     });
 
     jest.spyOn(fse, "readFile").mockImplementation(() => "fake content");
     jest.spyOn(handlebars, "compile").mockImplementation(() => jest.fn());
+    jest.spyOn(Glob, "glob").mockImplementation(async () => {
+      await Promise.resolve();
+      return [fileName];
+    });
 
     await Generator("outputDirectory");
 
