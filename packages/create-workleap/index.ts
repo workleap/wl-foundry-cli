@@ -1,26 +1,26 @@
 import * as child_process from "child_process";
 import process from "process";
+import { spinner } from "@clack/prompts";
 
-import { Intro, Select, Note, Text, Outro } from "./prompts";
+import { intro, select, note, text, outro } from "./prompts";
 import * as pkg from "./package.json";
-import { StartSpinner, StopSpinner } from "./spinner";
 
 const DEFAULT_OUTPUT_DIRECTORY = "./my-new-project";
 const NAME_PARAMETER_POSITION = 2; // TODO validate position of parameter once ask with `pnpm create`
 
 const FOUNDRY_CMD = "foundry";
 
-const AskForOutputDirectoryAsync = async (): Promise<string> => {
+const askForOutputDirectoryAsync = async (): Promise<string> => {
   const outputDirectoryFromArgument: string =
     process.argv[NAME_PARAMETER_POSITION];
 
   if (outputDirectoryFromArgument) {
-    Note(`${outputDirectoryFromArgument} project setup`);
+    note(`${outputDirectoryFromArgument} project setup`);
   }
 
   return (
     outputDirectoryFromArgument ??
-    (await Text(
+    (await text(
       "Where should we create the project?",
       DEFAULT_OUTPUT_DIRECTORY,
       DEFAULT_OUTPUT_DIRECTORY
@@ -28,24 +28,24 @@ const AskForOutputDirectoryAsync = async (): Promise<string> => {
   );
 };
 
-const AskForTemplateAsync = (): Promise<string> => {
+const askForTemplateAsync = (): Promise<string> => {
   const templates = [
     { value: "host-application" },
     { value: "remote-module" },
     { value: "static-module" },
   ];
 
-  return Select<string>("Select the template to create", templates);
+  return select<string>("Select the template to create", templates);
 };
 
-const AskForScopeAsync = (template: string): Promise<string> => {
-  return Text(
+const askForScopeAsync = (template: string): Promise<string> => {
+  return text(
     `What should be the ${template} scope?`,
     "Press enter if no scope is needed."
   );
 };
 
-const CallFoundryAsync = async (
+const callFoundryAsync = async (
   outputDirectory: string,
   template: string,
   scope: string
@@ -83,23 +83,24 @@ const CallFoundryAsync = async (
   });
 };
 
-const Main = async (): Promise<void> => {
-  Intro(pkg.name);
+const main = async (): Promise<void> => {
+  intro(pkg.name);
 
-  const outputDirectory = await AskForOutputDirectoryAsync();
+  const outputDirectory = await askForOutputDirectoryAsync();
 
-  const template = await AskForTemplateAsync();
+  const template = await askForTemplateAsync();
 
-  const scope = await AskForScopeAsync(template);
+  const scope = await askForScopeAsync(template);
 
-  StartSpinner();
-  await CallFoundryAsync(outputDirectory, template, scope);
-  StopSpinner();
+  const loader = spinner();
+  loader.start("Generating...");
+  await callFoundryAsync(outputDirectory, template, scope);
+  loader.stop("Generated!");
 
-  Outro("Done!");
+  outro("Done!");
 };
 
-Main()
+main()
   .then(() => {
     process.exit(0);
   })

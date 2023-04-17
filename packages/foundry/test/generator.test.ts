@@ -6,7 +6,7 @@ jest.mock("handlebars");
 jest.mock("fs-extra");
 jest.mock("glob");
 
-import { AddToReplace } from "../generator";
+import { addToReplace } from "../generator";
 
 describe("Given Generator", () => {
   afterEach(() => {
@@ -15,11 +15,11 @@ describe("Given Generator", () => {
   });
 
   test("When called Then work", async () => {
-    const { Generator } = require("../generator");
+    const { generator } = require("../generator");
 
     const fileName = "foo.bar";
 
-    AddToReplace(fileName, {
+    addToReplace(fileName, {
       hello: "world",
     });
 
@@ -30,7 +30,7 @@ describe("Given Generator", () => {
       return [fileName];
     });
 
-    await Generator("outputDirectory");
+    await generator("outputDirectory");
 
     expect(fse.readFile).toHaveBeenCalled();
     expect(fse.writeFile).toHaveBeenCalled();
@@ -38,9 +38,9 @@ describe("Given Generator", () => {
   });
 
   test("When nothing to replace Then do nothing", async () => {
-    const { Generator } = require("../generator");
+    const { generator } = require("../generator");
 
-    await Generator("outputDirectory");
+    await generator("outputDirectory");
 
     expect(fse.readFile).not.toHaveBeenCalled();
     expect(fse.writeFile).not.toHaveBeenCalled();
@@ -55,10 +55,10 @@ describe("Given Generator.AddToReplace", () => {
       bar: "bar",
     };
 
-    AddToReplace("hello.world", replacePattern);
+    addToReplace("hello.world", replacePattern);
   });
 
   test("When file name is smaller then MIN_FILE_NAME_SIZE Then throw", () => {
-    expect(() => AddToReplace("", {})).toThrow();
+    expect(() => addToReplace("", {})).toThrow();
   });
 });

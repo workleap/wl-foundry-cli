@@ -1,7 +1,7 @@
 import path from "path";
 import { OptionValues } from "@commander-js/extra-typings";
 
-import { AddToReplace } from "./generator";
+import { addToReplace } from "./generator";
 
 const BASE_REPOSITORY_ADDRESS = "Workleap/wl-foundry-cli/templates";
 
@@ -20,11 +20,11 @@ export interface TemplateInterface {
   action?: (options: Options) => Options;
 }
 
-const GetName = (outputDirectory: string): string => {
+const getName = (outputDirectory: string): string => {
   return path.basename(outputDirectory);
 };
 
-const GetScope = (options: Options, flagName: string): string => {
+const getScope = (options: Options, flagName: string): string => {
   const scope = options[flagName];
 
   return scope ? `${scope.toString()}/` : "";
@@ -41,12 +41,12 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: (options) => {
-      const scope = GetScope(options, "packageScope");
-      const name = GetName(options.outDir);
+      const scope = getScope(options, "packageScope");
+      const name = getName(options.outDir);
 
-      AddToReplace("**/package.json", { PACKAGE_SCOPE: scope, NAME: name });
-      AddToReplace("**/@apps/host", { PACKAGE_SCOPE: scope, NAME: name });
-      AddToReplace("README.md", { PACKAGE_SCOPE: scope, NAME: name });
+      addToReplace("**/package.json", { PACKAGE_SCOPE: scope, NAME: name });
+      addToReplace("**/@apps/host", { PACKAGE_SCOPE: scope, NAME: name });
+      addToReplace("README.md", { PACKAGE_SCOPE: scope, NAME: name });
 
       return options;
     },
@@ -61,10 +61,10 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: (options) => {
-      const scope = GetScope(options, "hostScope");
-      const name = GetName(options.outDir);
+      const scope = getScope(options, "hostScope");
+      const name = getName(options.outDir);
 
-      AddToReplace("**", { HOST_SCOPE: scope, NAME: name });
+      addToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },
@@ -79,10 +79,10 @@ export const Templates: { [key: string]: TemplateInterface } = {
       },
     ],
     action: (options) => {
-      const scope = GetScope(options, "hostScope");
-      const name = GetName(options.outDir);
+      const scope = getScope(options, "hostScope");
+      const name = getName(options.outDir);
 
-      AddToReplace("**", { HOST_SCOPE: scope, NAME: name });
+      addToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },

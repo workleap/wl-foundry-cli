@@ -1,6 +1,6 @@
 import process from "process";
 
-import { RunCli } from "../cli";
+import { runCli } from "../cli";
 
 const nodeDefaultArgv = ["node.js", "foundry"];
 
@@ -25,7 +25,7 @@ describe("Given CLI", () => {
       "@bar",
     ];
 
-    const configuration = RunCli();
+    const configuration = runCli();
 
     expect(configuration).not.toBeNull();
     expect(configuration.outputDirectory).toMatch(outputDirectory);
@@ -40,7 +40,7 @@ describe("Given CLI", () => {
 
     process.argv = [...nodeDefaultArgv, command];
 
-    RunCli();
+    runCli();
 
     expect(process.exit).toHaveBeenCalledWith(1);
     expect(process.stderr.write).toHaveBeenCalled();

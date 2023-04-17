@@ -14,7 +14,7 @@ export interface Configuration {
   repositoryUrl: string;
 }
 
-const AddDefaultOptionsToCommand = (command: Command): void => {
+const addDefaultOptionsToCommand = (command: Command): void => {
   command.option(
     "-o, --out-dir <string>",
     `where to create the template`,
@@ -22,7 +22,7 @@ const AddDefaultOptionsToCommand = (command: Command): void => {
   );
 };
 
-const AddCommand = (
+const addCommand = (
   program: Command,
   name: string,
   template: TemplateInterface
@@ -33,7 +33,7 @@ const AddCommand = (
     command.description(template.description);
   }
 
-  AddDefaultOptionsToCommand(command);
+  addDefaultOptionsToCommand(command);
 
   if (template.options && template.options.length > 0) {
     for (const option of template.options) {
@@ -51,13 +51,13 @@ const AddCommand = (
   });
 };
 
-export const RunCli = (): Configuration => {
+export const runCli = (): Configuration => {
   const program = new Command();
 
   program.name(pkg.name).description(pkg.description).version(pkg.version);
 
   for (const template in Templates) {
-    AddCommand(program, template, Templates[template]);
+    addCommand(program, template, Templates[template]);
   }
 
   program.parse(process.argv);

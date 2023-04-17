@@ -1,6 +1,6 @@
 import fse from "fs-extra";
 
-import { LoadTemplate } from "../loadTemplate";
+import { loadTemplate } from "../loadTemplate";
 import { Configuration } from "../cli";
 
 jest.mock("fs-extra");
@@ -22,7 +22,7 @@ describe("Given LoadTemplate", () => {
   });
 
   test("When Then", async () => {
-    await LoadTemplate(fakeConfiguration);
+    await loadTemplate(fakeConfiguration);
 
     expect(fse.ensureDir).toHaveBeenCalled();
     expect(cloneMock).toHaveBeenCalled();

@@ -1,18 +1,18 @@
 import * as process from "process";
 
-import { Configuration, RunCli } from "./cli";
-import { LoadTemplate } from "./loadTemplate";
-import { Generator } from "./generator";
+import { Configuration, runCli } from "./cli";
+import { loadTemplate } from "./loadTemplate";
+import { generator } from "./generator";
 
-const Main = async (): Promise<void> => {
-  const config: Configuration = RunCli();
+const main = async (): Promise<void> => {
+  const config: Configuration = runCli();
 
-  await LoadTemplate(config);
+  await loadTemplate(config);
 
-  await Generator(config.outputDirectory);
+  await generator(config.outputDirectory);
 };
 
-Main()
+main()
   .then(() => {
     process.exit(0);
   })

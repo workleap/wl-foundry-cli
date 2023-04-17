@@ -1,12 +1,12 @@
 import {
   Option,
-  Intro,
-  Text,
-  Confirm,
-  Select,
-  MultiSelect,
-  Outro,
-  Note,
+  intro,
+  text,
+  confirm,
+  select,
+  multiSelect,
+  outro,
+  note,
 } from "../prompts";
 
 import * as prompts from "@clack/prompts";
@@ -19,7 +19,7 @@ describe("Given Prompt.Intro", () => {
   });
 
   test("When no message Then do nothing", () => {
-    Intro();
+    intro();
 
     expect(prompts.intro).not.toHaveBeenCalled();
   });
@@ -27,7 +27,7 @@ describe("Given Prompt.Intro", () => {
   test("When message Then work", () => {
     const introText = "Intro";
 
-    Intro(introText);
+    intro(introText);
 
     expect(prompts.intro).toHaveBeenCalledTimes(1);
     expect(prompts.intro).toHaveBeenCalledWith(
@@ -42,13 +42,13 @@ describe("Given Prompt.Note", () => {
   });
 
   test("When no message Then work", () => {
-    Note();
+    note();
 
     expect(prompts.note).toHaveBeenCalled();
   });
 
   test("When message Then work", () => {
-    Note("Hello");
+    note("Hello");
 
     expect(prompts.note).toHaveBeenCalled();
   });
@@ -69,7 +69,7 @@ describe("Given Prompt.Text", () => {
       const inputValue = "InputValue";
       buildTextResult(inputValue);
 
-      const result = await Text(message, placeholder, defaultValue);
+      const result = await text(message, placeholder, defaultValue);
 
       expect(prompts.text).toHaveBeenCalledTimes(1);
       expect(prompts.text).toHaveBeenCalledWith({
@@ -90,7 +90,7 @@ describe("Given Prompt.Text", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Text(message);
+    await text(message);
 
     expect(prompts.text).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -105,7 +105,7 @@ describe("Given Prompt.Text", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Text(message, undefined, undefined, customCancelMessage);
+    await text(message, undefined, undefined, customCancelMessage);
 
     expect(prompts.text).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -139,7 +139,7 @@ describe("Given Prompt.Confirm", () => {
       const inputValue = true;
       buildConfirmResult(inputValue);
 
-      const result = await Confirm(message, initialValue);
+      const result = await confirm(message, initialValue);
 
       expect(prompts.confirm).toHaveBeenCalledTimes(1);
       expect(prompts.confirm).toHaveBeenCalledWith({
@@ -159,7 +159,7 @@ describe("Given Prompt.Confirm", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Confirm(message);
+    await confirm(message);
 
     expect(prompts.confirm).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -175,7 +175,7 @@ describe("Given Prompt.Confirm", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Confirm(message, undefined, customCancelMessage);
+    await confirm(message, undefined, customCancelMessage);
 
     expect(prompts.confirm).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -215,7 +215,7 @@ describe("Given Prompt.Select", () => {
       const inputValue = options[0].value;
       buildSelectResult(inputValue);
 
-      const result = await Select(message, options, initialValue?.value);
+      const result = await select(message, options, initialValue?.value);
 
       expect(prompts.select).toHaveBeenCalledTimes(1);
       expect(prompts.select).toHaveBeenCalledWith({
@@ -236,7 +236,7 @@ describe("Given Prompt.Select", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Select(message, options);
+    await select(message, options);
 
     expect(prompts.select).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -251,7 +251,7 @@ describe("Given Prompt.Select", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await Select(message, options, undefined, customCancelMessage);
+    await select(message, options, undefined, customCancelMessage);
 
     expect(prompts.select).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -291,7 +291,7 @@ describe("Given Prompt.MultiSelect", () => {
       const inputValues = [options[0].value, options[2].value];
       buildMultiSelectResult(inputValues);
 
-      const result = await MultiSelect(message, options, [initialValue?.value]);
+      const result = await multiSelect(message, options, [initialValue?.value]);
 
       expect(prompts.multiselect).toHaveBeenCalledTimes(1);
       expect(prompts.multiselect).toHaveBeenCalledWith({
@@ -312,7 +312,7 @@ describe("Given Prompt.MultiSelect", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await MultiSelect(message, options);
+    await multiSelect(message, options);
 
     expect(prompts.multiselect).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -327,7 +327,7 @@ describe("Given Prompt.MultiSelect", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    await MultiSelect(message, options, undefined, customCancelMessage);
+    await multiSelect(message, options, undefined, customCancelMessage);
 
     expect(prompts.multiselect).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -341,7 +341,7 @@ describe("Given Prompt.MultiSelect", () => {
     const inputValues = [options[0].value, options[2].value];
     buildMultiSelectResult(inputValues);
 
-    const result = await MultiSelect(
+    const result = await multiSelect(
       message,
       options,
       undefined,
@@ -379,7 +379,7 @@ describe("Given Prompt.Outro", () => {
   });
 
   test("When no message Then is not called", () => {
-    Outro();
+    outro();
 
     expect(prompts.outro).not.toHaveBeenCalled();
   });
@@ -387,7 +387,7 @@ describe("Given Prompt.Outro", () => {
   test("When message Then work", () => {
     const outroText = "Outro";
 
-    Outro(outroText);
+    outro(outroText);
 
     expect(prompts.outro).toHaveBeenCalledTimes(1);
     expect(prompts.outro).toHaveBeenCalledWith(

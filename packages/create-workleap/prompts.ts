@@ -1,14 +1,4 @@
-import {
-  isCancel,
-  cancel,
-  intro,
-  outro,
-  text,
-  confirm,
-  select,
-  multiselect,
-  note,
-} from "@clack/prompts";
+import * as cp from "@clack/prompts";
 import pc from "picocolors";
 
 const DEFAULT_CANCEL_MESSAGE = "Operation cancelled.";
@@ -26,98 +16,98 @@ export type Option<Value> = Value extends Primitive
       hint?: string;
     };
 
-export const Intro = (title?: string) => {
+export const intro = (title?: string) => {
   if (title) {
-    intro(title);
+    cp.intro(title);
   }
 };
 
-export const Note = (message?: string): void => {
-  note(message);
+export const note = (message?: string): void => {
+  cp.note(message);
 };
 
-export const Text = async (
+export const text = async (
   message: string,
   placeholder?: string,
   defaultValue?: string,
   customCancelMessage?: string
 ): Promise<string> => {
-  const value = await text({
+  const value = await cp.text({
     message,
     placeholder,
     defaultValue,
   });
 
-  if (isCancel(value)) {
-    cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+  if (cp.isCancel(value)) {
+    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
     process.exit(0);
   }
 
   return value;
 };
 
-export const Confirm = async (
+export const confirm = async (
   message: string,
   initialValue?: boolean,
   customCancelMessage?: string
 ): Promise<boolean> => {
-  const value = await confirm({
+  const value = await cp.confirm({
     message,
     initialValue,
   });
 
-  if (isCancel(value)) {
-    cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+  if (cp.isCancel(value)) {
+    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
     process.exit(0);
   }
 
   return value;
 };
 
-export const Select = async <T>(
+export const select = async <T>(
   message: string,
   options: Option<T>[],
   initialValue?: T,
   customCancelMessage?: string
 ): Promise<T> => {
-  const value = await select<Option<T>[], T>({
+  const value = await cp.select<Option<T>[], T>({
     message,
     options,
     initialValue,
   });
 
-  if (isCancel(value)) {
-    cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+  if (cp.isCancel(value)) {
+    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
     process.exit(0);
   }
 
   return value;
 };
 
-export const MultiSelect = async <T>(
+export const multiSelect = async <T>(
   message: string,
   options: Option<T>[],
   initialValues?: T[],
   customCancelMessage?: string,
   required?: boolean
 ): Promise<T[]> => {
-  const values = await multiselect<Option<T>[], T>({
+  const values = await cp.multiselect<Option<T>[], T>({
     message,
     options,
     initialValues,
     required,
   });
 
-  if (isCancel(values)) {
-    cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+  if (cp.isCancel(values)) {
+    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
     process.exit(0);
   }
 
   return values;
 };
 
-export const Outro = (message?: string): void => {
+export const outro = (message?: string): void => {
   if (message) {
-    outro(pc.green(message));
+    cp.outro(pc.green(message));
   }
 };
