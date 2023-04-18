@@ -3,8 +3,8 @@ import { readFile, writeFile } from "fs-extra";
 import handlebars from "handlebars";
 import { glob } from "glob";
 
-const MIN_FILE_NAME_SIZE = 2;
-const DEFAULT_GLOB_IGNORE = "node_modules/**";
+const MinimumFileNameSize = 2;
+const DefaultGlobIgnore = "node_modules/**";
 
 const toReplace: { [key: string]: { [key: string]: string } } = {};
 
@@ -16,7 +16,7 @@ const replaceInFile = async (
     return;
   }
 
-  const files = await glob(filePattern, { ignore: DEFAULT_GLOB_IGNORE });
+  const files = await glob(filePattern, { ignore: DefaultGlobIgnore });
 
   for (const file of files) {
     const content: Buffer = await readFile(file);
@@ -32,8 +32,8 @@ export const addToReplace = (
   filePath: string,
   templates: { [key: string]: string }
 ): void => {
-  if (filePath.length < MIN_FILE_NAME_SIZE) {
-    throw new Error(`File name cannot be smaller then ${MIN_FILE_NAME_SIZE}`);
+  if (filePath.length < MinimumFileNameSize) {
+    throw new Error(`File name cannot be smaller then ${MinimumFileNameSize}`);
   }
 
   if (!toReplace[filePath] === undefined) {

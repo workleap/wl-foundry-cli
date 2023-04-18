@@ -3,7 +3,7 @@ import { OptionValues } from "@commander-js/extra-typings";
 
 import { addToReplace } from "./generator";
 
-const BASE_REPOSITORY_ADDRESS = "Workleap/wl-foundry-cli/templates";
+const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
 
 export interface Options extends OptionValues {
   outDir: string;
@@ -33,7 +33,7 @@ const getScope = (options: Options, flagName: string): string => {
 export const Templates: { [key: string]: TemplateInterface } = {
   "host-application": {
     description: "use the host-application template",
-    repositoryUrl: `${BASE_REPOSITORY_ADDRESS}/host-application`,
+    repositoryUrl: `${BaseRepositoryAddress}/host-application`,
     options: [
       {
         flag: "--package-scope <string>",
@@ -53,7 +53,7 @@ export const Templates: { [key: string]: TemplateInterface } = {
   },
   "remote-module": {
     description: "use the remote-module template",
-    repositoryUrl: `${BASE_REPOSITORY_ADDRESS}/remote-module`,
+    repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
     options: [
       {
         flag: "--host-scope <string>",
@@ -71,7 +71,7 @@ export const Templates: { [key: string]: TemplateInterface } = {
   },
   "static-module": {
     description: "use the static-module template",
-    repositoryUrl: `${BASE_REPOSITORY_ADDRESS}/static-module`,
+    repositoryUrl: `${BaseRepositoryAddress}/static-module`,
     options: [
       {
         flag: "--host-scope <string>",

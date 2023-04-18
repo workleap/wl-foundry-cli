@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
   "bin": {
-    "foundry": "./dist/index.js"
+    "foundry": "./dist/src/bin.js"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist coverage",

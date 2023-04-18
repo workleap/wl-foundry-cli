@@ -1,4 +1,4 @@
-import { TemplateInterface, Templates } from "../templates";
+import { TemplateInterface, Templates } from "../src/templates";
 
 describe("Given Templates", () => {
   afterEach(() => {

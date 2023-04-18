@@ -1,12 +1,12 @@
-import handlebars from "handlebars";
-import fse from "fs-extra";
+import * as handlebars from "handlebars";
+import * as fse from "fs-extra";
 import * as Glob from "glob";
 
 jest.mock("handlebars");
 jest.mock("fs-extra");
 jest.mock("glob");
 
-import { addToReplace } from "../generator";
+import { addToReplace } from "../src/generator";
 
 describe("Given Generator", () => {
   afterEach(() => {
@@ -15,7 +15,7 @@ describe("Given Generator", () => {
   });
 
   test("When called Then work", async () => {
-    const { generator } = require("../generator");
+    const { generator } = require("../src/generator");
 
     const fileName = "foo.bar";
 
@@ -38,7 +38,7 @@ describe("Given Generator", () => {
   });
 
   test("When nothing to replace Then do nothing", async () => {
-    const { generator } = require("../generator");
+    const { generator } = require("../src/generator");
 
     await generator("outputDirectory");
 

@@ -7,7 +7,7 @@ import {
   multiSelect,
   outro,
   note,
-} from "../prompts";
+} from "../src/prompts";
 
 import * as prompts from "@clack/prompts";
 

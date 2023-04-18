@@ -1,7 +1,7 @@
 import * as cp from "@clack/prompts";
 import pc from "picocolors";
 
-const DEFAULT_CANCEL_MESSAGE = "Operation cancelled.";
+const DefaultCancelMessage = "Operation cancelled.";
 
 type Primitive = Readonly<string | boolean | number>;
 export type Option<Value> = Value extends Primitive
@@ -39,7 +39,7 @@ export const text = async (
   });
 
   if (cp.isCancel(value)) {
-    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+    cp.cancel(customCancelMessage ?? DefaultCancelMessage);
     process.exit(0);
   }
 
@@ -57,7 +57,7 @@ export const confirm = async (
   });
 
   if (cp.isCancel(value)) {
-    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+    cp.cancel(customCancelMessage ?? DefaultCancelMessage);
     process.exit(0);
   }
 
@@ -77,7 +77,7 @@ export const select = async <T>(
   });
 
   if (cp.isCancel(value)) {
-    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+    cp.cancel(customCancelMessage ?? DefaultCancelMessage);
     process.exit(0);
   }
 
@@ -99,7 +99,7 @@ export const multiSelect = async <T>(
   });
 
   if (cp.isCancel(values)) {
-    cp.cancel(customCancelMessage ?? DEFAULT_CANCEL_MESSAGE);
+    cp.cancel(customCancelMessage ?? DefaultCancelMessage);
     process.exit(0);
   }
 

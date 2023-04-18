@@ -1,6 +1,6 @@
 import process from "process";
 
-import { runCli } from "../cli";
+import { runCli } from "../src/cli";
 
 const nodeDefaultArgv = ["node.js", "foundry"];
 

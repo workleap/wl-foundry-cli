@@ -2,7 +2,7 @@ import { Command, OptionValues } from "@commander-js/extra-typings";
 
 import { Options, TemplateInterface, Templates } from "./templates";
 
-import * as pkg from "./package.json";
+import * as pkg from "../package.json";
 import process from "process";
 import path from "path";
 

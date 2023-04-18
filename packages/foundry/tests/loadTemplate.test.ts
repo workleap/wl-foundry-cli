@@ -1,7 +1,7 @@
-import fse from "fs-extra";
+import * as fse from "fs-extra";
 
-import { loadTemplate } from "../loadTemplate";
-import { Configuration } from "../cli";
+import { loadTemplate } from "../src/loadTemplate";
+import { Configuration } from "../src/cli";
 
 jest.mock("fs-extra");
 

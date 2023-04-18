@@ -1,18 +1,19 @@
+#!/usr/bin/env node
 import * as child_process from "child_process";
 import process from "process";
 import { spinner } from "@clack/prompts";
 
 import { intro, select, note, text, outro } from "./prompts";
-import * as pkg from "./package.json";
+import * as pkg from "../package.json";
 
-const DEFAULT_OUTPUT_DIRECTORY = "./my-new-project";
-const NAME_PARAMETER_POSITION = 2; // TODO validate position of parameter once ask with `pnpm create`
+const DefaultOutputDirectory = "./my-new-project";
+const NameParameterPosition = 2; // TODO validate position of parameter once ask with `pnpm create`
 
-const FOUNDRY_CMD = "foundry";
+const FoundryCmd = "foundry";
 
 const askForOutputDirectoryAsync = async (): Promise<string> => {
   const outputDirectoryFromArgument: string =
-    process.argv[NAME_PARAMETER_POSITION];
+    process.argv[NameParameterPosition];
 
   if (outputDirectoryFromArgument) {
     note(`${outputDirectoryFromArgument} project setup`);
@@ -22,8 +23,8 @@ const askForOutputDirectoryAsync = async (): Promise<string> => {
     outputDirectoryFromArgument ??
     (await text(
       "Where should we create the project?",
-      DEFAULT_OUTPUT_DIRECTORY,
-      DEFAULT_OUTPUT_DIRECTORY
+      DefaultOutputDirectory,
+      DefaultOutputDirectory
     ))
   );
 };
@@ -64,7 +65,7 @@ const callFoundryAsync = async (
     }
   }
 
-  const childProcess = child_process.spawn(FOUNDRY_CMD, options, {
+  const childProcess = child_process.spawn(FoundryCmd, options, {
     cwd: process.cwd(),
     shell: true,
   });
@@ -84,20 +85,20 @@ const callFoundryAsync = async (
 };
 
 const main = async (): Promise<void> => {
-  intro(pkg.name);
+intro(pkg.name);
 
   const outputDirectory = await askForOutputDirectoryAsync();
 
-  const template = await askForTemplateAsync();
+const template = await askForTemplateAsync();
 
-  const scope = await askForScopeAsync(template);
+const scope = await askForScopeAsync(template);
 
-  const loader = spinner();
-  loader.start("Generating...");
-  await callFoundryAsync(outputDirectory, template, scope);
-  loader.stop("Generated!");
+const loader = spinner();
+loader.start("Generating...");
+await callFoundryAsync(outputDirectory, template, scope);
+loader.stop("Generated!");
 
-  outro("Done!");
+outro("Done!");
 };
 
 main()
