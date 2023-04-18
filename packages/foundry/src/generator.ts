@@ -16,7 +16,7 @@ const replaceInFile = async (
     return;
   }
 
-  const files = await glob(filePattern, { ignore: DefaultGlobIgnore });
+  const files = await glob(filePattern, { ignore: DefaultGlobIgnore }) ?? [];
 
   for (const file of files) {
     const content: Buffer = await readFile(file);
