@@ -3,7 +3,9 @@ import process from "process";
 
 const FoundryCmd = "foundry";
 
-export type TemplatesIds = "host-application" | "remote-module" | "static-module";
+export const AvailableTemplates = ["host-application", "remote-module", "static-module"] as const;
+
+export type TemplatesIds = typeof AvailableTemplates[number];
 
 interface Arguments {
     templateId: TemplatesIds;

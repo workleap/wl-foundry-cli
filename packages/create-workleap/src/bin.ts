@@ -5,7 +5,7 @@ import color from "picocolors";
 
 import { name as projectName } from "../package.json";
 
-import { TemplatesIds, generateProject } from "./generateProject";
+import { AvailableTemplates, TemplatesIds, generateProject } from "./generateProject";
 
 const DefaultOutputDirectory = "./my-new-project";
 const NameParameterPosition = 2; // TODO validate position of parameter once ask with `pnpm create`
@@ -19,11 +19,9 @@ interface Option<Value> {
 
 const outputDirectoryFromArgument: string = process.argv[NameParameterPosition];
 
-const templates: Option<TemplatesIds>[] = [
-    { value: "host-application", label: "host-application" },
-    { value: "remote-module", label: "remote-module" },
-    { value: "static-module", label: "static-module" }
-];
+const templates: Option<TemplatesIds>[] = AvailableTemplates.map(x => {
+    return { value: x, label: x };
+});
 
 async function main() {
     p.intro(projectName);
