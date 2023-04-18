@@ -2,9 +2,9 @@
   "name": "create-workleap",
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
-  "bin": "./dist/src/bin.js",
+  "bin": "./dist/bin.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "clean": "pnpm dlx rimraf dist coverage",
     "lint:types": "tsc --noEmit"
   },
@@ -12,5 +12,11 @@
     "@clack/core": "0.3.2",
     "@clack/prompts": "0.6.3",
     "picocolors": "1.0.0"
+  },
+  "tsup": {
+    "entry": ["src/bin.ts"],
+    "clean": true,
+    "dts": true,
+    "format": ["cjs"]
   }
 }
