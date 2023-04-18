@@ -5,18 +5,18 @@ import { loadTemplate } from "./loadTemplate";
 import { generator } from "./generator";
 
 const main = async (): Promise<void> => {
-  const config: Configuration = runCli();
+    const config: Configuration = runCli();
 
-  await loadTemplate(config);
+    await loadTemplate(config);
 
-  await generator(config.outputDirectory);
+    await generator(config.outputDirectory);
 };
 
 main()
-  .then(() => {
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+    .then(() => {
+        process.exit(0);
+    })
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });

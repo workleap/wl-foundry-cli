@@ -5,44 +5,44 @@ import { runCli } from "../src/cli";
 const nodeDefaultArgv = ["node.js", "foundry"];
 
 describe("Given CLI", () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
 
-  it.each([
-    ["host-application", "--package-scope"],
-    ["remote-module", "--host-scope"],
-    ["static-module", "--host-scope"],
-  ])("Given existing command '%s' Then work", (command, scopeOptionTag) => {
-    const outputDirectory = "foo";
+    it.each([
+        ["host-application", "--package-scope"],
+        ["remote-module", "--host-scope"],
+        ["static-module", "--host-scope"]
+    ])("Given existing command '%s' Then work", (command, scopeOptionTag) => {
+        const outputDirectory = "foo";
 
-    process.argv = [
-      ...nodeDefaultArgv,
-      command,
-      "-o",
-      outputDirectory,
-      scopeOptionTag,
-      "@bar",
-    ];
+        process.argv = [
+            ...nodeDefaultArgv,
+            command,
+            "-o",
+            outputDirectory,
+            scopeOptionTag,
+            "@bar"
+        ];
 
-    const configuration = runCli();
+        const configuration = runCli();
 
-    expect(configuration).not.toBeNull();
-    expect(configuration.outputDirectory).toMatch(outputDirectory);
-    expect(configuration.repositoryUrl).toMatch(command);
-  });
+        expect(configuration).not.toBeNull();
+        expect(configuration.outputDirectory).toMatch(outputDirectory);
+        expect(configuration.repositoryUrl).toMatch(command);
+    });
 
-  test("Given not existing command Then exit process with error", () => {
-    const command = "not-a-real-command";
+    test("Given not existing command Then exit process with error", () => {
+        const command = "not-a-real-command";
 
-    jest.spyOn(process, "exit").mockImplementation();
-    jest.spyOn(process.stderr, "write").mockImplementation();
+        jest.spyOn(process, "exit").mockImplementation();
+        jest.spyOn(process.stderr, "write").mockImplementation();
 
-    process.argv = [...nodeDefaultArgv, command];
+        process.argv = [...nodeDefaultArgv, command];
 
-    runCli();
+        runCli();
 
-    expect(process.exit).toHaveBeenCalledWith(1);
-    expect(process.stderr.write).toHaveBeenCalled();
-  });
+        expect(process.exit).toHaveBeenCalledWith(1);
+        expect(process.stderr.write).toHaveBeenCalled();
+    });
 });

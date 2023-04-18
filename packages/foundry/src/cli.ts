@@ -10,60 +10,62 @@ let outputDirectory = "";
 let repositoryUrl: string;
 
 export interface Configuration {
-  outputDirectory: string;
-  repositoryUrl: string;
+    outputDirectory: string;
+    repositoryUrl: string;
 }
 
 const addDefaultOptionsToCommand = (command: Command): void => {
-  command.option(
-    "-o, --out-dir <string>",
-    `where to create the template`,
-    process.cwd()
-  );
+    command.option(
+        "-o, --out-dir <string>",
+        "where to create the template",
+        process.cwd()
+    );
 };
 
 const addCommand = (
-  program: Command,
-  name: string,
-  template: TemplateInterface
+    program: Command,
+    name: string,
+    template: TemplateInterface
 ) => {
-  const command = program.command(name);
+    const command = program.command(name);
 
-  if (template.description) {
-    command.description(template.description);
-  }
-
-  addDefaultOptionsToCommand(command);
-
-  if (template.options && template.options.length > 0) {
-    for (const option of template.options) {
-      command.option(option.flag, option.description, option.defaultValue);
+    if (template.description) {
+        command.description(template.description);
     }
-  }
 
-  command.action((options: OptionValues, command) => {
-    const outDir = options["outDir"]?.toString() ?? process.cwd();
-    outputDirectory = path.resolve(outDir);
+    addDefaultOptionsToCommand(command);
 
-    repositoryUrl = Templates[command.name()].repositoryUrl;
+    if (template.options && template.options.length > 0) {
+        for (const option of template.options) {
+            command.option(option.flag, option.description, option.defaultValue);
+        }
+    }
 
-    template.action ? template.action(options as Options) : options;
-  });
+    command.action((options: OptionValues, cmd) => {
+        const outDir = options["outDir"]?.toString() ?? process.cwd();
+        outputDirectory = path.resolve(outDir);
+
+        repositoryUrl = Templates[cmd.name()].repositoryUrl;
+
+        if (template.action) {
+            template.action(options as Options);
+        }
+    });
 };
 
 export const runCli = (): Configuration => {
-  const program = new Command();
+    const program = new Command();
 
-  program.name(pkg.name).description(pkg.description).version(pkg.version);
+    program.name(pkg.name).description(pkg.description).version(pkg.version);
 
-  for (const template in Templates) {
-    addCommand(program, template, Templates[template]);
-  }
+    for (const template in Templates) {
+        addCommand(program, template, Templates[template]);
+    }
 
-  program.parse(process.argv);
+    program.parse(process.argv);
 
-  return {
-    outputDirectory,
-    repositoryUrl,
-  };
+    return {
+        outputDirectory,
+        repositoryUrl
+    };
 };
