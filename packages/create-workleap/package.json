@@ -17,6 +17,7 @@
     "entry": ["src/bin.ts"],
     "clean": true,
     "dts": true,
-    "format": ["cjs"]
-  }
+    "format": ["esm"]
+  },
+  "type": "module"
 }

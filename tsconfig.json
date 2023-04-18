@@ -2,9 +2,6 @@
   "compileOnSave": true,
   "extends": "@workleap/typescript-configs/library/build.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "verbatimModuleSyntax": false,
   },
   "exclude": ["node_modules"]
 }

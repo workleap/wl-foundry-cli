@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "moduleResolution": "nodenext",
     "outDir": "./dist"
   },
   "include": ["src"],
