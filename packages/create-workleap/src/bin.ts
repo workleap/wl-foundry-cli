@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import process from "process";
+import process from "node:process";
 import * as p from "@clack/prompts";
 import color from "picocolors";
 
