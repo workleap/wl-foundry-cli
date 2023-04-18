@@ -9,25 +9,13 @@
 
 ## Usage
 
-To create a new project base on the Workleap starter kit, run:
+### Interactive
 
-### npm
+You can create a new project interactively by using [create-workleap](packages/create-workleap/README.md).
 
-```cmd
-npm create workleap <your-app-folder>
-```
+### Non-interactive
 
-### yarn
-
-```cmd
-yarn create workleap <your-app-folder>
-```
-
-### pnpm
-
-```cmd
-pnpm create workleap <your-app-folder>
-```
+Using [@workleap/foundry](packages/foundry/README.md), you can also pass command line arguments to set up a new project non-interactively.
 
 ## 🤝 Contributing
 
