@@ -6,7 +6,7 @@ jest.mock("handlebars");
 jest.mock("fs-extra");
 jest.mock("glob");
 
-import { addToReplace } from "../src/generator";
+import { addToReplace, generator } from "../src/generator";
 
 describe("Given Generator", () => {
   afterEach(() => {
@@ -15,7 +15,6 @@ describe("Given Generator", () => {
   });
 
   test("When called Then work", async () => {
-    const { generator } = require("../src/generator");
 
     const fileName = "foo.bar";
 
@@ -38,8 +37,6 @@ describe("Given Generator", () => {
   });
 
   test("When nothing to replace Then do nothing", async () => {
-    const { generator } = require("../src/generator");
-
     await generator("outputDirectory");
 
     expect(fse.readFile).not.toHaveBeenCalled();
