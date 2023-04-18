@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "pnpm dlx rimraf dist coverage",
+    "lint:types": "tsc --noEmit",
     "test": "jest",
     "coverage": "jest --coverage"
   },
