@@ -1,67 +1,54 @@
-import events from "events";
-
-import { TemplateInterface } from "./templates";
-import { Loader } from "./loader";
-import { Generate, ReplaceInFile } from "./generate";
-import process from "process";
 import path from "path";
+import { readFile, writeFile } from "fs-extra";
+import handlebars from "handlebars";
+import { glob } from "glob";
 
-export interface Options {
-  outDir: string;
-  toReplace: ReplaceInFile[];
-  templateSpecificOptions: {
-    [key: string]: string | boolean | undefined;
-  };
-}
+const MinimumFileNameSize = 2;
+const DefaultGlobIgnore = "node_modules/**";
 
-export interface Configuration {
-  template: TemplateInterface;
-  options: Options;
-}
+const toReplace: { [key: string]: { [key: string]: string } } = {};
 
-export class Generator {
-  private readonly _template: TemplateInterface;
-  private readonly _loader: Loader;
-  private readonly _generator: Generate;
-  private readonly _options: Options;
-
-  public readonly LoaderEvent: events.EventEmitter;
-  public readonly GeneratorEvent: events.EventEmitter;
-
-  constructor(configuration: Configuration) {
-    this._template = configuration.template;
-    this._options = configuration.options;
-
-    this._loader = new Loader(this._template.repositoryUrl);
-    this._generator = new Generate();
-
-    this.LoaderEvent = this._loader.loaderEvent;
-    this.GeneratorEvent = this._generator.generatorEvent;
+const replaceInFile = async (
+  filePattern: string,
+  templates: { [key: string]: string }
+): Promise<void> => {
+  if (!templates || Object.keys(templates).length === 0) {
+    return;
   }
 
-  public async Run(): Promise<void> {
-    const options: Options =
-      this._template.action == undefined
-        ? this._options
-        : await this._template.action(this._options);
+  const files = await glob(filePattern, { ignore: DefaultGlobIgnore });
 
-    this.AddDefaultTextToReplace(options);
+  for (const file of files) {
+    const content: Buffer = await readFile(file);
 
-    await this._loader.Clone(options.outDir ?? process.cwd());
-    await this._generator.Run(options.toReplace);
+    const template = handlebars.compile(content.toString());
+    const newContent = template(templates);
+
+    await writeFile(file, newContent);
+  }
+};
+
+export const addToReplace = (
+  filePath: string,
+  templates: { [key: string]: string }
+): void => {
+  if (filePath.length < MinimumFileNameSize) {
+    throw new Error(`File name cannot be smaller then ${MinimumFileNameSize}`);
   }
 
-  private AddDefaultTextToReplace(options: Options) {
-    // package.json
-    options.toReplace.push({
-      src: "package.json",
-      patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
-    });
-
-    // README.md
-    options.toReplace.push({
-      src: "README.md",
-      patterns: [{ from: /<%name%>/, to: path.basename(options.outDir) }],
-    });
+  if (!toReplace[filePath] === undefined) {
+    toReplace[filePath] = {};
   }
-}
+
+  toReplace[filePath] = { ...toReplace[filePath], ...templates };
+};
+
+export const generator = async (outputDirectory: string): Promise<void> => {
+  if (!toReplace || Object.keys(toReplace).length === 0) {
+    return;
+  }
+
+  for (const file in toReplace) {
+    await replaceInFile(path.join(outputDirectory, file), toReplace[file]);
+  }
+};

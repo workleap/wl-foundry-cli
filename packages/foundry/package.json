@@ -2,9 +2,9 @@
   "name": "@workleap/foundry",
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
-  "bin": "./dist/src/bin/bin.js",
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "foundry": "./dist/src/bin.js"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "pnpm dlx rimraf dist coverage",
@@ -13,10 +13,14 @@
   },
   "dependencies": {
     "commander": "^10.0.0",
-    "degit": "^2.8.4"
+    "degit": "^2.8.4",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.1.0",
+    "handlebars": "^4.7.7"
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^10.0.3",
-    "@types/degit": "^2.8.3"
+    "@types/degit": "^2.8.3",
+    "@types/fs-extra": "^11.0.1"
   }
 }

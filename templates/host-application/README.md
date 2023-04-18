@@ -1,1 +1,1 @@
-# <%scope%>/<%name%>
+# {{PACKAGE_SCOPE}}{{NAME}}

@@ -1,10 +1,17 @@
-import { Prompt, Color, Option } from "../../src/prompts";
+import {
+  Option,
+  intro,
+  text,
+  confirm,
+  select,
+  multiSelect,
+  outro,
+  note,
+} from "../src/prompts";
 
 import * as prompts from "@clack/prompts";
 
 jest.mock("@clack/prompts");
-
-const BlackColorCode = "\x1b[30m";
 
 describe("Given Prompt.Intro", () => {
   afterEach(() => {
@@ -12,7 +19,7 @@ describe("Given Prompt.Intro", () => {
   });
 
   test("When no message Then do nothing", () => {
-    new Prompt();
+    intro();
 
     expect(prompts.intro).not.toHaveBeenCalled();
   });
@@ -20,26 +27,30 @@ describe("Given Prompt.Intro", () => {
   test("When message Then work", () => {
     const introText = "Intro";
 
-    new Prompt(introText);
+    intro(introText);
 
     expect(prompts.intro).toHaveBeenCalledTimes(1);
     expect(prompts.intro).toHaveBeenCalledWith(
       expect.stringContaining(introText)
     );
   });
+});
 
-  test("When message with color Then work", () => {
-    const introText = "Intro";
+describe("Given Prompt.Note", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
-    new Prompt(introText, Color.black);
+  test("When no message Then work", () => {
+    note();
 
-    expect(prompts.intro).toHaveBeenCalledTimes(1);
-    expect(prompts.intro).toHaveBeenCalledWith(
-      expect.stringContaining(introText)
-    );
-    expect(prompts.intro).toHaveBeenCalledWith(
-      expect.stringContaining(BlackColorCode)
-    );
+    expect(prompts.note).toHaveBeenCalled();
+  });
+
+  test("When message Then work", () => {
+    note("Hello");
+
+    expect(prompts.note).toHaveBeenCalled();
   });
 });
 
@@ -58,9 +69,7 @@ describe("Given Prompt.Text", () => {
       const inputValue = "InputValue";
       buildTextResult(inputValue);
 
-      const prompt = new Prompt();
-
-      const result = await prompt.Text(message, placeholder, defaultValue);
+      const result = await text(message, placeholder, defaultValue);
 
       expect(prompts.text).toHaveBeenCalledTimes(1);
       expect(prompts.text).toHaveBeenCalledWith({
@@ -81,8 +90,7 @@ describe("Given Prompt.Text", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Text(message);
+    await text(message);
 
     expect(prompts.text).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -97,40 +105,13 @@ describe("Given Prompt.Text", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Text(message, undefined, undefined, customCancelMessage);
+    await text(message, undefined, undefined, customCancelMessage);
 
     expect(prompts.text).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledWith(customCancelMessage);
     expect(mockExit).toBeCalledTimes(1);
-  });
-
-  test("When text with color Then work", async () => {
-    const message = "Text Message";
-    const inputValue = "InputValue";
-    buildTextResult(inputValue);
-
-    const prompt = new Prompt();
-    const result = await prompt.Text(
-      message,
-      undefined,
-      undefined,
-      undefined,
-      Color.black
-    );
-
-    expect(prompts.text).toHaveBeenCalledTimes(1);
-    expect(prompts.text).toHaveBeenCalledWith({
-      message: expect.stringContaining(BlackColorCode) as boolean,
-      placeholder: undefined,
-      defaultValue: undefined,
-    });
-    expect(prompts.isCancel).toBeCalledTimes(1);
-    expect(prompts.cancel).toBeCalledTimes(0);
-
-    expect(result).toBe(inputValue);
   });
 
   const buildTextResult = (result: string): void => {
@@ -158,9 +139,7 @@ describe("Given Prompt.Confirm", () => {
       const inputValue = true;
       buildConfirmResult(inputValue);
 
-      const prompt = new Prompt();
-
-      const result = await prompt.Confirm(message, initialValue);
+      const result = await confirm(message, initialValue);
 
       expect(prompts.confirm).toHaveBeenCalledTimes(1);
       expect(prompts.confirm).toHaveBeenCalledWith({
@@ -180,8 +159,7 @@ describe("Given Prompt.Confirm", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Confirm(message);
+    await confirm(message);
 
     expect(prompts.confirm).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -197,38 +175,13 @@ describe("Given Prompt.Confirm", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Confirm(message, undefined, customCancelMessage);
+    await confirm(message, undefined, customCancelMessage);
 
     expect(prompts.confirm).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledWith(customCancelMessage);
     expect(mockExit).toBeCalledTimes(1);
-  });
-
-  test("When confirm with color Then work", async () => {
-    const message = "Confirm Message";
-    const inputValue = true;
-    buildConfirmResult(inputValue);
-
-    const prompt = new Prompt();
-    const result = await prompt.Confirm(
-      message,
-      undefined,
-      undefined,
-      Color.black
-    );
-
-    expect(prompts.confirm).toHaveBeenCalledTimes(1);
-    expect(prompts.confirm).toHaveBeenCalledWith({
-      message: expect.stringContaining(BlackColorCode) as boolean,
-      initialValue: undefined,
-    });
-    expect(prompts.isCancel).toBeCalledTimes(1);
-    expect(prompts.cancel).toBeCalledTimes(0);
-
-    expect(result).toBe(inputValue);
   });
 
   const buildConfirmResult = (result: boolean): void => {
@@ -262,8 +215,7 @@ describe("Given Prompt.Select", () => {
       const inputValue = options[0].value;
       buildSelectResult(inputValue);
 
-      const prompt = new Prompt();
-      const result = await prompt.Select(message, options, initialValue?.value);
+      const result = await select(message, options, initialValue?.value);
 
       expect(prompts.select).toHaveBeenCalledTimes(1);
       expect(prompts.select).toHaveBeenCalledWith({
@@ -284,8 +236,7 @@ describe("Given Prompt.Select", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Select(message, options);
+    await select(message, options);
 
     expect(prompts.select).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -300,41 +251,13 @@ describe("Given Prompt.Select", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.Select(message, options, undefined, customCancelMessage);
+    await select(message, options, undefined, customCancelMessage);
 
     expect(prompts.select).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledWith(customCancelMessage);
     expect(mockExit).toBeCalledTimes(1);
-  });
-
-  test("When select with color Then work", async () => {
-    const message = "Select Message";
-    const inputValue = options[0].value;
-    buildSelectResult(inputValue);
-
-    const prompt = new Prompt();
-
-    const result = await prompt.Select(
-      message,
-      options,
-      undefined,
-      undefined,
-      Color.black
-    );
-
-    expect(prompts.select).toHaveBeenCalledTimes(1);
-    expect(prompts.select).toHaveBeenCalledWith({
-      message: expect.stringContaining(BlackColorCode) as boolean,
-      options,
-      initialValue: undefined,
-    });
-    expect(prompts.isCancel).toBeCalledTimes(1);
-    expect(prompts.cancel).toBeCalledTimes(0);
-
-    expect(result).toBe(inputValue);
   });
 
   const buildSelectResult = (result: string): void => {
@@ -368,11 +291,7 @@ describe("Given Prompt.MultiSelect", () => {
       const inputValues = [options[0].value, options[2].value];
       buildMultiSelectResult(inputValues);
 
-      const prompt = new Prompt();
-
-      const result = await prompt.MultiSelect(message, options, [
-        initialValue?.value,
-      ]);
+      const result = await multiSelect(message, options, [initialValue?.value]);
 
       expect(prompts.multiselect).toHaveBeenCalledTimes(1);
       expect(prompts.multiselect).toHaveBeenCalledWith({
@@ -393,8 +312,7 @@ describe("Given Prompt.MultiSelect", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.MultiSelect(message, options);
+    await multiSelect(message, options);
 
     expect(prompts.multiselect).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -409,8 +327,7 @@ describe("Given Prompt.MultiSelect", () => {
 
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
 
-    const prompt = new Prompt();
-    await prompt.MultiSelect(message, options, undefined, customCancelMessage);
+    await multiSelect(message, options, undefined, customCancelMessage);
 
     expect(prompts.multiselect).toBeCalledTimes(1);
     expect(prompts.isCancel).toBeCalledTimes(1);
@@ -424,9 +341,7 @@ describe("Given Prompt.MultiSelect", () => {
     const inputValues = [options[0].value, options[2].value];
     buildMultiSelectResult(inputValues);
 
-    const prompt = new Prompt();
-
-    const result = await prompt.MultiSelect(
+    const result = await multiSelect(
       message,
       options,
       undefined,
@@ -440,35 +355,6 @@ describe("Given Prompt.MultiSelect", () => {
       options,
       initialValues: undefined,
       required: true,
-    });
-    expect(prompts.isCancel).toBeCalledTimes(1);
-    expect(prompts.cancel).toBeCalledTimes(0);
-
-    expect(result).toBe(inputValues);
-  });
-
-  test("When multiselect with color Then work", async () => {
-    const message = "Select Message";
-    const inputValues = [options[0].value, options[2].value];
-    buildMultiSelectResult(inputValues);
-
-    const prompt = new Prompt();
-
-    const result = await prompt.MultiSelect(
-      message,
-      options,
-      undefined,
-      undefined,
-      undefined,
-      Color.black
-    );
-
-    expect(prompts.multiselect).toHaveBeenCalledTimes(1);
-    expect(prompts.multiselect).toHaveBeenCalledWith({
-      message: expect.stringContaining(BlackColorCode) as boolean,
-      options,
-      initialValue: undefined,
-      required: undefined,
     });
     expect(prompts.isCancel).toBeCalledTimes(1);
     expect(prompts.cancel).toBeCalledTimes(0);
@@ -493,9 +379,7 @@ describe("Given Prompt.Outro", () => {
   });
 
   test("When no message Then is not called", () => {
-    const prompt = new Prompt();
-
-    prompt.Outro();
+    outro();
 
     expect(prompts.outro).not.toHaveBeenCalled();
   });
@@ -503,29 +387,11 @@ describe("Given Prompt.Outro", () => {
   test("When message Then work", () => {
     const outroText = "Outro";
 
-    const prompt = new Prompt();
-
-    prompt.Outro(outroText);
+    outro(outroText);
 
     expect(prompts.outro).toHaveBeenCalledTimes(1);
     expect(prompts.outro).toHaveBeenCalledWith(
       expect.stringContaining(outroText)
-    );
-  });
-
-  test("When message with color Then work", () => {
-    const outroText = "Outro";
-
-    const prompt = new Prompt();
-
-    prompt.Outro(outroText, Color.black);
-
-    expect(prompts.outro).toHaveBeenCalledTimes(1);
-    expect(prompts.outro).toHaveBeenCalledWith(
-      expect.stringContaining(outroText)
-    );
-    expect(prompts.outro).toHaveBeenCalledWith(
-      expect.stringContaining(BlackColorCode)
     );
   });
 });

@@ -2,9 +2,7 @@
   "name": "create-workleap",
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
-  "bin": "./dist/bin/bin.js",
-  "main": "./dist/create-workleap.js",
-  "types": "./dist/create-workleap.d.ts",
+  "bin": "./dist/src/bin.js",
   "scripts": {
     "build": "tsc",
     "clean": "pnpm dlx rimraf dist coverage",
@@ -14,7 +12,6 @@
   "dependencies": {
     "@clack/core": "^0.3.2",
     "@clack/prompts": "^0.6.3",
-    "@workleap/foundry": "workspace:*",
     "picocolors": "^1.0.0"
   }
 }

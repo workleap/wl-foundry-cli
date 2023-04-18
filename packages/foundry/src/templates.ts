@@ -1,18 +1,34 @@
-import {Options} from "./generator";
+import path from "path";
+import { OptionValues } from "@commander-js/extra-typings";
+
+import { addToReplace } from "./generator";
+
+const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
+
+export interface Options extends OptionValues {
+  outDir: string;
+}
 
 export interface TemplateInterface {
   description: string;
   repositoryUrl: string;
   options: {
     flag: string;
-    question: string;
     description?: string;
     defaultValue?: string | boolean | [] | string[] | undefined;
   }[];
-  action?: (options: Options) => Promise<Options>;
+  action?: (options: Options) => Options;
 }
 
-const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
+const getName = (outputDirectory: string): string => {
+  return path.basename(outputDirectory);
+};
+
+const getScope = (options: Options, flagName: string): string => {
+  const scope = options[flagName];
+
+  return scope ? `${scope.toString()}/` : "";
+};
 
 export const Templates: { [key: string]: TemplateInterface } = {
   "host-application": {
@@ -21,25 +37,16 @@ export const Templates: { [key: string]: TemplateInterface } = {
     options: [
       {
         flag: "--package-scope <string>",
-        question: "What should be the host-application scope?",
         description: "package scope",
       },
     ],
-    action: async (options) => {
-      const scope = options.templateSpecificOptions["packageScope"]
-        ? `${options.templateSpecificOptions["packageScope"]?.toString()}/`
-        : "";
+    action: (options) => {
+      const scope = getScope(options, "packageScope");
+      const name = getName(options.outDir);
 
-      options.toReplace.push({
-        src: "package.json", patterns: [{from: /<%scope%>\//, to: scope,},],
-      });
-
-      options.toReplace.push({
-        src: "README.md", patterns: [{from: /<%scope%>\//, to: scope,},],
-      });
-
-      // Fake the async
-      await Promise.resolve();
+      addToReplace("**/package.json", { PACKAGE_SCOPE: scope, NAME: name });
+      addToReplace("**/@apps/host", { PACKAGE_SCOPE: scope, NAME: name });
+      addToReplace("README.md", { PACKAGE_SCOPE: scope, NAME: name });
 
       return options;
     },
@@ -50,25 +57,14 @@ export const Templates: { [key: string]: TemplateInterface } = {
     options: [
       {
         flag: "--host-scope <string>",
-        question: "What should be the remote-module scope?",
         description: "host scope",
       },
     ],
-    action: async (options) => {
-      const scope = options.templateSpecificOptions["hostScope"]
-        ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
-        : "";
+    action: (options) => {
+      const scope = getScope(options, "hostScope");
+      const name = getName(options.outDir);
 
-      options.toReplace.push({
-        src: "package.json", patterns: [{from: /<%scope%>/, to: scope,},],
-      });
-
-      options.toReplace.push({
-        src: "README.md", patterns: [{from: /<%scope%>/, to: scope,},],
-      });
-
-      // Fake the async
-      await Promise.resolve();
+      addToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },
@@ -79,25 +75,14 @@ export const Templates: { [key: string]: TemplateInterface } = {
     options: [
       {
         flag: "--host-scope <string>",
-        question: "What should be the static-module scope?",
         description: "host scope",
       },
     ],
-    action: async (options) => {
-      const scope = options.templateSpecificOptions["hostScope"]
-        ? `${options.templateSpecificOptions["hostScope"]?.toString()}/`
-        : "";
+    action: (options) => {
+      const scope = getScope(options, "hostScope");
+      const name = getName(options.outDir);
 
-      options.toReplace.push({
-        src: "package.json", patterns: [{from: /<%scope%>/, to: scope},],
-      });
-
-      options.toReplace.push({
-        src: "README.md", patterns: [{from: /<%scope%>/, to: scope},],
-      });
-
-      // Fake the async
-      await Promise.resolve();
+      addToReplace("**", { HOST_SCOPE: scope, NAME: name });
 
       return options;
     },
