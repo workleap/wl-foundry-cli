@@ -52,9 +52,7 @@ describe("Given Generator.AddToReplace", () => {
             bar: "bar"
         };
 
-        addToReplace("hello.world", replacePattern);
-
-        expect(addToReplace).not.toThrow();
+        expect(() => addToReplace("hello.world", replacePattern)).not.toThrow();
     });
 
     test("When file name is smaller then MIN_FILE_NAME_SIZE Then throw", () => {
