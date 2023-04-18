@@ -11,9 +11,15 @@ const DefaultOutputDirectory = "./my-new-project";
 const NameParameterPosition = 2; // TODO validate position of parameter once ask with `pnpm create`
 const DefaultCancelMessage = "Operation cancelled.";
 
+interface Option<Value> {
+    value: Value;
+    label?: string;
+    hint?: string;
+}
+
 const outputDirectoryFromArgument: string = process.argv[NameParameterPosition];
 
-const templates = [
+const templates: Option<TemplatesIds>[] = [
     { value: "host-application", label: "host-application" },
     { value: "remote-module", label: "remote-module" },
     { value: "static-module", label: "static-module" }
@@ -41,28 +47,19 @@ async function main() {
         process.exit(0);
     }
 
-    // Ask for template
-    const templateId = await p.select({
-        message: "Select the template to create",
-        options: templates
-    });
-
-    if (p.isCancel(templateId)) {
-        p.cancel(DefaultCancelMessage);
-        process.exit(0);
-    }
-
     // Ask for other arguments
     const args = await p.group(
         {
+            templateId: () => p.select<Option<TemplatesIds>[], TemplatesIds>({
+                message: "Select the template to create",
+                options: templates
+            }),
             scope: () => p.text({
-                message: `What should be the ${templateId} scope?`,
+                message: "What should be the scope?",
                 placeholder: "Press enter if no scope is needed."
             })
         },
         {
-            // On Cancel callback that wraps the group
-            // So if the user cancels one of the prompts in the group this function will be called
             onCancel: () => {
                 p.cancel(DefaultCancelMessage);
                 process.exit(0);
@@ -74,7 +71,7 @@ async function main() {
     const loader = p.spinner();
     loader.start("Generating...");
 
-    await generateProject(templateId as TemplatesIds, outputDir, args);
+    await generateProject(outputDir, args);
 
     loader.stop("Generated!");
 

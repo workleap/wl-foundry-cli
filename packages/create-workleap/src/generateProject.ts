@@ -6,18 +6,19 @@ const FoundryCmd = "foundry";
 export type TemplatesIds = "host-application" | "remote-module" | "static-module";
 
 interface Arguments {
+    templateId: TemplatesIds;
     scope?: string;
 }
 
-export const generateProject = async (templateId: TemplatesIds, outputDir: string, args: Arguments): Promise<number> => {
-    const options: string[] = [templateId];
+export const generateProject = async (outputDir: string, args: Arguments): Promise<number> => {
+    const options: string[] = [args.templateId];
 
     if (outputDir) {
         options.push("-o", outputDir);
     }
 
     if (args.scope) {
-        if (templateId === "host-application") {
+        if (args.templateId === "host-application") {
             options.push("--package-scope", args.scope);
         } else {
             options.push("--host-scope", args.scope);
