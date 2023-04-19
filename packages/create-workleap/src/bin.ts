@@ -23,8 +23,7 @@ p.intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 if (!outputDir) {
     const dir = await p.text({
         message: "Where should we create the project?",
-        placeholder: "./my-new-project",
-        initialValue: "./my-new-project"
+        placeholder: "."
     });
 
     if (p.isCancel(dir)) {
@@ -32,7 +31,7 @@ if (!outputDir) {
         process.exit(1);
     }
 
-    outputDir = dir as string;
+    outputDir = dir ?? ".";
 }
 
 // Check if the directory is empty
