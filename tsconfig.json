@@ -2,6 +2,7 @@
   "compileOnSave": true,
   "extends": "@workleap/typescript-configs/library/build.json",
   "compilerOptions": {
+    "verbatimModuleSyntax": false
   },
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,6 @@
 import * as fse from "fs-extra";
 
-import { cloneProjectTemplate } from "../src/cloneProjectTemplate.js";
+import { cloneProjectTemplate } from "../src/cloneProjectTemplate";
 
 jest.mock("fs-extra");
 
@@ -22,6 +22,6 @@ describe("loadTemplate", () => {
         await cloneProjectTemplate(outputDirectory, repositoryUrl);
 
         expect(fse.ensureDir).toHaveBeenCalledWith(outputDirectory);
-        expect(cloneMock).toHaveBeenCalledWith(repositoryUrl);
+        expect(cloneMock).toHaveBeenCalledWith(outputDirectory);
     });
 });
