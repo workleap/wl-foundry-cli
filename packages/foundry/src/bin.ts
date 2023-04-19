@@ -1,22 +1,42 @@
-import * as process from "process";
+#!/usr/bin/env node
+import process from "node:process";
+import path from "node:path";
+import { Command } from "commander";
+import { type OptionValues } from "@commander-js/extra-typings";
 
-import { Configuration, runCli } from "./cli";
-import { loadTemplate } from "./loadTemplate";
-import { generator } from "./generator";
+import { Templates, create } from "./create.js";
 
-const main = async (): Promise<void> => {
-    const config: Configuration = runCli();
+import packageJson from "../package.json" assert { type: "json" };
 
-    await loadTemplate(config);
+const program = new Command();
 
-    await generator(config.outputDirectory);
-};
+program.name(packageJson.name).description(packageJson.description).version(packageJson.version);
 
-main()
-    .then(() => {
-        process.exit(0);
-    })
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
+for (const [ templateId, template ] of Templates) {
+    const command = program.command(templateId);
+
+    if (template.description) {
+        command.description(template.description);
+    }
+
+    // Add default option
+    command.option(
+        "-o, --out-dir <string>",
+        "where to create the template",
+        process.cwd()
+    );
+
+    if (template.options && template.options.length > 0) {
+        for (const option of template.options) {
+            command.option(option.flag, option.description, option.defaultValue);
+        }
+    }
+
+    command.action(async (options: OptionValues) => {
+        const outDir = options["outDir"]?.toString() ?? process.cwd();
+
+        await create(template, path.resolve(outDir), options);
     });
+}
+
+await program.parseAsync(process.argv);
