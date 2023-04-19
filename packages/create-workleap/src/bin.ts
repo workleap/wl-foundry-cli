@@ -1,55 +1,63 @@
 #!/usr/bin/env node
 import process from "node:process";
 import * as p from "@clack/prompts";
-import color from "picocolors";
+import fs from "node:fs";
+import path from "node:path";
+import colors from "picocolors";
+import { AvailableTemplates, generateProject, type TemplateId } from "./generateProject.js";
+import packageJson from "../package.json" assert { type: "json" };
 
-import { name as projectName } from "../package.json";
-
-import { AvailableTemplates, type TemplatesIds, generateProject } from "./generateProject.js";
-
-const DefaultOutputDirectory = "./my-new-project";
-const NameParameterPosition = 2; // TODO validate position of parameter once ask with `pnpm create`
-const DefaultCancelMessage = "Operation cancelled.";
-
+// This type is required until this PR has been merged in the @clack/prompts package:
+// https://github.com/natemoo-re/clack/pull/102
 interface Option<Value> {
     value: Value;
     label?: string;
     hint?: string;
 }
 
-const outputDirectoryFromArgument: string = process.argv[NameParameterPosition];
+let outputDir = process.argv[2];
 
-const templates: Option<TemplatesIds>[] = AvailableTemplates.map(x => {
-    return { value: x, label: x };
-});
-
-p.intro(projectName);
-
-if (outputDirectoryFromArgument) {
-    p.note(`${outputDirectoryFromArgument} project setup`);
-}
+p.intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 
 // Ask for output directory
-const outputDir = (
-    outputDirectoryFromArgument ??
-        (await p.text({
-            message: "Where should we create the project?",
-            placeholder: DefaultOutputDirectory,
-            initialValue: DefaultOutputDirectory
-        }))
-);
+if (!outputDir) {
+    const dir = await p.text({
+        message: "Where should we create the project?",
+        placeholder: "./my-new-project",
+        initialValue: "./my-new-project"
+    });
 
-if (p.isCancel(outputDir)) {
-    p.cancel(DefaultCancelMessage);
-    process.exit(0);
+    if (p.isCancel(dir)) {
+        p.cancel("Operation cancelled.");
+        process.exit(1);
+    }
+
+    outputDir = dir as string;
+}
+
+// Check if the directory is empty
+if (fs.existsSync(outputDir)) {
+    if (fs.readdirSync(outputDir).length > 0) {
+        const force = await p.confirm({
+            message: "Directory not empty. Continue?",
+            initialValue: false
+        });
+
+        // bail if `force` is `false` or the user cancelled with Ctrl-C
+        if (force !== true) {
+            process.exit(1);
+        }
+    }
 }
 
 // Ask for other arguments
-const args = await p.group(
+const { templateId, scope } = await p.group(
     {
-        templateId: () => p.select<Option<TemplatesIds>[], TemplatesIds>({
+        templateId: () => p.select<Option<TemplateId>[], TemplateId>({
             message: "Select the template to create",
-            options: templates
+            options: AvailableTemplates.map(x => {
+                return { value: x, label: x };
+            })
         }),
         scope: () => p.text({
             message: "What should be the scope?",
@@ -58,18 +66,27 @@ const args = await p.group(
     },
     {
         onCancel: () => {
-            p.cancel(DefaultCancelMessage);
-            process.exit(0);
+            p.cancel("Operation cancelled.");
+            process.exit(1);
         }
     }
 );
 
 // Call generateProject
 const loader = p.spinner();
-loader.start("Generating...");
+loader.start("Generating your project...");
 
-await generateProject(outputDir, args);
+await generateProject(templateId, outputDir, scope);
 
-loader.stop("Generated!");
+loader.stop();
+p.outro(colors.green("Your project is ready!"));
 
-p.outro(color.green("Done!"));
+console.log("Next steps:");
+let i = 1;
+
+const relative = path.relative(process.cwd(), outputDir);
+if (relative !== "") {
+    console.log(`  ${i++}: ${colors.bold(colors.cyan(`cd ${relative}`))}`);
+}
+
+console.log(`  ${i++}: ${colors.bold(colors.cyan("pnpm install \n"))}`);

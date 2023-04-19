@@ -1,47 +1,39 @@
 import child_process from "node:child_process";
 import process from "node:process";
 
-const FoundryCmd = "foundry";
-
 export const AvailableTemplates = ["host-application", "remote-module", "static-module"] as const;
+export type TemplateId = typeof AvailableTemplates[number];
 
-export type TemplatesIds = typeof AvailableTemplates[number];
-
-interface Arguments {
-    templateId: TemplatesIds;
-    scope?: string;
-}
-
-export const generateProject = async (outputDir: string, args: Arguments): Promise<number> => {
-    const options: string[] = [args.templateId];
+export async function generateProject(templateId: TemplateId, outputDir: string, scope?: string) {
+    const options: string[] = [templateId];
 
     if (outputDir) {
         options.push("-o", outputDir);
     }
 
-    if (args.scope) {
-        if (args.templateId === "host-application") {
-            options.push("--package-scope", args.scope);
+    if (scope) {
+        if (templateId === "host-application") {
+            options.push("--package-scope", scope);
         } else {
-            options.push("--host-scope", args.scope);
+            options.push("--host-scope", scope);
         }
     }
 
-    const childProcess = child_process.spawn(FoundryCmd, options, {
+    const childProcess = child_process.spawn("foundry", options, {
         cwd: process.cwd(),
         shell: true
     });
 
     return new Promise(resolve => {
-        childProcess.stdout.on("data", (x: string): void => {
+        childProcess.stdout.on("data", x => {
             process.stdout.write(x.toString());
         });
-        childProcess.stderr.on("data", (x: string): void => {
+        childProcess.stderr.on("data", x => {
             process.stderr.write(x.toString());
             process.exit(1);
         });
-        childProcess.on("exit", (code?: number): void => {
+        childProcess.on("exit", code => {
             resolve(code ?? 0);
         });
     });
-};
+}
