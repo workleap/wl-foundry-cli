@@ -1,7 +1,8 @@
 import path from "node:path";
+import { type OptionValues } from "@commander-js/extra-typings";
+
 import { cloneProjectTemplate } from "./cloneProjectTemplate.js";
 import { replaceTokens } from "./replaceTokens.js";
-import { type OptionValues } from "@commander-js/extra-typings";
 
 const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
 

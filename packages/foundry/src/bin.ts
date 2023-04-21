@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import process from "node:process";
 import path from "node:path";
+import process from "node:process";
 import { Command } from "commander";
 import { type OptionValues } from "@commander-js/extra-typings";
 
