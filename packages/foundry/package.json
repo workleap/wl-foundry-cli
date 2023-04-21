@@ -12,15 +12,13 @@
     "access": "public",
     "provenance": true
   },
-  "bin": {
-    "foundry": "./dist/src/bin.js"
-  },
+  "bin": "./dist/src/bin.js",
   "scripts": {
+    "dev": "pnpm run build && pnpm link --global",
     "build": "tsc",
     "clean": "pnpm dlx rimraf dist coverage",
     "lint:types": "tsc --noEmit",
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "commander": "^10.0.0",

@@ -1,7 +1,0 @@
-{
-  "compileOnSave": true,
-  "extends": "@workleap/typescript-configs/library/build.json",
-  "compilerOptions": {
-  },
-  "exclude": ["node_modules"]
-}

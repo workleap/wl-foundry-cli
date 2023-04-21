@@ -4,16 +4,9 @@ import * as p from "@clack/prompts";
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { AvailableTemplates, generateProject, type TemplateId } from "./generateProject.js";
+import { generateProject } from "./generateProject.js";
 import packageJson from "../package.json" assert { type: "json" };
-
-// This type is required until this PR has been merged in the @clack/prompts package:
-// https://github.com/natemoo-re/clack/pull/102
-interface Option<Value> {
-    value: Value;
-    label?: string;
-    hint?: string;
-}
+import { type TemplateId } from "./templates.js";
 
 let outputDir = process.argv[2];
 
@@ -22,14 +15,11 @@ p.intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 // Ask for output directory
 if (!outputDir) {
     const dir = await p.text({
-        message: "Where should we create the project?",
-        placeholder: "."
+        message: "Where should we create your project?",
+        placeholder: "  (hit Enter to use current directory)"
     });
 
-    if (p.isCancel(dir)) {
-        p.cancel("Operation cancelled.");
-        process.exit(1);
-    }
+    if (p.isCancel(dir)) { process.exit(1); }
 
     outputDir = dir ?? ".";
 }
@@ -49,35 +39,61 @@ if (fs.existsSync(outputDir)) {
     }
 }
 
-// Ask for other arguments
-const { templateId, scope } = await p.group(
-    {
-        templateId: () => p.select<Option<TemplateId>[], TemplateId>({
-            message: "Select the template to create",
-            options: AvailableTemplates.map(x => {
-                return { value: x, label: x };
-            })
-        }),
-        scope: () => p.text({
-            message: "What should be the scope?",
-            placeholder: "Press enter if no scope is needed."
-        })
-    },
-    {
-        onCancel: () => {
-            p.cancel("Operation cancelled.");
-            process.exit(1);
+const templateId = await p.select({
+    message: "What would you like to generate?",
+    initialValue: "host-application" as TemplateId,
+    options: [
+        {
+            value: "host-application",
+            label: "Host application"
+        },
+        {
+            value: "remote-module",
+            label: "Remote module"
+        },
+        {
+            value: "static-module",
+            label: "Static module"
         }
-    }
-);
+    ]
+});
+
+if (p.isCancel(templateId)) { process.exit(1); }
+
+// Ask for other arguments
+let packageScope: string | undefined;
+let hostScope: string | undefined;
+
+if (templateId === "host-application") {
+    packageScope = await p.text({
+        message: "What should be the package scope?",
+        placeholder: "  (hit Enter if no scope is needed)"
+    }) as string;
+
+    if (p.isCancel(packageScope)) { process.exit(1); }
+} else {
+    hostScope = await p.text({
+        message: "What is the host application scope?",
+        placeholder: "  (hit Enter if no scope is needed)"
+
+    }) as string;
+
+    if (p.isCancel(hostScope)) { process.exit(1); }
+}
 
 // Call generateProject
 const loader = p.spinner();
 loader.start("Generating your project...");
 
-await generateProject(templateId, outputDir, scope);
+await generateProject({
+    templateId,
+    outputDir,
+    packageScope,
+    hostScope
+});
 
 loader.stop();
+
 p.outro(colors.green("Your project is ready!"));
 
 console.log("Next steps:");
