@@ -2,6 +2,16 @@
   "name": "create-workleap",
   "version": "0.0.0",
   "description": "Foundry-CLI Workleap project starter kit",
+  "license": "Apache-2.0",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/workleap/wl-foundry-cli.git",
+      "directory": "packages/create-workleap"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "bin": "./dist/bin.js",
   "scripts": {

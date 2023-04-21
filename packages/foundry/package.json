@@ -2,6 +2,16 @@
   "name": "@workleap/foundry",
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
+  "license": "Apache-2.0",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/workleap/wl-foundry-cli.git",
+      "directory": "packages/foundry"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "bin": {
     "foundry": "./dist/src/bin.js"
   },
