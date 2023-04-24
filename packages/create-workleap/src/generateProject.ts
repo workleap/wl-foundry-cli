@@ -31,7 +31,7 @@ export async function generateProject({ templateId, outputDirectory, packageScop
             break;
     }
 
-    const childProcess = child_process.exec(`npx foundry ${commandName} ${args.join(" ")}`);
+    const childProcess = child_process.exec(`npx @workleap/foundry ${commandName} ${args.join(" ")}`);
 
     return new Promise(resolve => {
         childProcess.on("exit", code => {
