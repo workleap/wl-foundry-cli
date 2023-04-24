@@ -4,7 +4,7 @@ import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/pr
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { generateProject } from "./generateProject.js";
+import { UserInputs, generateProject } from "./generateProject.js";
 import packageJson from "../package.json" assert { type: "json" };
 import type { TemplateId } from "./templates.js";
 
@@ -60,12 +60,14 @@ const templateId = await select({
 
 if (isCancel(templateId)) { process.exit(1); }
 
-// Ask for other arguments
-let packageScope: string | undefined;
-let hostScope: string | undefined;
+const userInputs: UserInputs = {
+    outputDirectory,
+    templateId
+};
 
+// Ask for other arguments
 if (templateId === "host-application") {
-    packageScope = await text({
+    const packageScope = await text({
         message: "What should be the package scope?",
         placeholder: "ex: @my-app",
         validate: value => {
@@ -73,11 +75,13 @@ if (templateId === "host-application") {
                 return "You must enter a scope";
             }
         }
-    }) as string;
+    });
 
     if (isCancel(packageScope)) { process.exit(1); }
+
+    userInputs.packageScope = packageScope;
 } else {
-    hostScope = await text({
+    const hostScope = await text({
         message: "What is the host application scope?",
         placeholder: "ex: @my-app",
         validate: value => {
@@ -86,21 +90,18 @@ if (templateId === "host-application") {
             }
         }
 
-    }) as string;
+    });
 
     if (isCancel(hostScope)) { process.exit(1); }
+
+    userInputs.hostScope = hostScope;
 }
 
 // Call generateProject
 const loader = spinner();
 loader.start("Generating your project...");
 
-await generateProject({
-    templateId,
-    outputDirectory,
-    packageScope,
-    hostScope
-});
+await generateProject(userInputs);
 
 loader.stop(colors.green("Your project is ready!"));
 

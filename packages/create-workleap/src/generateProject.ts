@@ -1,7 +1,7 @@
 import child_process from "node:child_process";
 import type { TemplateId } from "./templates.js";
 
-interface UserInputs {
+export interface UserInputs {
     templateId: TemplateId;
     outputDirectory: string;
     packageScope?: string;
