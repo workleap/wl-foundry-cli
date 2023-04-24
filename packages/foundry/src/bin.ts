@@ -15,7 +15,7 @@ program
     .version(packageJson.version);
 
 program.command("generate-host-application")
-    .description("\"use the host-application template\"")
+    .description("use the host-application template")
     .option(
         "-o, --out-dir <string>",
         "where to create the template",

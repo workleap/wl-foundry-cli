@@ -8,7 +8,7 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
         return;
     }
 
-    const filesToReplace = await glob(globPatterns, { ignore: "node_modules/**", cwd: outputDirectory, nodir: true });
+    const filesToReplace = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
 
     for (const fileToReplace of filesToReplace) {
         const fileToReplacePath = join(outputDirectory, fileToReplace);

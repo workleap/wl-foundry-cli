@@ -16,19 +16,19 @@ const getName = (outputDirectory: string) => {
     return basename(outputDirectory);
 };
 
-const getScope = (options: Record<string, string>, flagName: string) => {
-    let scope = options[flagName] as string;
+const getScope = (scope: string) => {
+    let formattedScope = scope;
 
     if (scope) {
-        if (scope[0] !== "@") {
-            scope = `@${scope}`;
+        if (formattedScope[0] !== "@") {
+            formattedScope = `@${formattedScope}`;
         }
 
-        if (scope.slice(-1) !== "/") {
-            scope = `${scope}/`;
+        if (formattedScope.slice(-1) !== "/") {
+            formattedScope = `${formattedScope}/`;
         }
 
-        return scope;
+        return formattedScope;
     } else {
         return "";
     }
@@ -38,8 +38,8 @@ const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["host-application", {
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options, "packageScope");
-            const name = getName(options["outDir"] as string);
+            const scope = getScope(options["packageScope"]);
+            const name = getName(options["outDir"]);
 
             await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
                 PACKAGE_SCOPE: scope,
@@ -50,8 +50,8 @@ const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["remote-module", {
         repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options, "hostScope");
-            const name = getName(options["outDir"] as string);
+            const scope = getScope(options["hostScope"]);
+            const name = getName(options["outDir"]);
 
             await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
@@ -59,8 +59,8 @@ const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["static-module", {
         repositoryUrl: `${BaseRepositoryAddress}/static-module`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options, "hostScope");
-            const name = getName(options["outDir"] as string);
+            const scope = getScope(options["hostScope"]);
+            const name = getName(options["outDir"]);
 
             await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
