@@ -29,7 +29,7 @@ for (const [ templateId, template ] of Templates) {
     if (template.options && template.options.length > 0) {
         for (const option of template.options) {
             if (option.required) {
-                command.requiredOption(option.flag, option.description, option.defaultValue);
+                command.requiredOption(option.flag, `${option.description} (required)`, option.defaultValue);
             } else {
                 command.option(option.flag, option.description, option.defaultValue);
             }

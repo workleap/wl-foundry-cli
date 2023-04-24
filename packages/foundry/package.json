@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "description": "Foundry-CLI generator module",
   "type": "module",
-  "bin": {
-    "foundry": "./dist/bin.js"
-  },
+  "bin": "./dist/bin.js",
   "scripts": {
     "build": "tsup",
     "build:dev": "tsup --sourcemap",
