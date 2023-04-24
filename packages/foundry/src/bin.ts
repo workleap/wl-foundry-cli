@@ -2,7 +2,6 @@
 import { resolve } from "node:path";
 import { cwd, argv } from "node:process";
 import { Command } from "commander";
-import { type OptionValues } from "@commander-js/extra-typings";
 
 import { create } from "./create.js";
 
@@ -26,7 +25,7 @@ program.command("generate-host-application")
         "--package-scope <string>",
         "package scope (required)"
     )
-    .action(async (options: OptionValues) => {
+    .action(async options => {
         const outDir = options["outDir"]?.toString() ?? cwd();
 
         await create("host-application", resolve(outDir), options);
@@ -67,4 +66,4 @@ program.command("generate-static-module")
         await create("static-module", resolve(outDir), options);
     });
 
-await program.parseAsync(argv);
+program.parse(argv);

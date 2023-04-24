@@ -3,15 +3,15 @@ import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
 import { compile } from "handlebars";
 
-export async function replaceTokens(files: string[], values: Record<string, unknown>, outputDir: string) {
-    if (!files || files.length === 0 || !values || Object.keys(values).length === 0) {
+export async function replaceTokens(globPatterns: string[], values: Record<string, unknown>, outputDirectory: string) {
+    if (!globPatterns || globPatterns.length === 0 || !values || Object.keys(values).length === 0) {
         return;
     }
 
-    const filesToReplace = await glob(files, { ignore: "node_modules/**", cwd: outputDir, nodir: true });
+    const filesToReplace = await glob(globPatterns, { ignore: "node_modules/**", cwd: outputDirectory, nodir: true });
 
     for (const fileToReplace of filesToReplace) {
-        const fileToReplacePath = join(outputDir, fileToReplace);
+        const fileToReplacePath = join(outputDirectory, fileToReplace);
 
         const content = await readFile(fileToReplacePath);
 

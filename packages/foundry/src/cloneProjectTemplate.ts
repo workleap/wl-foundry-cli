@@ -1,9 +1,9 @@
 import degit from "degit";
 import { ensureDir } from "fs-extra";
 
-export async function cloneProjectTemplate (outputDir: string, repositoryUrl: string) {
-    await ensureDir(outputDir);
+export async function cloneProjectTemplate (outputDirectory: string, repositoryUrl: string) {
+    await ensureDir(outputDirectory);
 
     const runner = degit(repositoryUrl);
-    await runner.clone(outputDir);
+    await runner.clone(outputDirectory);
 }

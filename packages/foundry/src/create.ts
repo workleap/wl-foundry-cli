@@ -1,5 +1,4 @@
 import { basename } from "node:path";
-import { type OptionValues } from "@commander-js/extra-typings";
 
 import { cloneProjectTemplate } from "./cloneProjectTemplate.js";
 import { replaceTokens } from "./replaceTokens.js";
@@ -10,14 +9,14 @@ type TemplateId = "host-application" | "remote-module" | "static-module";
 
 interface TemplateDetails {
     repositoryUrl: string;
-    action: (outputDir: string, options: OptionValues) => void;
+    action: (outputDirectory: string, options: Record<string, string>) => Promise<void>;
 }
 
 const getName = (outputDirectory: string) => {
     return basename(outputDirectory);
 };
 
-const getScope = (options: OptionValues, flagName: string) => {
+const getScope = (options: Record<string, string>, flagName: string) => {
     let scope = options[flagName] as string;
 
     if (scope) {
@@ -38,44 +37,44 @@ const getScope = (options: OptionValues, flagName: string) => {
 const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["host-application", {
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,
-        action: async (outputDir, options) => {
+        action: async (outputDirectory, options) => {
             const scope = getScope(options, "packageScope");
             const name = getName(options["outDir"] as string);
 
             await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
                 PACKAGE_SCOPE: scope,
                 NAME: name
-            }, outputDir);
+            }, outputDirectory);
         }
     }],
     ["remote-module", {
         repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
-        action: async (outputDir, options) => {
+        action: async (outputDirectory, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);
 
-            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDir);
+            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
     }],
     ["static-module", {
         repositoryUrl: `${BaseRepositoryAddress}/static-module`,
-        action: async (outputDir, options) => {
+        action: async (outputDirectory, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);
 
-            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDir);
+            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
     }]
 ]);
 
-export async function create(templateId: TemplateId, outputDir: string, args: OptionValues) {
+export async function create(templateId: TemplateId, outputDirectory: string, args: Record<string, string>) {
     const template = Templates.get(templateId);
 
     if (template == null) {
         return;
     }
 
-    await cloneProjectTemplate(outputDir, template.repositoryUrl);
+    await cloneProjectTemplate(outputDirectory, template.repositoryUrl);
 
-    await template.action(outputDir, args);
+    await template.action(outputDirectory, args);
 }
