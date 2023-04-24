@@ -1,34 +1,34 @@
 #!/usr/bin/env node
 import process from "node:process";
-import * as p from "@clack/prompts";
+import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/prompts";
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
 import { generateProject } from "./generateProject.js";
 import packageJson from "../package.json" assert { type: "json" };
-import { type TemplateId } from "./templates.js";
+import type { TemplateId } from "./templates.js";
 
-let outputDir = process.argv[2];
+let outputDirectory = process.argv[2];
 
-p.intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
+intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 
 // Ask for output directory
-if (!outputDir) {
-    const dir = await p.text({
+if (!outputDirectory) {
+    const directory = await text({
         message: "Where should we create your project?",
         placeholder: "  (hit Enter to use current directory)"
     });
 
-    if (p.isCancel(dir)) { process.exit(1); }
+    if (isCancel(directory)) { process.exit(1); }
 
-    outputDir = dir ?? ".";
+    outputDirectory = directory ?? ".";
 }
 
 // Check if the directory is empty
-if (fs.existsSync(outputDir)) {
-    if (fs.readdirSync(outputDir).length > 0) {
-        const force = await p.confirm({
-            message: "Directory not empty. Continue?",
+if (fs.existsSync(outputDirectory)) {
+    if (fs.readdirSync(outputDirectory).length > 0) {
+        const force = await confirm({
+            message: "The directory is not empty. Do you wish to continue?",
             initialValue: false
         });
 
@@ -39,7 +39,7 @@ if (fs.existsSync(outputDir)) {
     }
 }
 
-const templateId = await p.select({
+const templateId = await select({
     message: "What would you like to generate?",
     initialValue: "host-application" as TemplateId,
     options: [
@@ -58,50 +58,63 @@ const templateId = await p.select({
     ]
 });
 
-if (p.isCancel(templateId)) { process.exit(1); }
+if (isCancel(templateId)) { process.exit(1); }
 
 // Ask for other arguments
 let packageScope: string | undefined;
 let hostScope: string | undefined;
 
 if (templateId === "host-application") {
-    packageScope = await p.text({
+    packageScope = await text({
         message: "What should be the package scope?",
-        placeholder: "  (hit Enter if no scope is needed)"
+        placeholder: "ex: @my-app",
+        validate: value => {
+            if (value === "" || value === undefined) {
+                return "You must enter a scope";
+            }
+        }
     }) as string;
 
-    if (p.isCancel(packageScope)) { process.exit(1); }
+    if (isCancel(packageScope)) { process.exit(1); }
 } else {
-    hostScope = await p.text({
+    hostScope = await text({
         message: "What is the host application scope?",
-        placeholder: "  (hit Enter if no scope is needed)"
+        placeholder: "ex: @my-app",
+        validate: value => {
+            if (value === "" || value === undefined) {
+                return "You must enter a scope";
+            }
+        }
 
     }) as string;
 
-    if (p.isCancel(hostScope)) { process.exit(1); }
+    if (isCancel(hostScope)) { process.exit(1); }
 }
 
 // Call generateProject
-const loader = p.spinner();
+const loader = spinner();
 loader.start("Generating your project...");
 
 await generateProject({
     templateId,
-    outputDir,
+    outputDirectory,
     packageScope,
     hostScope
 });
 
-loader.stop();
+loader.stop(colors.green("Your project is ready!"));
 
-p.outro(colors.green("Your project is ready!"));
+let stepNumber = 1;
+const nextStepsInstructions = [];
 
-console.log("Next steps:");
-let i = 1;
-
-const relative = path.relative(process.cwd(), outputDir);
+const relative = path.relative(process.cwd(), outputDirectory);
 if (relative !== "") {
-    console.log(`  ${i++}: ${colors.bold(colors.cyan(`cd ${relative}`))}`);
+    nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan(`cd ${relative}`)}`);
 }
+nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
 
-console.log(`  ${i++}: ${colors.bold(colors.cyan("pnpm install \n"))}`);
+note(
+    nextStepsInstructions.join("\n"),
+    "Next steps:"
+);
+

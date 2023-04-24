@@ -1,35 +1,37 @@
 {
-  "name": "@workleap/foundry",
-  "version": "0.0.0",
-  "description": "Foundry-CLI generator module",
-  "license": "Apache-2.0",
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/workleap/wl-foundry-cli.git",
-      "directory": "packages/foundry"
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "bin": "./dist/src/bin.js",
-  "scripts": {
-    "dev": "pnpm run build && pnpm link --global",
-    "build": "tsc",
-    "clean": "pnpm dlx rimraf dist coverage",
-    "lint:types": "tsc --noEmit",
-    "test": "jest"
-  },
-  "dependencies": {
-    "commander": "^10.0.0",
-    "degit": "^2.8.4",
-    "fs-extra": "^11.1.1",
-    "glob": "^10.1.0",
-    "handlebars": "^4.7.7"
-  },
-  "devDependencies": {
-    "@commander-js/extra-typings": "^10.0.3",
-    "@types/degit": "^2.8.3",
-    "@types/fs-extra": "^11.0.1"
-  }
+    "name": "@workleap/foundry",
+    "version": "0.0.0",
+    "description": "Foundry-CLI generator module",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/workleap/wl-foundry-cli.git",
+        "directory": "packages/foundry"
+    },
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "bin": {
+        "foundry": "./dist/src/bin.js"
+    },
+    "scripts": {
+        "dev": "pnpm run build && pnpm link --global",
+        "build": "tsc",
+        "clean": "pnpm dlx rimraf dist coverage",
+        "lint:types": "tsc --noEmit",
+        "test": "jest"
+    },
+    "dependencies": {
+        "commander": "^10.0.0",
+        "degit": "^2.8.4",
+        "fs-extra": "^11.1.1",
+        "glob": "^10.1.0",
+        "handlebars": "^4.7.7"
+    },
+    "devDependencies": {
+        "@commander-js/extra-typings": "^10.0.3",
+        "@types/degit": "^2.8.3",
+        "@types/fs-extra": "^11.0.1"
+    }
 }
