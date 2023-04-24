@@ -26,7 +26,7 @@ To test locally your development version, without need the need to rebuild it an
 
 ```cmd
 # first compile the TypeScript to JS
-tsc
+pnpm build
 # then link the bin globally
 pnpm link --global
 ```
