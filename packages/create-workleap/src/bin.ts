@@ -99,12 +99,14 @@ if (templateId === "host-application") {
 const loader = spinner();
 loader.start("Generating your project...");
 
-await generateProject({
+await generateProject(
     templateId,
     outputDirectory,
-    hostScope,
-    packageScope
-});
+    {
+        hostScope,
+        packageScope
+    }
+);
 
 loader.stop(colors.green("Your project is ready!"));
 

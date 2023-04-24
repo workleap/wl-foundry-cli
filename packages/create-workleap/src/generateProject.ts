@@ -1,20 +1,16 @@
 import child_process from "node:child_process";
 import type { TemplateId } from "./templates.js";
 
-export interface GenerateProjectArguments {
-    templateId: TemplateId;
-    outputDirectory: string;
+export interface GenerateProjectOptionalArguments {
     packageScope?: string;
     hostScope?: string;
 }
 
-export async function generateProject({ templateId, outputDirectory, packageScope, hostScope }: GenerateProjectArguments) {
+export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments) {
     let commandName;
     const args: string[] = [];
 
-    if (outputDirectory) {
-        args.push("-o", outputDirectory);
-    }
+    args.push("-o", outputDirectory);
 
     switch (templateId) {
         case "host-application":
