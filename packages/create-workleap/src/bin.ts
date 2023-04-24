@@ -4,7 +4,7 @@ import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/pr
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { GenerateProjectArguments, generateProject } from "./generateProject.js";
+import { generateProject } from "./generateProject.js";
 import packageJson from "../package.json" assert { type: "json" };
 import type { TemplateId } from "./templates.js";
 
@@ -60,14 +60,12 @@ const templateId = await select({
 
 if (isCancel(templateId)) { process.exit(1); }
 
-const generateProjectInputs: GenerateProjectArguments = {
-    outputDirectory,
-    templateId
-};
+let packageScope: string | undefined;
+let hostScope: string | undefined;
 
 // Ask for other arguments
 if (templateId === "host-application") {
-    const packageScope = await text({
+    const textValue = await text({
         message: "What should be the package scope?",
         placeholder: "ex: @my-app",
         validate: value => {
@@ -77,11 +75,11 @@ if (templateId === "host-application") {
         }
     });
 
-    if (isCancel(packageScope)) { process.exit(1); }
+    if (isCancel(textValue)) { process.exit(1); }
 
-    generateProjectInputs.packageScope = packageScope;
+    packageScope = textValue;
 } else {
-    const hostScope = await text({
+    const textValue = await text({
         message: "What is the host application scope?",
         placeholder: "ex: @my-app",
         validate: value => {
@@ -92,16 +90,21 @@ if (templateId === "host-application") {
 
     });
 
-    if (isCancel(hostScope)) { process.exit(1); }
+    if (isCancel(textValue)) { process.exit(1); }
 
-    generateProjectInputs.hostScope = hostScope;
+    hostScope = textValue;
 }
 
 // Call generateProject
 const loader = spinner();
 loader.start("Generating your project...");
 
-await generateProject(generateProjectInputs);
+await generateProject({
+    templateId,
+    outputDirectory,
+    hostScope,
+    packageScope
+});
 
 loader.stop(colors.green("Your project is ready!"));
 
