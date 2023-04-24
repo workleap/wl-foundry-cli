@@ -15,6 +15,7 @@ interface TemplateInterface {
         flag: string;
         description?: string;
         defaultValue?: string | boolean | [] | string[] | undefined;
+        required?: boolean;
     }[];
     action: (outputDir: string, options: OptionValues) => void;
 }
@@ -48,7 +49,8 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
         options: [
             {
                 flag: "--package-scope <string>",
-                description: "package scope"
+                description: "package scope",
+                required: true
             }
         ],
         action: async (outputDir, options): Promise<void> => {
@@ -67,7 +69,8 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
         options: [
             {
                 flag: "--host-scope <string>",
-                description: "host scope"
+                description: "host scope",
+                required: true
             }
         ],
         action: async (outputDir, options): Promise<void> => {
@@ -83,7 +86,8 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
         options: [
             {
                 flag: "--host-scope <string>",
-                description: "host scope"
+                description: "host scope",
+                required: true
             }
         ],
         action: async (outputDir, options): Promise<void> => {

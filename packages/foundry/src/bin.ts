@@ -28,7 +28,11 @@ for (const [ templateId, template ] of Templates) {
 
     if (template.options && template.options.length > 0) {
         for (const option of template.options) {
-            command.option(option.flag, option.description, option.defaultValue);
+            if (option.required) {
+                command.requiredOption(option.flag, option.description, option.defaultValue);
+            } else {
+                command.option(option.flag, option.description, option.defaultValue);
+            }
         }
     }
 
