@@ -1,9 +1,9 @@
-import path from "node:path";
-import fse from "fs-extra";
+import { join } from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
-import handlebars from "handlebars";
+import { compile } from "handlebars";
 
-export async function replaceTokens(files: string[], values: { [key:string]: unknown }, outputDir: string): Promise<void> {
+export async function replaceTokens(files: string[], values: Record<string, unknown>, outputDir: string) {
     if (!files || files.length === 0 || !values || Object.keys(values).length === 0) {
         return;
     }
@@ -11,12 +11,12 @@ export async function replaceTokens(files: string[], values: { [key:string]: unk
     const filesToReplace = await glob(files, { ignore: "node_modules/**", cwd: outputDir, nodir: true });
 
     for (const fileToReplace of filesToReplace) {
-        const fileToReplacePath = path.join(outputDir, fileToReplace);
+        const fileToReplacePath = join(outputDir, fileToReplace);
 
-        const content: Buffer = await fse.readFile(fileToReplacePath);
+        const content = await readFile(fileToReplacePath);
 
-        const template = handlebars.compile(content.toString());
+        const template = compile(content.toString());
 
-        await fse.writeFile(fileToReplacePath, template(values));
+        await writeFile(fileToReplacePath, template(values));
     }
 }

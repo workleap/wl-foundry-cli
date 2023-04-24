@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import path from "node:path";
+import { resolve } from "node:path";
 import process from "node:process";
 import { Command } from "commander";
 import { type OptionValues } from "@commander-js/extra-typings";
@@ -39,7 +39,7 @@ for (const [ templateId, template ] of Templates) {
     command.action(async (options: OptionValues) => {
         const outDir = options["outDir"]?.toString() ?? process.cwd();
 
-        await create(template, path.resolve(outDir), options);
+        await create(templateId, resolve(outDir), options);
     });
 }
 

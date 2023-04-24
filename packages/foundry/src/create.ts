@@ -1,14 +1,14 @@
-import path from "node:path";
+import { basename } from "node:path";
 import { type OptionValues } from "@commander-js/extra-typings";
 
 import { cloneProjectTemplate } from "./cloneProjectTemplate.js";
 import { replaceTokens } from "./replaceTokens.js";
 
-const BaseRepositoryAddress = "Workleap/wl-foundry-cli/templates";
+const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
 type TemplateId = "host-application" | "remote-module" | "static-module";
 
-interface TemplateInterface {
+interface TemplateDetails {
     description: string;
     repositoryUrl: string;
     options: {
@@ -20,11 +20,11 @@ interface TemplateInterface {
     action: (outputDir: string, options: OptionValues) => void;
 }
 
-const getName = (outputDirectory: string): string => {
-    return path.basename(outputDirectory);
+const getName = (outputDirectory: string) => {
+    return basename(outputDirectory);
 };
 
-const getScope = (options: OptionValues, flagName: string): string => {
+const getScope = (options: OptionValues, flagName: string) => {
     let scope = options[flagName] as string;
 
     if (scope) {
@@ -42,7 +42,7 @@ const getScope = (options: OptionValues, flagName: string): string => {
     }
 };
 
-export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
+export const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["host-application", {
         description: "use the host-application template",
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,
@@ -53,12 +53,12 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
                 required: true
             }
         ],
-        action: async (outputDir, options): Promise<void> => {
+        action: async (outputDir, options) => {
             const scope = getScope(options, "packageScope");
             const name = getName(options["outDir"] as string);
 
             await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
-                HOST_SCOPE: scope,
+                PACKAGE_SCOPE: scope,
                 NAME: name
             }, outputDir);
         }
@@ -73,7 +73,7 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
                 required: true
             }
         ],
-        action: async (outputDir, options): Promise<void> => {
+        action: async (outputDir, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);
 
@@ -90,7 +90,7 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
                 required: true
             }
         ],
-        action: async (outputDir, options): Promise<void> => {
+        action: async (outputDir, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);
 
@@ -99,7 +99,13 @@ export const Templates: Map<TemplateId, TemplateInterface> = new Map ([
     }]
 ]);
 
-export async function create(template: TemplateInterface, outputDir: string, args: OptionValues): Promise<void> {
+export async function create(templateId: TemplateId, outputDir: string, args: OptionValues) {
+    const template = Templates.get(templateId);
+
+    if (template == null) {
+        return;
+    }
+
     await cloneProjectTemplate(outputDir, template.repositoryUrl);
 
     await template.action(outputDir, args);

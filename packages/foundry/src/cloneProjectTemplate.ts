@@ -1,8 +1,8 @@
 import degit from "degit";
-import fse from "fs-extra";
+import { ensureDir } from "fs-extra";
 
-export async function cloneProjectTemplate (outputDir: string, repositoryUrl: string): Promise<void> {
-    await fse.ensureDir(outputDir);
+export async function cloneProjectTemplate (outputDir: string, repositoryUrl: string) {
+    await ensureDir(outputDir);
 
     const runner = degit(repositoryUrl);
     await runner.clone(outputDir);
