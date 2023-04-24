@@ -1,14 +1,14 @@
 import child_process from "node:child_process";
 import type { TemplateId } from "./templates.js";
 
-export interface UserInputs {
+export interface GenerateProjectArguments {
     templateId: TemplateId;
     outputDirectory: string;
     packageScope?: string;
     hostScope?: string;
 }
 
-export async function generateProject({ templateId, outputDirectory, packageScope, hostScope }: UserInputs) {
+export async function generateProject({ templateId, outputDirectory, packageScope, hostScope }: GenerateProjectArguments) {
     let commandName;
     const args: string[] = [];
 

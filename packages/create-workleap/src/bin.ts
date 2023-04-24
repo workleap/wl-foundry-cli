@@ -4,7 +4,7 @@ import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/pr
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { UserInputs, generateProject } from "./generateProject.js";
+import { GenerateProjectArguments, generateProject } from "./generateProject.js";
 import packageJson from "../package.json" assert { type: "json" };
 import type { TemplateId } from "./templates.js";
 
@@ -60,7 +60,7 @@ const templateId = await select({
 
 if (isCancel(templateId)) { process.exit(1); }
 
-const userInputs: UserInputs = {
+const generateProjectInputs: GenerateProjectArguments = {
     outputDirectory,
     templateId
 };
@@ -79,7 +79,7 @@ if (templateId === "host-application") {
 
     if (isCancel(packageScope)) { process.exit(1); }
 
-    userInputs.packageScope = packageScope;
+    generateProjectInputs.packageScope = packageScope;
 } else {
     const hostScope = await text({
         message: "What is the host application scope?",
@@ -94,14 +94,14 @@ if (templateId === "host-application") {
 
     if (isCancel(hostScope)) { process.exit(1); }
 
-    userInputs.hostScope = hostScope;
+    generateProjectInputs.hostScope = hostScope;
 }
 
 // Call generateProject
 const loader = spinner();
 loader.start("Generating your project...");
 
-await generateProject(userInputs);
+await generateProject(generateProjectInputs);
 
 loader.stop(colors.green("Your project is ready!"));
 
