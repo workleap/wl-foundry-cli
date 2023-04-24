@@ -1,111 +1,126 @@
 #!/usr/bin/env node
-import * as child_process from "child_process";
-import process from "process";
-import { spinner } from "@clack/prompts";
+import process from "node:process";
+import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/prompts";
+import fs from "node:fs";
+import path from "node:path";
+import colors from "picocolors";
+import { generateProject } from "./generateProject.js";
+import packageJson from "../package.json" assert { type: "json" };
+import type { TemplateId } from "./templates.js";
 
-import { intro, select, note, text, outro } from "./prompts";
-import * as pkg from "../package.json";
+let outputDirectory = process.argv[2];
 
-const DefaultOutputDirectory = "./my-new-project";
-const NameParameterPosition = 2; // TODO validate position of parameter once ask with `pnpm create`
+intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 
-const FoundryCmd = "foundry";
+// Ask for output directory
+if (!outputDirectory) {
+    const directory = await text({
+        message: "Where should we create your project?",
+        placeholder: "  (hit Enter to use current directory)"
+    });
 
-const askForOutputDirectoryAsync = async (): Promise<string> => {
-    const outputDirectoryFromArgument: string =
-    process.argv[NameParameterPosition];
+    if (isCancel(directory)) { process.exit(1); }
 
-    if (outputDirectoryFromArgument) {
-        note(`${outputDirectoryFromArgument} project setup`);
-    }
+    outputDirectory = directory ?? ".";
+}
 
-    return (
-        outputDirectoryFromArgument ??
-    (await text(
-        "Where should we create the project?",
-        DefaultOutputDirectory,
-        DefaultOutputDirectory
-    ))
-    );
-};
+// Check if the directory is empty
+if (fs.existsSync(outputDirectory)) {
+    if (fs.readdirSync(outputDirectory).length > 0) {
+        const force = await confirm({
+            message: "The directory is not empty. Do you wish to continue?",
+            initialValue: false
+        });
 
-const askForTemplateAsync = (): Promise<string> => {
-    const templates = [
-        { value: "host-application" },
-        { value: "remote-module" },
-        { value: "static-module" }
-    ];
-
-    return select<string>("Select the template to create", templates);
-};
-
-const askForScopeAsync = (template: string): Promise<string> => {
-    return text(
-        `What should be the ${template} scope?`,
-        "Press enter if no scope is needed."
-    );
-};
-
-const callFoundryAsync = async (
-    outputDirectory: string,
-    template: string,
-    scope: string
-): Promise<number> => {
-    const options = [template];
-
-    if (outputDirectory) {
-        options.push("-o", outputDirectory);
-    }
-
-    if (scope) {
-        if (template === "host-application") {
-            options.push("--package-scope", scope);
-        } else {
-            options.push("--host-scope", scope);
+        // bail if `force` is `false` or the user cancelled with Ctrl-C
+        if (force !== true) {
+            process.exit(1);
         }
     }
+}
 
-    const childProcess = child_process.spawn(FoundryCmd, options, {
-        cwd: process.cwd(),
-        shell: true
+const templateId = await select({
+    message: "What would you like to generate?",
+    initialValue: "host-application" as TemplateId,
+    options: [
+        {
+            value: "host-application",
+            label: "Host application"
+        },
+        {
+            value: "remote-module",
+            label: "Remote module"
+        },
+        {
+            value: "static-module",
+            label: "Static module"
+        }
+    ]
+});
+
+if (isCancel(templateId)) { process.exit(1); }
+
+let packageScope: string | undefined;
+let hostScope: string | undefined;
+
+// Ask for other arguments
+if (templateId === "host-application") {
+    const textValue = await text({
+        message: "What should be the package scope?",
+        placeholder: "ex: @my-app",
+        validate: value => {
+            if (value === "" || value === undefined) {
+                return "You must enter a scope";
+            }
+        }
     });
 
-    return new Promise(resolve => {
-        childProcess.stdout.on("data", (x: string): void => {
-            process.stdout.write(x.toString());
-        });
-        childProcess.stderr.on("data", (x: string): void => {
-            process.stderr.write(x.toString());
-            process.exit(1);
-        });
-        childProcess.on("exit", (code?: number): void => {
-            resolve(code ?? 0);
-        });
+    if (isCancel(textValue)) { process.exit(1); }
+
+    packageScope = textValue;
+} else {
+    const textValue = await text({
+        message: "What is the host application scope?",
+        placeholder: "ex: @my-app",
+        validate: value => {
+            if (value === "" || value === undefined) {
+                return "You must enter a scope";
+            }
+        }
+
     });
-};
 
-const main = async (): Promise<void> => {
-    intro(pkg.name);
+    if (isCancel(textValue)) { process.exit(1); }
 
-    const outputDirectory = await askForOutputDirectoryAsync();
+    hostScope = textValue;
+}
 
-    const template = await askForTemplateAsync();
+// Call generateProject
+const loader = spinner();
+loader.start("Generating your project...");
 
-    const scope = await askForScopeAsync(template);
+await generateProject(
+    templateId,
+    outputDirectory,
+    {
+        hostScope,
+        packageScope
+    }
+);
 
-    const loader = spinner();
-    loader.start("Generating...");
-    await callFoundryAsync(outputDirectory, template, scope);
-    loader.stop("Generated!");
+loader.stop(colors.green("Your project is ready!"));
 
-    outro("Done!");
-};
+let stepNumber = 1;
+const nextStepsInstructions = [];
 
-main()
-    .then(() => {
-        process.exit(0);
-    })
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
+const relative = path.relative(process.cwd(), outputDirectory);
+if (relative !== "") {
+    nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan(`cd ${relative}`)}`);
+}
+nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
+
+note(
+    nextStepsInstructions.join("\n"),
+    "Next steps:"
+);
+

@@ -1,7 +1,6 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "@workleap/typescript-configs/library.json",
   "compilerOptions": {
-    "moduleResolution": "nodenext",
     "outDir": "dist"
   },
   "include": ["src"]

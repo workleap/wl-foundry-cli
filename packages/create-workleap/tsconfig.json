@@ -1,7 +1,7 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "@workleap/typescript-configs/library.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "dist"
   },
-  "exclude": ["node_modules", "dist", "tests", "*.config.ts"]
+  "include": ["src"]
 }
