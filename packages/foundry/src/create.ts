@@ -9,14 +9,7 @@ const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 type TemplateId = "host-application" | "remote-module" | "static-module";
 
 interface TemplateDetails {
-    description: string;
     repositoryUrl: string;
-    options: {
-        flag: string;
-        description?: string;
-        defaultValue?: string | boolean | [] | string[] | undefined;
-        required?: boolean;
-    }[];
     action: (outputDir: string, options: OptionValues) => void;
 }
 
@@ -42,17 +35,9 @@ const getScope = (options: OptionValues, flagName: string) => {
     }
 };
 
-export const Templates: Map<TemplateId, TemplateDetails> = new Map ([
+const Templates: Map<TemplateId, TemplateDetails> = new Map ([
     ["host-application", {
-        description: "use the host-application template",
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,
-        options: [
-            {
-                flag: "--package-scope <string>",
-                description: "package scope",
-                required: true
-            }
-        ],
         action: async (outputDir, options) => {
             const scope = getScope(options, "packageScope");
             const name = getName(options["outDir"] as string);
@@ -64,15 +49,7 @@ export const Templates: Map<TemplateId, TemplateDetails> = new Map ([
         }
     }],
     ["remote-module", {
-        description: "use the remote-module template",
         repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
-        options: [
-            {
-                flag: "--host-scope <string>",
-                description: "host scope",
-                required: true
-            }
-        ],
         action: async (outputDir, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);
@@ -81,15 +58,7 @@ export const Templates: Map<TemplateId, TemplateDetails> = new Map ([
         }
     }],
     ["static-module", {
-        description: "use the static-module template",
         repositoryUrl: `${BaseRepositoryAddress}/static-module`,
-        options: [
-            {
-                flag: "--host-scope <string>",
-                description: "host scope",
-                required: true
-            }
-        ],
         action: async (outputDir, options) => {
             const scope = getScope(options, "hostScope");
             const name = getName(options["outDir"] as string);

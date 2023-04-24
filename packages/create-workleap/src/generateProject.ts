@@ -14,15 +14,15 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
 
     switch (templateId) {
         case "host-application":
-            commandName = "host-application";
+            commandName = "generate-host-application";
             args.push("--package-scope", packageScope!);
             break;
         case "remote-module":
-            commandName = "remote-module";
+            commandName = "generate-remote-module";
             args.push("--host-scope", hostScope!);
             break;
         case "static-module":
-            commandName = "static-module";
+            commandName = "generate-static-module";
             args.push("--host-scope", hostScope!);
             break;
     }

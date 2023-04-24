@@ -1,4 +1,5 @@
 import * as path from "node:path";
+import * as fs from "node:fs/promises";
 import * as fse from "fs-extra";
 import * as glob from "glob";
 import * as handlebars from "handlebars";
@@ -56,15 +57,15 @@ describe("replaceTokens", () => {
 
     test("When patter match files Then work", async () => {
         jest.spyOn(glob, "glob").mockImplementation(async () => fakeFileList);
-        jest.spyOn(fse, "readFile").mockImplementation(async () => "");
+        jest.spyOn(fs, "readFile").mockImplementation(async () => "");
         jest.spyOn(handlebars, "compile").mockImplementation(() => jest.fn());
 
         await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
         expect(glob.glob).toHaveBeenCalled();
         expect(path.join).toHaveBeenCalled();
-        expect(fse.readFile).toHaveBeenCalled();
-        expect(fse.writeFile).toHaveBeenCalled();
+        expect(fs.readFile).toHaveBeenCalled();
+        expect(fs.writeFile).toHaveBeenCalled();
         expect(handlebars.compile).toHaveBeenCalled();
     });
 });
