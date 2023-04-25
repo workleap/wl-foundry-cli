@@ -2,6 +2,8 @@ import * as fs from "node:fs/promises";
 import * as glob from "glob";
 import { replaceTokens } from "../src/replaceTokens";
 
+import { join } from "path";
+
 jest.mock("node:fs/promises");
 jest.mock("glob");
 
@@ -60,8 +62,8 @@ test("when pattern match files, variables are replaced", async () => {
         }`;
 
     expect(fs.writeFile).toHaveBeenCalledWith("foo.bar", replacedContent);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\world.txt", replacedContent);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\mr\\anderson.txt", replacedContent);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "world.txt"), replacedContent);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), replacedContent);
 });
 
 test("when files detected with no variables inside, do nothing", async () => {
@@ -78,8 +80,8 @@ test("when files detected with no variables inside, do nothing", async () => {
     await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
     expect(fs.writeFile).toHaveBeenCalledWith("foo.bar", content);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\world.txt", content);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\mr\\anderson.txt", content);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "world.txt"), content);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), content);
 });
 
 test("when files detected with unknown variable, do nothing", async () => {
@@ -96,6 +98,6 @@ test("when files detected with unknown variable, do nothing", async () => {
     await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
     expect(fs.writeFile).toHaveBeenCalledWith("foo.bar", content);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\world.txt", content);
-    expect(fs.writeFile).toHaveBeenCalledWith("hello\\mr\\anderson.txt", content);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "world.txt"), content);
+    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), content);
 });

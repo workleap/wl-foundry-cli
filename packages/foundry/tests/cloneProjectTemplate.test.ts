@@ -1,8 +1,8 @@
-import * as fse from "fs-extra";
+import { mkdir } from "node:fs/promises";
 
 import { cloneProjectTemplate } from "../src/cloneProjectTemplate";
 
-jest.mock("fs-extra");
+jest.mock("node:fs/promises");
 
 const cloneMock = jest.fn<string, string[], void>();
 
@@ -20,6 +20,6 @@ test("when called with valid argument, template is cloned", async () => {
 
     await cloneProjectTemplate(outputDirectory, repositoryUrl);
 
-    expect(fse.ensureDir).toHaveBeenCalledWith(outputDirectory);
+    expect(mkdir).toHaveBeenCalledWith(outputDirectory, expect.anything());
     expect(cloneMock).toHaveBeenCalledWith(outputDirectory);
 });
