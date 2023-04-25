@@ -12,7 +12,7 @@ const program = new Command();
 program
     .name(packageJson.name)
     .description(packageJson.description)
-    .version(packageJson.version);
+    .version(packageJson.version, "-v, --version");
 
 program.command("generate-host-application")
     .description("use the host-application template")

@@ -13,11 +13,9 @@
         "access": "public",
         "provenance": true
     },
-    "bin": {
-        "foundry": "./dist/src/bin.js"
-    },
+    "bin": "./dist/bin.js",
     "scripts": {
-        "dev": "pnpm run build && pnpm link --global",
+        "dev": "pnpm run build:dev && pnpm link --global",
         "build": "tsup",
         "build:dev": "tsup --sourcemap",
         "clean": "pnpm dlx rimraf dist coverage",
@@ -27,12 +25,10 @@
     "dependencies": {
         "commander": "10.0.1",
         "degit": "2.8.4",
-        "fs-extra": "11.1.1",
         "glob": "10.2.2"
     },
     "devDependencies": {
-        "@types/degit": "2.8.3",
-        "@types/fs-extra": "11.0.1"
+        "@types/degit": "2.8.3"
     },
     "tsup": {
       "entry": ["src/bin.ts"],

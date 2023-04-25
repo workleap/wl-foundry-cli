@@ -8,7 +8,7 @@ Usage: @workleap/foundry [options] [command]
 Foundry-CLI generator module
 
 Options:
-  -V, --version                        output the version number
+  -v, --version                        output the version number
   -h, --help                           display help for command
 
 Commands:
