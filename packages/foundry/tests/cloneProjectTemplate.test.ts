@@ -15,7 +15,7 @@ describe("loadTemplate", () => {
         jest.restoreAllMocks();
     });
 
-    test("When called with valid argument Then work", async () => {
+    test("when called with valid argument, template is cloned", async () => {
         const outputDirectory = "./test";
         const repositoryUrl = "foo/bar";
 
