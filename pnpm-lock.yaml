@@ -1066,7 +1066,7 @@ packages:
       chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
-      glob: 7.2.3
+      glob: 7.1.6
       graceful-fs: 4.2.11
       istanbul-lib-coverage: 3.2.0
       istanbul-lib-instrument: 5.2.1
@@ -2136,7 +2136,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001481
-      electron-to-chromium: 1.4.370
+      electron-to-chromium: 1.4.371
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
     dev: true
@@ -2588,8 +2588,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /electron-to-chromium@1.4.370:
-    resolution: {integrity: sha512-c+wzD4sCYQeNeasbnArwsU3ig6+lR6bwQmxfMjB6bx+XoopVSPFp+7ZLxqa90MTC+Tq9QQ5l7zsMNG9GgMBorg==}
+  /electron-to-chromium@1.4.371:
+    resolution: {integrity: sha512-jlBzY4tFcJaiUjzhRTCWAqRvTO/fWzjA3Bls0mykzGZ7zvcMP7h05W6UcgzfT9Ca1SW2xyKDOFRyI0pQeRNZGw==}
     dev: true
 
   /emittery@0.13.1:
@@ -3381,17 +3381,6 @@ packages:
       path-is-absolute: 1.0.1
     dev: true
 
-  /glob@7.2.3:
-    resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 3.1.2
-      once: 1.4.0
-      path-is-absolute: 1.0.1
-    dev: true
-
   /globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
     engines: {node: '>=4'}
@@ -3928,7 +3917,7 @@ packages:
       jest-util: 29.5.0
       p-limit: 3.1.0
       pretty-format: 29.5.0
-      pure-rand: 6.0.1
+      pure-rand: 6.0.2
       slash: 3.0.0
       stack-utils: 2.0.6
     transitivePeerDependencies:
@@ -3983,7 +3972,7 @@ packages:
       chalk: 4.1.2
       ci-info: 3.8.0
       deepmerge: 4.3.1
-      glob: 7.2.3
+      glob: 7.1.6
       graceful-fs: 4.2.11
       jest-circus: 29.5.0
       jest-environment-node: 29.5.0
@@ -4195,7 +4184,7 @@ packages:
       chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
-      glob: 7.2.3
+      glob: 7.1.6
       graceful-fs: 4.2.11
       jest-haste-map: 29.5.0
       jest-message-util: 29.5.0
@@ -5409,8 +5398,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /pure-rand@6.0.1:
-    resolution: {integrity: sha512-t+x1zEHDjBwkDGY5v5ApnZ/utcd4XYDiJsaQQoptTXgUXX95sDg1elCdJghzicm7n2mbCBJ3uYWr6M22SO19rg==}
+  /pure-rand@6.0.2:
+    resolution: {integrity: sha512-6Yg0ekpKICSjPswYOuC5sku/TSWaRYlA0qsXqJgM/d/4pLPHPuTxK7Nbf7jFKzAeedUhR8C7K9Uv63FBsSo8xQ==}
     dev: true
 
   /queue-microtask@1.2.3:
@@ -5577,7 +5566,7 @@ packages:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     hasBin: true
     dependencies:
-      glob: 7.2.3
+      glob: 7.1.6
     dev: true
 
   /rimraf@5.0.0:
@@ -5925,7 +5914,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       '@istanbuljs/schema': 0.1.3
-      glob: 7.2.3
+      glob: 7.1.6
       minimatch: 3.1.2
     dev: true
 
