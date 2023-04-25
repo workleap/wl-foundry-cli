@@ -1,7 +1,6 @@
 import { join } from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
-import { compile } from "handlebars";
 
 export async function replaceTokens(globPatterns: string[], values: Record<string, string>, outputDirectory: string) {
     if (!globPatterns || globPatterns.length === 0 || !values || Object.keys(values).length === 0) {
@@ -15,8 +14,19 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
 
         const content = await readFile(fileToReplacePath);
 
-        const template = compile(content.toString());
+        const newContent = replaceTokensInFile(content.toString(), values);
 
-        await writeFile(fileToReplacePath, template(values));
+        await writeFile(fileToReplacePath, newContent);
     }
 }
+
+const TokenRegex = /{{(.*?)}}/g; // regex to match all tokens in the form of {{TOKEN}}
+
+function replaceTokensInFile(content:string, values: Record<string, string>) {
+    return content.replaceAll(TokenRegex, (match, token) => {
+        const replacement = values[token];
+
+        return replacement !== undefined ? replacement : match;
+    });
+}
+

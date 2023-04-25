@@ -28,8 +28,7 @@
         "commander": "10.0.1",
         "degit": "2.8.4",
         "fs-extra": "11.1.1",
-        "glob": "10.2.2",
-        "handlebars": "4.7.7"
+        "glob": "10.2.2"
     },
     "devDependencies": {
         "@types/degit": "2.8.3",
