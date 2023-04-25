@@ -1,6 +1,12 @@
 # @workleap/foundry
 
-A CLI to create new Workleap projects non-interactively. See `@workleap/foundry --help`:
+This project is a non-interactive command-line tool that allows users to quickly create customized copies of a template
+stored in a Git
+repository. By specifying the desired values for text tokens within the template, users can easily generate new files
+that incorporate their own content and configurations. The tool streamlines the process of creating new projects based
+on an existing template, saving time and effort while ensuring consistency and accuracy.
+
+See `@workleap/foundry --help`:
 
 ```cmd
 Usage: @workleap/foundry [options] [command]
@@ -22,8 +28,8 @@ Commands:
 
 ### generate-host-application
 
-Add and render the template
-from [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application).
+Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application) template as
+a base to customize with these options:
 
 | option                   | description                  | required |
 |--------------------------|------------------------------|----------|
@@ -33,8 +39,8 @@ from [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/tem
 
 ### generate-remote-module
 
-Add and render the template
-from [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module).
+Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module) template as
+a base to customize with these options:
 
 | option                 | description                  | required |
 |------------------------|------------------------------|----------|
@@ -44,8 +50,8 @@ from [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templa
 
 ### generate-static-module
 
-Add and render the template
-from [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module).
+Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module) template as
+a base to customize with these options:
 
 | option                 | description                  | required |
 |------------------------|------------------------------|----------|
