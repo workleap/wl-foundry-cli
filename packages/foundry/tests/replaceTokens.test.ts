@@ -55,7 +55,7 @@ describe("replaceTokens", () => {
         expect(handlebars.compile).not.toHaveBeenCalled();
     });
 
-    test("When patter match files Then work", async () => {
+    test("When pattern match files Then work", async () => {
         jest.spyOn(glob, "glob").mockImplementation(async () => fakeFileList);
         jest.spyOn(fs, "readFile").mockImplementation(async () => "");
         jest.spyOn(handlebars, "compile").mockImplementation(() => jest.fn());

@@ -80,9 +80,6 @@ importers:
         specifier: 4.7.7
         version: 4.7.7
     devDependencies:
-      '@commander-js/extra-typings':
-        specifier: 10.0.3
-        version: 10.0.3(commander@10.0.1)
       '@types/degit':
         specifier: 2.8.3
         version: 2.8.3
@@ -659,14 +656,6 @@ packages:
     dev: false
     bundledDependencies:
       - is-unicode-supported
-
-  /@commander-js/extra-typings@10.0.3(commander@10.0.1):
-    resolution: {integrity: sha512-OIw28QV/GlP8k0B5CJTRsl8IyNvd0R8C8rfo54Yz9P388vCNDgdNrFlKxZTGqps+5j6lSw3Ss9JTQwcur1w1oA==}
-    peerDependencies:
-      commander: 10.0.x
-    dependencies:
-      commander: 10.0.1
-    dev: true
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -2361,6 +2350,7 @@ packages:
   /commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
+    dev: false
 
   /commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
