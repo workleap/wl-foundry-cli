@@ -10,7 +10,7 @@ jest.mock("degit", () => () => ({
     clone: (...args: string[]) => cloneMock(...args)
 }));
 
-describe("loadTemplate", () => {
+describe("cloneProjectTemplate", () => {
     afterEach(() => {
         jest.restoreAllMocks();
     });
