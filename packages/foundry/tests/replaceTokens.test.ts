@@ -15,22 +15,6 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-test("when no files, do nothing", async () => {
-    await replaceTokens([], fakeReplaceValueList, ".");
-
-    expect(glob.glob).not.toHaveBeenCalled();
-    expect(fs.readFile).not.toHaveBeenCalled();
-    expect(fs.writeFile).not.toHaveBeenCalled();
-});
-
-test("when no value to replace, do nothing", async () => {
-    await replaceTokens(fakeFilePatternList, {}, ".");
-
-    expect(glob.glob).not.toHaveBeenCalled();
-    expect(fs.readFile).not.toHaveBeenCalled();
-    expect(fs.writeFile).not.toHaveBeenCalled();
-});
-
 test("when pattern match no file, do no file system io", async () => {
     jest.spyOn(glob, "glob").mockImplementation(async () => []);
 

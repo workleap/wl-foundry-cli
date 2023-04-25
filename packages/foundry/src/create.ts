@@ -16,10 +16,6 @@ function formatScope(scope: string) {
     let formattedScope = scope;
 
     if (scope) {
-        if (formattedScope[0] !== "@") {
-            formattedScope = `@${formattedScope}`;
-        }
-
         if (formattedScope.slice(-1) !== "/") {
             formattedScope = `${formattedScope}/`;
         }
@@ -65,10 +61,6 @@ const Templates: Record<TemplateId, TemplateDetails> = {
 
 export async function create(templateId: TemplateId, outputDirectory: string, args: Record<string, string>) {
     const template = Templates[templateId];
-
-    if (!template) {
-        throw new Error("Invalid template id");
-    }
 
     await cloneProjectTemplate(outputDirectory, template.repositoryUrl);
 

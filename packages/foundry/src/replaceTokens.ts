@@ -3,20 +3,16 @@ import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
 
 export async function replaceTokens(globPatterns: string[], values: Record<string, string>, outputDirectory: string) {
-    if (!globPatterns || globPatterns.length === 0 || !values || Object.keys(values).length === 0) {
-        return;
-    }
+    const targets = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
 
-    const filesToReplace = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
+    for (const target of targets) {
+        const targetPath = join(outputDirectory, target);
 
-    for (const fileToReplace of filesToReplace) {
-        const fileToReplacePath = join(outputDirectory, fileToReplace);
-
-        const content = await readFile(fileToReplacePath);
+        const content = await readFile(targetPath);
 
         const newContent = replaceTokensInFile(content.toString(), values);
 
-        await writeFile(fileToReplacePath, newContent);
+        await writeFile(targetPath, newContent);
     }
 }
 

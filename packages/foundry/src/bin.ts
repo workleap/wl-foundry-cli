@@ -23,7 +23,7 @@ program.command("generate-host-application")
     )
     .requiredOption(
         "--package-scope <string>",
-        "package scope (required)"
+        "package scope, should begin with a '@' (required)"
     )
     .action(async options => {
         const outDir = options["outDir"]?.toString() ?? cwd();
