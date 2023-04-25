@@ -16,54 +16,52 @@ const fakeFileList = ["foo.bar", "hello/world.txt", "hello/mr/anderson.txt"];
 
 const fakeReplaceValueList = { "FOO": "bar", "PING": "pong" };
 
-describe("replaceTokens", () => {
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
-    test("when no files, do nothing", async () => {
-        await replaceTokens([], fakeReplaceValueList, ".");
+test("when no files, do nothing", async () => {
+    await replaceTokens([], fakeReplaceValueList, ".");
 
-        expect(path.join).not.toHaveBeenCalled();
-        expect(glob.glob).not.toHaveBeenCalled();
-        expect(fs.readFile).not.toHaveBeenCalled();
-        expect(fs.writeFile).not.toHaveBeenCalled();
-        expect(handlebars.compile).not.toHaveBeenCalled();
-    });
+    expect(path.join).not.toHaveBeenCalled();
+    expect(glob.glob).not.toHaveBeenCalled();
+    expect(fs.readFile).not.toHaveBeenCalled();
+    expect(fs.writeFile).not.toHaveBeenCalled();
+    expect(handlebars.compile).not.toHaveBeenCalled();
+});
 
-    test("when no value to replace, do nothing", async () => {
-        await replaceTokens(fakeFilePatternList, {}, ".");
+test("when no value to replace, do nothing", async () => {
+    await replaceTokens(fakeFilePatternList, {}, ".");
 
-        expect(path.join).not.toHaveBeenCalled();
-        expect(glob.glob).not.toHaveBeenCalled();
-        expect(fs.readFile).not.toHaveBeenCalled();
-        expect(fs.writeFile).not.toHaveBeenCalled();
-        expect(handlebars.compile).not.toHaveBeenCalled();
-    });
+    expect(path.join).not.toHaveBeenCalled();
+    expect(glob.glob).not.toHaveBeenCalled();
+    expect(fs.readFile).not.toHaveBeenCalled();
+    expect(fs.writeFile).not.toHaveBeenCalled();
+    expect(handlebars.compile).not.toHaveBeenCalled();
+});
 
-    test("when pattern match no file, do no file system io", async () => {
-        jest.spyOn(glob, "glob").mockImplementation(async () => []);
+test("when pattern match no file, do no file system io", async () => {
+    jest.spyOn(glob, "glob").mockImplementation(async () => []);
 
-        await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
+    await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
-        expect(glob.glob).toHaveBeenCalled();
-        expect(path.join).not.toHaveBeenCalled();
-        expect(fs.readFile).not.toHaveBeenCalled();
-        expect(fs.writeFile).not.toHaveBeenCalled();
-        expect(handlebars.compile).not.toHaveBeenCalled();
-    });
+    expect(glob.glob).toHaveBeenCalled();
+    expect(path.join).not.toHaveBeenCalled();
+    expect(fs.readFile).not.toHaveBeenCalled();
+    expect(fs.writeFile).not.toHaveBeenCalled();
+    expect(handlebars.compile).not.toHaveBeenCalled();
+});
 
-    test("when pattern match files, variables are replaced", async () => {
-        jest.spyOn(glob, "glob").mockImplementation(async () => fakeFileList);
-        jest.spyOn(fs, "readFile").mockImplementation(async () => "");
-        jest.spyOn(handlebars, "compile").mockImplementation(() => jest.fn());
+test("when pattern match files, variables are replaced", async () => {
+    jest.spyOn(glob, "glob").mockImplementation(async () => fakeFileList);
+    jest.spyOn(fs, "readFile").mockImplementation(async () => "");
+    jest.spyOn(handlebars, "compile").mockImplementation(() => jest.fn());
 
-        await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
+    await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
-        expect(glob.glob).toHaveBeenCalled();
-        expect(path.join).toHaveBeenCalled();
-        expect(fs.readFile).toHaveBeenCalled();
-        expect(fs.writeFile).toHaveBeenCalled();
-        expect(handlebars.compile).toHaveBeenCalled();
-    });
+    expect(glob.glob).toHaveBeenCalled();
+    expect(path.join).toHaveBeenCalled();
+    expect(fs.readFile).toHaveBeenCalled();
+    expect(fs.writeFile).toHaveBeenCalled();
+    expect(handlebars.compile).toHaveBeenCalled();
 });

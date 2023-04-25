@@ -10,18 +10,16 @@ jest.mock("degit", () => () => ({
     clone: (...args: string[]) => cloneMock(...args)
 }));
 
-describe("cloneProjectTemplate", () => {
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
-    test("when called with valid argument, template is cloned", async () => {
-        const outputDirectory = "./test";
-        const repositoryUrl = "foo/bar";
+test("when called with valid argument, template is cloned", async () => {
+    const outputDirectory = "./test";
+    const repositoryUrl = "foo/bar";
 
-        await cloneProjectTemplate(outputDirectory, repositoryUrl);
+    await cloneProjectTemplate(outputDirectory, repositoryUrl);
 
-        expect(fse.ensureDir).toHaveBeenCalledWith(outputDirectory);
-        expect(cloneMock).toHaveBeenCalledWith(outputDirectory);
-    });
+    expect(fse.ensureDir).toHaveBeenCalledWith(outputDirectory);
+    expect(cloneMock).toHaveBeenCalledWith(outputDirectory);
 });
