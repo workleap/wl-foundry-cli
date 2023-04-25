@@ -7,16 +7,16 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
         return;
     }
 
-    const filesToReplace = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
+    const targets = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
 
-    for (const fileToReplace of filesToReplace) {
-        const fileToReplacePath = join(outputDirectory, fileToReplace);
+    for (const fileToReplace of targets) {
+        const target = join(outputDirectory, fileToReplace);
 
-        const content = await readFile(fileToReplacePath);
+        const content = await readFile(target);
 
         const newContent = replaceTokensInFile(content.toString(), values);
 
-        await writeFile(fileToReplacePath, newContent);
+        await writeFile(target, newContent);
     }
 }
 
