@@ -30,16 +30,14 @@
         "dev": "pnpm -r dev",
         "build": "pnpm -r build",
         "changeset": "changeset",
-        "clean": "pnpm run /^clean:.*/",
-        "clean:pkg": "pnpm -r clean",
-        "clean:root": "pnpm dlx rimraf node_modules pnpm-lock.yaml",
+        "clean": "pnpm -r --parallel exec pnpm dlx rimraf dist",
         "lint": "pnpm run /^lint:.*/",
         "lint:eslint": "eslint .  --cache --cache-location node_modules/.cache/eslint",
-        "lint:types": "pnpm -r lint:types",
+        "lint:types": "tsc --noEmit",
         "lint-ci": "pnpm run /^lint-ci:.*/",
         "lint-ci:eslint": "eslint . --max-warnings=0",
         "release": "pnpm build && changeset publish",
-        "test": "pnpm -r test"
+        "test": "jest"
     },
     "engines": {
         "node": ">=16.0.0"

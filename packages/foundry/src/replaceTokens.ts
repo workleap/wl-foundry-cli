@@ -22,7 +22,7 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
 
 const TokenRegex = /{{(.*?)}}/g; // regex to match all tokens in the form of {{TOKEN}}
 
-function replaceTokensInFile(content:string, values: Record<string, string>) {
+function replaceTokensInFile(content: string, values: Record<string, string>) {
     return content.replaceAll(TokenRegex, (match, token) => {
         const replacement = values[token];
 

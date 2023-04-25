@@ -17,10 +17,7 @@
     "scripts": {
         "dev": "pnpm run build:dev && pnpm link --global",
         "build": "tsup",
-        "build:dev": "tsup --sourcemap",
-        "clean": "pnpm dlx rimraf dist coverage",
-        "lint:types": "tsc --noEmit",
-        "test": "jest"
+        "build:dev": "tsup --sourcemap"
     },
     "dependencies": {
         "commander": "10.0.1",
