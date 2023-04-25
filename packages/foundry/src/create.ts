@@ -30,7 +30,6 @@ function formatScope(scope: string) {
     }
 }
 
-
 const Templates: Record<TemplateId, TemplateDetails> = {
     "host-application": {
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,

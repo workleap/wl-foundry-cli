@@ -26,7 +26,7 @@ function replaceTokensInFile(content:string, values: Record<string, string>) {
     return content.replaceAll(TokenRegex, (match, token) => {
         const replacement = values[token];
 
-        return replacement !== undefined ? replacement : match;
+        return replacement ?? match;
     });
 }
 

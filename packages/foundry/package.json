@@ -33,10 +33,5 @@
     "devDependencies": {
         "@types/degit": "2.8.3",
         "@types/fs-extra": "11.0.1"
-    },
-    "tsup": {
-      "entry": ["src/bin.ts"],
-      "clean": true,
-      "format": ["esm"]
     }
 }
