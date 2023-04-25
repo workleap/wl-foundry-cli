@@ -12,11 +12,7 @@ interface TemplateDetails {
     action: (outputDirectory: string, options: Record<string, string>) => Promise<void>;
 }
 
-const getName = (outputDirectory: string) => {
-    return basename(outputDirectory);
-};
-
-const getScope = (scope: string) => {
+function formatScope(scope: string) {
     let formattedScope = scope;
 
     if (scope) {
@@ -32,46 +28,47 @@ const getScope = (scope: string) => {
     } else {
         return "";
     }
-};
+}
 
-const Templates: Map<TemplateId, TemplateDetails> = new Map ([
-    ["host-application", {
+
+const Templates: Record<TemplateId, TemplateDetails> = {
+    "host-application": {
         repositoryUrl: `${BaseRepositoryAddress}/host-application`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options["packageScope"]);
-            const name = getName(options["outDir"]);
+            const scope = formatScope(options["packageScope"]);
+            const name = basename(options["outDir"]);
 
             await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
                 PACKAGE_SCOPE: scope,
                 NAME: name
             }, outputDirectory);
         }
-    }],
-    ["remote-module", {
+    },
+    "remote-module": {
         repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options["hostScope"]);
-            const name = getName(options["outDir"]);
+            const scope = formatScope(options["hostScope"]);
+            const name = basename(options["outDir"]);
 
             await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
-    }],
-    ["static-module", {
+    },
+    "static-module": {
         repositoryUrl: `${BaseRepositoryAddress}/static-module`,
         action: async (outputDirectory, options) => {
-            const scope = getScope(options["hostScope"]);
-            const name = getName(options["outDir"]);
+            const scope = formatScope(options["hostScope"]);
+            const name = basename(options["outDir"]);
 
             await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
         }
-    }]
-]);
+    }
+};
 
 export async function create(templateId: TemplateId, outputDirectory: string, args: Record<string, string>) {
-    const template = Templates.get(templateId);
+    const template = Templates[templateId];
 
-    if (template == null) {
-        return;
+    if (!template) {
+        throw new Error("Invalid template id");
     }
 
     await cloneProjectTemplate(outputDirectory, template.repositoryUrl);

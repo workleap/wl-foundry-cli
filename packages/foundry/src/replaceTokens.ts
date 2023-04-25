@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
 import { compile } from "handlebars";
 
-export async function replaceTokens(globPatterns: string[], values: Record<string, unknown>, outputDirectory: string) {
+export async function replaceTokens(globPatterns: string[], values: Record<string, string>, outputDirectory: string) {
     if (!globPatterns || globPatterns.length === 0 || !values || Object.keys(values).length === 0) {
         return;
     }
