@@ -1,6 +1,6 @@
 import * as fs from "node:fs/promises";
 import * as glob from "glob";
-import { replaceTokens } from "../src/replaceTokens";
+import { replaceTokens } from "../src/replaceTokens.js";
 
 import { join } from "path";
 
