@@ -87,7 +87,6 @@ if (templateId === "host-application") {
                 return "You must enter a scope";
             }
         }
-
     });
 
     if (isCancel(textValue)) { process.exit(1); }

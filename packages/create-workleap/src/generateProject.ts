@@ -30,6 +30,14 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
     const childProcess = child_process.exec(`npx @workleap/foundry ${commandName} ${args.join(" ")}`);
 
     return new Promise(resolve => {
+        childProcess.on("error", error => {
+            console.error(error);
+            resolve(1);
+        });
+        childProcess.stderr?.on("data", (x: string): void => {
+            console.error(x);
+            resolve(1);
+        });
         childProcess.on("exit", code => {
             resolve(code ?? 0);
         });
