@@ -6,7 +6,7 @@ export interface GenerateProjectOptionalArguments {
     hostScope?: string;
 }
 
-export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments) {
+export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments): Promise<number> {
     let commandName;
     const args: string[] = [];
 

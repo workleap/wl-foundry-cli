@@ -127,3 +127,4 @@ if (status === 0) {
     loader.stop(colors.red("Something went wrong"));
 }
 
+process.exitCode = status;
