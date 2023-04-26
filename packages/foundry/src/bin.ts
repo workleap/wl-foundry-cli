@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { cwd, argv } from "node:process";
 import { Command } from "commander";
 
-import { create } from "./create.js";
+import { create } from "./create.ts";
 
 import packageJson from "../package.json" assert { type: "json" };
 

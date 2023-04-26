@@ -1,6 +1,6 @@
 import { mkdir } from "node:fs/promises";
 
-import { cloneProjectTemplate } from "../src/cloneProjectTemplate";
+import { cloneProjectTemplate } from "../src/cloneProjectTemplate.ts";
 
 jest.mock("node:fs/promises");
 

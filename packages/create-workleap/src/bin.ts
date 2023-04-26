@@ -4,9 +4,9 @@ import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/pr
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { generateProject } from "./generateProject.js";
+import { generateProject } from "./generateProject.ts";
 import packageJson from "../package.json" assert { type: "json" };
-import type { TemplateId } from "./templates.js";
+import type { TemplateId } from "./templates.ts";
 
 let outputDirectory = process.argv[2];
 

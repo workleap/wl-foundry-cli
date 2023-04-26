@@ -1,7 +1,7 @@
 import { basename } from "node:path";
 
-import { cloneProjectTemplate } from "./cloneProjectTemplate.js";
-import { replaceTokens } from "./replaceTokens.js";
+import { cloneProjectTemplate } from "./cloneProjectTemplate.ts";
+import { replaceTokens } from "./replaceTokens.ts";
 
 const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 

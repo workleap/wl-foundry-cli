@@ -1,5 +1,5 @@
 import child_process from "node:child_process";
-import type { TemplateId } from "./templates.js";
+import type { TemplateId } from "./templates.ts";
 
 export interface GenerateProjectOptionalArguments {
     packageScope?: string;
