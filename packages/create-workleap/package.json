@@ -24,5 +24,8 @@
         "@clack/core": "0.3.2",
         "@clack/prompts": "0.6.3",
         "picocolors": "1.0.0"
+    },
+    "devDependencies": {
+        "tsup": "6.7.0"
     }
 }

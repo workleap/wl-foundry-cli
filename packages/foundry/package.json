@@ -22,7 +22,8 @@
     "dependencies": {
         "commander": "10.0.1",
         "degit": "2.8.4",
-        "glob": "10.2.2"
+        "glob": "10.2.2",
+        "tsup": "6.7.0"
     },
     "devDependencies": {
         "@types/degit": "2.8.3"
