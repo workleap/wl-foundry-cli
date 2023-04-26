@@ -6,7 +6,7 @@ export interface GenerateProjectOptionalArguments {
     hostScope?: string;
 }
 
-export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments): Promise<number> {
+export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments) {
     let commandName;
     const args: string[] = [];
 
@@ -29,7 +29,7 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
 
     const childProcess = child_process.exec(`npx @workleap/foundry ${commandName} ${args.join(" ")}`);
 
-    return new Promise(resolve => {
+    return new Promise<number>(resolve => {
         childProcess.on("error", error => {
             console.error(error);
             resolve(1);
