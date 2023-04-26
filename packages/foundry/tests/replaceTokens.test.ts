@@ -15,7 +15,7 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-test("when pattern match no file, do no file system io", async () => {
+test("when pattern match no file, do nothing", async () => {
     jest.spyOn(glob, "glob").mockImplementation(async () => []);
 
     await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
@@ -50,7 +50,7 @@ test("when pattern match files, variables are replaced", async () => {
     expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), replacedContent);
 });
 
-test("when files detected with no variables inside, do nothing", async () => {
+test("when files detected with no variables inside, content stays the same", async () => {
     const content =
         `{
             "name": "allo",
@@ -68,7 +68,7 @@ test("when files detected with no variables inside, do nothing", async () => {
     expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), content);
 });
 
-test("when files detected with unknown variable, do nothing", async () => {
+test("when files detected with unknown variable, content stays the same", async () => {
     const content =
         `{
             "name": "{{COUCOU}}",
