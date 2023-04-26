@@ -1,5 +1,5 @@
 {
-  "name": "{{HOST_SCOPE}}{{NAME}}",
+  "name": "{{HOST_SCOPE}}/{{NAME}}",
   "version": "0.0.0",
   "private": true,
   "dependencies": {}

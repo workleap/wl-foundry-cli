@@ -7,23 +7,9 @@ const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
 type TemplateId = "host-application" | "remote-module" | "static-module";
 
-function formatScope(scope: string) {
-    let formattedScope = scope;
-
-    if (scope) {
-        if (formattedScope.slice(-1) !== "/") {
-            formattedScope = `${formattedScope}/`;
-        }
-
-        return formattedScope;
-    } else {
-        return "";
-    }
-}
-
 const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: Record<string, string>) => Promise<void>> = {
     "host-application": async (outputDirectory, options) => {
-        const scope = formatScope(options["packageScope"]);
+        const scope = options["packageScope"];
         const name = basename(options["outDir"]);
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/host-application`);
@@ -34,7 +20,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         }, outputDirectory);
     },
     "remote-module": async (outputDirectory, options) => {
-        const scope = formatScope(options["hostScope"]);
+        const scope = options["hostScope"];
         const name = basename(options["outDir"]);
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/remote-module`);
@@ -42,7 +28,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
     },
     "static-module": async (outputDirectory, options) => {
-        const scope = formatScope(options["hostScope"]);
+        const scope = options["hostScope"];
         const name = basename(options["outDir"]);
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/static-module`);
