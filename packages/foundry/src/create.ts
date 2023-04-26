@@ -7,11 +7,6 @@ const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
 type TemplateId = "host-application" | "remote-module" | "static-module";
 
-interface TemplateDetails {
-    repositoryUrl: string;
-    action: (outputDirectory: string, options: Record<string, string>) => Promise<void>;
-}
-
 function formatScope(scope: string) {
     let formattedScope = scope;
 
@@ -26,43 +21,38 @@ function formatScope(scope: string) {
     }
 }
 
-const Templates: Record<TemplateId, TemplateDetails> = {
-    "host-application": {
-        repositoryUrl: `${BaseRepositoryAddress}/host-application`,
-        action: async (outputDirectory, options) => {
-            const scope = formatScope(options["packageScope"]);
-            const name = basename(options["outDir"]);
+const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: Record<string, string>) => Promise<void>> = {
+    "host-application": async (outputDirectory, options) => {
+        const scope = formatScope(options["packageScope"]);
+        const name = basename(options["outDir"]);
 
-            await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
-                PACKAGE_SCOPE: scope,
-                NAME: name
-            }, outputDirectory);
-        }
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/host-application`);
+
+        await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
+            PACKAGE_SCOPE: scope,
+            NAME: name
+        }, outputDirectory);
     },
-    "remote-module": {
-        repositoryUrl: `${BaseRepositoryAddress}/remote-module`,
-        action: async (outputDirectory, options) => {
-            const scope = formatScope(options["hostScope"]);
-            const name = basename(options["outDir"]);
+    "remote-module": async (outputDirectory, options) => {
+        const scope = formatScope(options["hostScope"]);
+        const name = basename(options["outDir"]);
 
-            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
-        }
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/remote-module`);
+
+        await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
     },
-    "static-module": {
-        repositoryUrl: `${BaseRepositoryAddress}/static-module`,
-        action: async (outputDirectory, options) => {
-            const scope = formatScope(options["hostScope"]);
-            const name = basename(options["outDir"]);
+    "static-module": async (outputDirectory, options) => {
+        const scope = formatScope(options["hostScope"]);
+        const name = basename(options["outDir"]);
 
-            await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
-        }
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/static-module`);
+
+        await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
     }
 };
 
 export async function create(templateId: TemplateId, outputDirectory: string, args: Record<string, string>) {
-    const template = Templates[templateId];
+    const templateCreator = TemplateGenerators[templateId];
 
-    await cloneProjectTemplate(outputDirectory, template.repositoryUrl);
-
-    await template.action(outputDirectory, args);
+    await templateCreator(outputDirectory, args);
 }
