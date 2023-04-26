@@ -33,7 +33,7 @@ a base to customize with these options:
 
 | option                   | description                  | required |
 |--------------------------|------------------------------|----------|
-| -o, --out-dir <string>   | where to create the template |          |
+| -o, --out-dir <string>   | where to create the template | ✔        |
 | --package-scope <string> | package scope                | ✔        |
 | -h, --help               | display help for command     |          |
 
@@ -44,7 +44,7 @@ a base to customize with these options:
 
 | option                 | description                  | required |
 |------------------------|------------------------------|----------|
-| -o, --out-dir <string> | where to create the template |          |
+| -o, --out-dir <string> | where to create the template | ✔        |
 | --host-scope <string>  | host scope                   | ✔        |
 | -h, --help             | display help for command     |          |
 
@@ -55,7 +55,7 @@ a base to customize with these options:
 
 | option                 | description                  | required |
 |------------------------|------------------------------|----------|
-| -o, --out-dir <string> | where to create the template |          |
+| -o, --out-dir <string> | where to create the template | ✔        |
 | --host-scope <string>  | host scope                   | ✔        |
 | -h, --help             | display help for command     |          |
 

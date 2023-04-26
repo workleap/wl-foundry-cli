@@ -16,9 +16,9 @@ program
 
 program.command("generate-host-application")
     .description("use the host-application template")
-    .option(
+    .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template",
+        "where to create the template (required)",
         cwd()
     )
     .requiredOption(
@@ -26,16 +26,14 @@ program.command("generate-host-application")
         "package scope, should begin with a '@' (required)"
     )
     .action(async options => {
-        const outDir = options["outDir"]?.toString() ?? cwd();
-
-        await create("host-application", resolve(outDir), options);
+        await create("remote-module", resolve(options["outDir"]), options);
     });
 
 program.command("generate-remote-module")
     .description("use the remote-module template")
-    .option(
+    .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template",
+        "where to create the template (required)",
         cwd()
     )
     .requiredOption(
@@ -43,17 +41,15 @@ program.command("generate-remote-module")
         "host scope (required)"
     )
     .action(async options => {
-        const outDir = options["outDir"]?.toString() ?? cwd();
-
-        await create("remote-module", resolve(outDir), options);
+        await create("remote-module", resolve(options["outDir"]), options);
     });
 
 
 program.command("generate-static-module")
     .description("use the static-module template")
-    .option(
+    .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template",
+        "where to create the template (required)",
         cwd()
     )
     .requiredOption(
@@ -61,9 +57,7 @@ program.command("generate-static-module")
         "host scope (required)"
     )
     .action(async options => {
-        const outDir = options["outDir"]?.toString() ?? cwd();
-
-        await create("static-module", resolve(outDir), options);
+        await create("remote-module", resolve(options["outDir"]), options);
     });
 
 program.parse(argv);
