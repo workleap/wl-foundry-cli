@@ -12,7 +12,7 @@ let outputDirectory = process.argv[2];
 
 intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 
-const invalidPathCharactersRegex = /[:*?"<>|]/;
+const InvalidPathCharactersRegex = /[:*?"<>|]/;
 
 // Ask for output directory
 if (!outputDirectory) {
@@ -20,7 +20,7 @@ if (!outputDirectory) {
         message: "Where should we create your project?",
         placeholder: "  (hit Enter to use current directory)",
         validate: value => {
-            if (invalidPathCharactersRegex.test(value)) {
+            if (InvalidPathCharactersRegex.test(value)) {
                 return "Invalid path format";
             }
         }
