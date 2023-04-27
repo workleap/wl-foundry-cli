@@ -12,11 +12,18 @@ let outputDirectory = process.argv[2];
 
 intro(colors.gray(`${packageJson.name} - v${packageJson.version}`));
 
+const invalidPathCharactersRegex = /[:*?"<>|]/;
+
 // Ask for output directory
 if (!outputDirectory) {
     const directory = await text({
         message: "Where should we create your project?",
-        placeholder: "  (hit Enter to use current directory)"
+        placeholder: "  (hit Enter to use current directory)",
+        validate: value => {
+            if (invalidPathCharactersRegex.test(value)) {
+                return "Invalid path format";
+            }
+        }
     });
 
     if (isCancel(directory)) { process.exit(1); }
@@ -72,6 +79,14 @@ if (templateId === "host-application") {
             if (value === "" || value === undefined) {
                 return "You must enter a scope";
             }
+
+            if (!value.startsWith("@")) {
+                return "Scope should begin with '@'";
+            }
+
+            if (value.endsWith("/")) {
+                return "Scope should not end with '/'";
+            }
         }
     });
 
@@ -85,6 +100,14 @@ if (templateId === "host-application") {
         validate: value => {
             if (value === "" || value === undefined) {
                 return "You must enter a scope";
+            }
+
+            if (!value.startsWith("@")) {
+                return "Scope should begin with '@'";
+            }
+
+            if (value.endsWith("/")) {
+                return "Scope should not end with '/'";
             }
         }
     });

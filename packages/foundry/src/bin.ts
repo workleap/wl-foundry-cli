@@ -44,7 +44,6 @@ program.command("generate-remote-module")
         await create("remote-module", resolve(options["outDir"]), options);
     });
 
-
 program.command("generate-static-module")
     .description("use the static-module template")
     .requiredOption(
