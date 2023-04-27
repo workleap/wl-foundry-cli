@@ -63,14 +63,10 @@ a base to customize with these options:
 
 During development, we are using `pnpm`, this is the recommended tooling.
 
-To test locally your development version, without need the need to rebuild it and install it continually, use this
-command:
+To test locally your development version, without the need to rebuild and install it continually, use this command:
 
 ```cmd
-# first compile the TypeScript to JS
-pnpm build
-# then link the bin globally
-pnpm link --global
+pnpm dev
 ```
 
 Then you can call the CLI as a global command from `foundry`.

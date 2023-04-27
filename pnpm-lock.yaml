@@ -44,7 +44,7 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
-  packages/create-workleap:
+  packages/create-workleap-project:
     dependencies:
       '@clack/core':
         specifier: 0.3.2
