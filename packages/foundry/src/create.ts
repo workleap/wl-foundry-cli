@@ -38,7 +38,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
 };
 
 export async function create(templateId: TemplateId, outputDirectory: string, args: Record<string, string>) {
-    const templateCreator = TemplateGenerators[templateId];
+    const templateGenerator = TemplateGenerators[templateId];
 
-    await templateCreator(outputDirectory, args);
+    await templateGenerator(outputDirectory, args);
 }
