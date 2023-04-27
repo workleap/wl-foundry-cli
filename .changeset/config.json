@@ -10,5 +10,5 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["create-workleap", "@workleap/foundry"]
+  "ignore": ["create-workleap-project", "@workleap/foundry"]
 }
