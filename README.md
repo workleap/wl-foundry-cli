@@ -14,7 +14,7 @@
 
 ### Interactive
 
-You can create a new project interactively by using [create-workleap](packages/create-workleap/README.md).
+You can create a new project interactively by using [create-workleap](packages/create-workleap-project/README.md).
 
 ### Non-interactive
 
