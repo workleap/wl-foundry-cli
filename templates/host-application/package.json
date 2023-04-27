@@ -1,5 +1,5 @@
 {
-  "name": "{{PACKAGE_SCOPE}}{{NAME}}",
+  "name": "{{PACKAGE_SCOPE}}/{{NAME}}",
   "version": "0.0.0",
   "private": true,
   "dependencies": {}

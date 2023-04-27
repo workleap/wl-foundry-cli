@@ -18,18 +18,14 @@
     "scripts": {
         "dev": "pnpm run build:dev && pnpm link --global",
         "build": "tsup",
-        "build:dev": "tsup --sourcemap",
-        "clean": "pnpm dlx rimraf dist coverage",
-        "lint:types": "tsc --noEmit"
+        "build:dev": "tsup --sourcemap"
     },
     "dependencies": {
         "@clack/core": "0.3.2",
         "@clack/prompts": "0.6.3",
         "picocolors": "1.0.0"
     },
-    "tsup": {
-        "entry": ["src/bin.ts"],
-        "clean": true,
-        "format": ["esm"]
+    "devDependencies": {
+        "tsup": "6.7.0"
     }
 }

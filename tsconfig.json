@@ -1,0 +1,8 @@
+{
+  "compileOnSave": true,
+  "extends": "@workleap/typescript-configs/monorepo-root.json",
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
+}

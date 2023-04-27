@@ -1,8 +1,6 @@
 {
   "extends": "@workleap/typescript-configs/library.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "module": "commonjs",
-  },
-  "include": ["src"]
+    "allowImportingTsExtensions": true
+  }
 }

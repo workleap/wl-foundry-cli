@@ -1,5 +1,5 @@
 import child_process from "node:child_process";
-import type { TemplateId } from "./templates.js";
+import type { TemplateId } from "./templates.ts";
 
 export interface GenerateProjectOptionalArguments {
     packageScope?: string;
@@ -14,22 +14,30 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
 
     switch (templateId) {
         case "host-application":
-            commandName = "host-application";
+            commandName = "generate-host-application";
             args.push("--package-scope", packageScope!);
             break;
         case "remote-module":
-            commandName = "remote-module";
+            commandName = "generate-remote-module";
             args.push("--host-scope", hostScope!);
             break;
         case "static-module":
-            commandName = "static-module";
+            commandName = "generate-static-module";
             args.push("--host-scope", hostScope!);
             break;
     }
 
     const childProcess = child_process.exec(`npx @workleap/foundry ${commandName} ${args.join(" ")}`);
 
-    return new Promise(resolve => {
+    return new Promise<number>(resolve => {
+        childProcess.on("error", error => {
+            console.error(error);
+            resolve(1);
+        });
+        childProcess.stderr?.on("data", (x: string): void => {
+            console.error(x);
+            resolve(1);
+        });
         childProcess.on("exit", code => {
             resolve(code ?? 0);
         });

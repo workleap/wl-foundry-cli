@@ -1,22 +1,63 @@
-import * as process from "process";
+#!/usr/bin/env node
+import { resolve } from "node:path";
+import { cwd, argv } from "node:process";
+import { Command } from "commander";
 
-import { Configuration, runCli } from "./cli";
-import { loadTemplate } from "./loadTemplate";
-import { generator } from "./generator";
+import { create } from "./create.ts";
 
-const main = async (): Promise<void> => {
-    const config: Configuration = runCli();
+import packageJson from "../package.json" assert { type: "json" };
 
-    await loadTemplate(config);
+const program = new Command();
 
-    await generator(config.outputDirectory);
-};
+program
+    .name(packageJson.name)
+    .description(packageJson.description)
+    .version(packageJson.version, "-v, --version");
 
-main()
-    .then(() => {
-        process.exit(0);
-    })
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
+program.command("generate-host-application")
+    .description("use the host-application template")
+    .requiredOption(
+        "-o, --out-dir <string>",
+        "where to create the template (required)",
+        cwd()
+    )
+    .requiredOption(
+        "--package-scope <string>",
+        "package scope, should begin with a '@' (required)"
+    )
+    .action(async options => {
+        await create("remote-module", resolve(options["outDir"]), options);
     });
+
+program.command("generate-remote-module")
+    .description("use the remote-module template")
+    .requiredOption(
+        "-o, --out-dir <string>",
+        "where to create the template (required)",
+        cwd()
+    )
+    .requiredOption(
+        "--host-scope <string>",
+        "host scope (required)"
+    )
+    .action(async options => {
+        await create("remote-module", resolve(options["outDir"]), options);
+    });
+
+
+program.command("generate-static-module")
+    .description("use the static-module template")
+    .requiredOption(
+        "-o, --out-dir <string>",
+        "where to create the template (required)",
+        cwd()
+    )
+    .requiredOption(
+        "--host-scope <string>",
+        "host scope (required)"
+    )
+    .action(async options => {
+        await create("remote-module", resolve(options["outDir"]), options);
+    });
+
+program.parse(argv);

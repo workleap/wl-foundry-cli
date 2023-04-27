@@ -4,9 +4,9 @@ import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/pr
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
-import { generateProject } from "./generateProject.js";
+import { generateProject } from "./generateProject.ts";
 import packageJson from "../package.json" assert { type: "json" };
-import type { TemplateId } from "./templates.js";
+import type { TemplateId } from "./templates.ts";
 
 let outputDirectory = process.argv[2];
 
@@ -87,7 +87,6 @@ if (templateId === "host-application") {
                 return "You must enter a scope";
             }
         }
-
     });
 
     if (isCancel(textValue)) { process.exit(1); }
@@ -99,7 +98,7 @@ if (templateId === "host-application") {
 const loader = spinner();
 loader.start("Generating your project...");
 
-await generateProject(
+const status = await generateProject(
     templateId,
     outputDirectory,
     {
@@ -108,19 +107,24 @@ await generateProject(
     }
 );
 
-loader.stop(colors.green("Your project is ready!"));
+if (status === 0) {
+    loader.stop(colors.green("Your project is ready!"));
 
-let stepNumber = 1;
-const nextStepsInstructions = [];
+    let stepNumber = 1;
+    const nextStepsInstructions = [];
 
-const relative = path.relative(process.cwd(), outputDirectory);
-if (relative !== "") {
-    nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan(`cd ${relative}`)}`);
+    const relative = path.relative(process.cwd(), outputDirectory);
+    if (relative !== "") {
+        nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan(`cd ${relative}`)}`);
+    }
+    nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
+
+    note(
+        nextStepsInstructions.join("\n"),
+        "Next steps:"
+    );
+} else {
+    loader.stop(colors.red("Something went wrong"));
 }
-nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
 
-note(
-    nextStepsInstructions.join("\n"),
-    "Next steps:"
-);
-
+process.exitCode = status;

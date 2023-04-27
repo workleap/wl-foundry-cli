@@ -1,7 +1,6 @@
 {
   "extends": "@workleap/typescript-configs/library.json",
   "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "include": ["src"],
+    "allowImportingTsExtensions": true
+  }
 }
