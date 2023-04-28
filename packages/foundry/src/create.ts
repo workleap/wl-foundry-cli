@@ -10,13 +10,11 @@ type TemplateId = "host-application" | "remote-module" | "static-module";
 const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: Record<string, string>) => Promise<void>> = {
     "host-application": async (outputDirectory, options) => {
         const scope = options["packageScope"];
-        const name = basename(options["outDir"]);
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/host-application`);
 
         await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
-            PACKAGE_SCOPE: scope,
-            NAME: name
+            PACKAGE_SCOPE: scope
         }, outputDirectory);
     },
     "remote-module": async (outputDirectory, options) => {

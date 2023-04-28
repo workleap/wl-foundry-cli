@@ -1,1 +1,1 @@
-# {{PACKAGE_SCOPE}}{{NAME}}
+# {{PACKAGE_SCOPE}}
