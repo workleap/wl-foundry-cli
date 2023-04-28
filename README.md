@@ -8,13 +8,13 @@
 | Package                 | Type        | Version                                                                                                                                     |
 |-------------------------| ----------- |---------------------------------------------------------------------------------------------------------------------------------------------|
 | @workleap/foundry       | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/foundry.svg?style=flat)](https://www.npmjs.org/package/@workleap/foundry)             |
-| create-workleap-project | application | [![NPM Version](http://img.shields.io/npm/v/create-workleap-project.svg?style=flat)](https://www.npmjs.org/package/create-workleap-project) |
+| @workleap/create-project | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/create-project.svg?style=flat)](https://www.npmjs.org/package/@workleap/create-project) |
 
 ## Usage
 
 ### Interactive
 
-You can create a new project interactively by using [create-workleap-project](packages/create-workleap-project/README.md).
+You can create a new project interactively by using [@workleap/create-project](packages/create-project/README.md).
 
 ### Non-interactive
 
