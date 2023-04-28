@@ -4,9 +4,10 @@ import type { TemplateId } from "./templates.ts";
 export interface GenerateProjectOptionalArguments {
     packageScope?: string;
     hostScope?: string;
+    packageName?: string;
 }
 
-export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope }: GenerateProjectOptionalArguments) {
+export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope, packageName }: GenerateProjectOptionalArguments) {
     let commandName;
     const args: string[] = [];
 
@@ -20,10 +21,12 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
         case "remote-module":
             commandName = "generate-remote-module";
             args.push("--host-scope", hostScope!);
+            args.push("--package-name", packageName!);
             break;
         case "static-module":
             commandName = "generate-static-module";
             args.push("--host-scope", hostScope!);
+            args.push("--package-name", packageName!);
             break;
     }
 

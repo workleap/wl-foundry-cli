@@ -32,6 +32,6 @@ Then you can call the CLI as a global command from `create-workleap-project`.
 
 Then to remove the link:
 
-```
+```cmd
 pnpm unlink
 ```
