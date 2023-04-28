@@ -1,6 +1,6 @@
 {
     "name": "@workleap/foundry",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "Foundry-CLI generator module",
     "license": "Apache-2.0",
     "type": "module",
