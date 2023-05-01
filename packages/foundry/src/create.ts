@@ -1,5 +1,3 @@
-import { basename } from "node:path";
-
 import { cloneProjectTemplate } from "./cloneProjectTemplate.ts";
 import { replaceTokens } from "./replaceTokens.ts";
 
@@ -14,24 +12,24 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/host-application`);
 
         await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
-            PACKAGE_SCOPE: scope
+            "PACKAGE-SCOPE": scope
         }, outputDirectory);
     },
     "remote-module": async (outputDirectory, options) => {
         const scope = options["hostScope"];
-        const name = basename(options["outDir"]);
+        const packageName = options["packageName"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/remote-module`);
 
-        await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
+        await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
     },
     "static-module": async (outputDirectory, options) => {
         const scope = options["hostScope"];
-        const name = basename(options["outDir"]);
+        const packageName = options["packageName"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/static-module`);
 
-        await replaceTokens(["**"], { HOST_SCOPE: scope, NAME: name }, outputDirectory);
+        await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
     }
 };
 

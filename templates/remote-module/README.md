@@ -1,1 +1,1 @@
-# {{HOST_SCOPE}}{{NAME}}
+# {{PACKAGE-NAME}}
