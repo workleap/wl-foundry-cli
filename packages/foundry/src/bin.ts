@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { resolve } from "node:path";
-import { cwd, argv } from "node:process";
+import { argv } from "node:process";
 import { Command } from "commander";
 
 import { create } from "./create.ts";
@@ -18,8 +18,7 @@ program.command("generate-host-application")
     .description("use the host-application template")
     .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template (required)",
-        cwd()
+        "where to create the template (required)"
     )
     .requiredOption(
         "--package-scope <string>",
@@ -33,12 +32,15 @@ program.command("generate-remote-module")
     .description("use the remote-module template")
     .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template (required)",
-        cwd()
+        "where to create the template (required)"
     )
     .requiredOption(
         "--host-scope <string>",
         "host scope (required)"
+    )
+    .requiredOption(
+        "-n, --package-name <string>",
+        "package name (required)"
     )
     .action(async options => {
         await create("remote-module", resolve(options["outDir"]), options);
@@ -48,12 +50,15 @@ program.command("generate-static-module")
     .description("use the static-module template")
     .requiredOption(
         "-o, --out-dir <string>",
-        "where to create the template (required)",
-        cwd()
+        "where to create the template (required)"
     )
     .requiredOption(
         "--host-scope <string>",
         "host scope (required)"
+    )
+    .requiredOption(
+        "-n, --package-name <string>",
+        "package name (required)"
     )
     .action(async options => {
         await create("remote-module", resolve(options["outDir"]), options);

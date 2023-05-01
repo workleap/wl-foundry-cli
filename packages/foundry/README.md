@@ -1,10 +1,6 @@
 # @workleap/foundry
 
-This project is a non-interactive command-line tool that allows users to quickly create customized copies of a template
-stored in a Git
-repository. By specifying the desired values for text tokens within the template, users can easily generate new files
-that incorporate their own content and configurations. The tool streamlines the process of creating new projects based
-on an existing template, saving time and effort while ensuring consistency and accuracy.
+This project is a non-interactive command-line tool that allows users to quickly create customized copies of a template stored in a Git repository. By specifying the desired values for text tokens within the template, users can easily generate new files that incorporate their own content and configurations. The tool streamlines the process of creating new projects based on an existing template, saving time and effort while ensuring consistency and accuracy.
 
 See `@workleap/foundry --help`:
 
@@ -28,8 +24,7 @@ Commands:
 
 ### generate-host-application
 
-Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application) template as
-a base to customize with these options:
+Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application) template as a base to customize with these options:
 
 | option                   | description                  | required |
 |--------------------------|------------------------------|----------|
@@ -39,25 +34,25 @@ a base to customize with these options:
 
 ### generate-remote-module
 
-Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module) template as
-a base to customize with these options:
+Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module) template as a base to customize with these options:
 
-| option                 | description                  | required |
-|------------------------|------------------------------|----------|
-| -o, --out-dir <string> | where to create the template | ✔        |
-| --host-scope <string>  | host scope                   | ✔        |
-| -h, --help             | display help for command     |          |
+| option                      | description                  | required |
+|-----------------------------|------------------------------|----------|
+| -o, --out-dir <string>      | where to create the template | ✔        |
+| --host-scope <string>       | host scope                   | ✔        |
+| -n, --package-name <string> | package name                 | ✔        |
+| -h, --help                  | display help for command     |          |
 
 ### generate-static-module
 
-Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module) template as
-a base to customize with these options:
+Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module) template as a base to customize with these options:
 
-| option                 | description                  | required |
-|------------------------|------------------------------|----------|
-| -o, --out-dir <string> | where to create the template | ✔        |
-| --host-scope <string>  | host scope                   | ✔        |
-| -h, --help             | display help for command     |          |
+| option                      | description                  | required |
+|-----------------------------|------------------------------|----------|
+| -o, --out-dir <string>      | where to create the template | ✔        |
+| --host-scope <string>       | host scope                   | ✔        |
+| -n, --package-name <string> | package name                 | ✔        |
+| -h, --help                  | display help for command     |          |
 
 ## Develop
 
@@ -73,6 +68,6 @@ Then you can call the CLI as a global command from `foundry`.
 
 Then to remove the link:
 
-```
+```cmd
 pnpm unlink
 ```

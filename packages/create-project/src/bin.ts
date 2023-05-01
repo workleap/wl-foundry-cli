@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import process from "node:process";
-import { spinner, note, text, intro, isCancel, confirm, select } from "@clack/prompts";
+import { spinner, note, text, intro, isCancel, confirm, select, group } from "@clack/prompts";
 import fs from "node:fs";
 import path from "node:path";
 import colors from "picocolors";
@@ -67,12 +67,15 @@ const templateId = await select({
 
 if (isCancel(templateId)) { process.exit(1); }
 
+const ValidNpmPackageNameRegex = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+
 let packageScope: string | undefined;
 let hostScope: string | undefined;
+let packageName: string | undefined;
 
 // Ask for other arguments
 if (templateId === "host-application") {
-    const textValue = await text({
+    const packageScopeValue = await text({
         message: "What should be the package scope?",
         placeholder: "ex: @my-app",
         validate: value => {
@@ -90,31 +93,45 @@ if (templateId === "host-application") {
         }
     });
 
-    if (isCancel(textValue)) { process.exit(1); }
+    if (isCancel(packageScopeValue)) { process.exit(1); }
 
-    packageScope = textValue;
+    packageScope = packageScopeValue;
 } else {
-    const textValue = await text({
-        message: "What is the host application scope?",
-        placeholder: "ex: @my-app",
-        validate: value => {
-            if (value === "" || value === undefined) {
-                return "You must enter a scope";
+    const groupValue = await group({
+        packageName: () => text({
+            message: "What should be the package name?",
+            placeholder: "ex: my-package",
+            validate: value => {
+                if (!ValidNpmPackageNameRegex.test(value)) {
+                    return "The package name is not valid";
+                }
             }
+        }),
+        hostScope: () => text({
+            message: "What is the host application scope?",
+            placeholder: "ex: @my-app",
+            validate: value => {
+                if (value === "" || value === undefined) {
+                    return "You must enter a scope";
+                }
 
-            if (!value.startsWith("@")) {
-                return "Scope should begin with '@'";
-            }
+                if (!value.startsWith("@")) {
+                    return "Scope should begin with '@'";
+                }
 
-            if (value.endsWith("/")) {
-                return "Scope should not end with '/'";
+                if (value.endsWith("/")) {
+                    return "Scope should not end with '/'";
+                }
             }
+        })
+    }, {
+        onCancel: () => {
+            process.exit(1);
         }
     });
 
-    if (isCancel(textValue)) { process.exit(1); }
-
-    hostScope = textValue;
+    hostScope = groupValue.hostScope;
+    packageName = groupValue.packageName;
 }
 
 // Call generateProject
@@ -126,7 +143,8 @@ const status = await generateProject(
     outputDirectory,
     {
         hostScope,
-        packageScope
+        packageScope,
+        packageName
     }
 );
 
