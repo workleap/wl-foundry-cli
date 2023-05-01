@@ -1,96 +1,235 @@
-# Contributing to wl-foundry-cli
+# Contributing
 
-Thank you for considering contributing to wl-foundry-cli! This document outlines some guidelines and suggestions to help make the contribution process smooth and effective.
+The following documentation is only for the maintainers of this repository.
 
-## New contributor guide
+- [Monorepo setup](#monorepo-setup)
+- [Installation](#installation)
+- [Develop the CLI packages](#Develop-the-CLI-packages)
+- [Release the packages](#release-the-packages)
+- [Available commands](#commands)
+- [CI](#ci)
+- [Add a new package to the monorepo](#add-a-new-package-to-the-monorepo)
 
-If you're new to the project and looking to contribute, welcome! Here are some resources to get started:
+## Monorepo setup
 
-- [Project README](README.md): This file provides an overview of the project, its purpose, and how to install and use the wl-foundry-cli tool.
-- [Issues](https://github.com/workleap/wl-foundry-cli/issues): Check out the list of open issues to find something to work on. If you have a new feature or bug to report, feel free to create a new issue.
-- [Code of Conduct](CODE_OF_CONDUCT.md): We strive to maintain a welcoming and inclusive community, and ask that all contributors abide by our code of conduct.
+This repository is managed as a monorepo that is composed of many npm packages.
 
-## Getting started
+For more information on monorepo:
 
-### Issues
+- [Babel GitHub](https://github.com/babel/babel/blob/master/doc/design/monorepo.md)
+- [Shopify GitHub](https://github.com/Shopify/quilt/blob/master/Decision%20records/00%20-%20Use%20a%20Lerna%20monorepo.md)
+- [Google](https://www.google.com/search?q=monorepo)
 
-#### Create a new issue
+### PNPM workspace
 
-If you spot a problem with the components, [search if an issue already exists](https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments) on our [issues page](https://github.com/workleap/wl-foundry-cli/issues). If a related issue doesn't exist, you can [open a new issue](https://github.com/workleap/wl-foundry-cli/issues).
+This monorepo is using PNPM workspace feature to handle the installation of the npm dependencies and manage the packages interdependencies.
 
-#### Solve an issue
+It's important to note that PNPM workspace will **hoist** the npm dependencies at the root of the workspace. This means that there might not be a *node_modules* directory nested in the packages directories. The npm dependencies are installed in a *node_modules* directory at the root of the workspace and a single *pnpm-lock.yaml* file is generated at the root of the workspace.
 
-Scan through our [existing issues](https://github.com/workleap/wl-foundry-cli/issues) to find one that interests you. As a general rule, we don’t assign issues to anyone. If you find an issue to work on, you are welcome to open a PR with a fix.
+## Installation
 
-### Make Changes
+This project uses PNPM workspace. Therefore, you must [install PNPM](https://pnpm.io/installation):
 
-#### Requirements
+To install the project, open a terminal at the root of the workspace and execute the following command:
 
-This tooling will be required for building and testing the project:
-- [PNPM](https://pnpm.io/) 
-- [Node.js](https://nodejs.org/en), the version need to be at least **v18**.
+```bash
+pnpm i
+```
 
-#### Make changes locally
+## Develop the CLI packages
 
-1. Fork the repository: `git clone https://github.com/workleap/wl-foundry-cli.git`
-2. Install dependencies: `pnpm install`
-3. Build the code: `pnpm dev`
-4. Test the code: `pnpm test`
-5. Create a working branch and start with your changes!
+The following documentation is a brief overview of the tools and processes involved in the development of the CLI packages.
 
-### Commit your update
+> To develop for each package, you can run `pnpm dev` from the project root folder. This will build all the content of the `packages` folder.
 
-Commit the changes once you are happy with them.
+### Working in `@workleap/create-project`
 
-Each commit message needs a title and a body. The title must contain a type, a target and a subject.
+This package can be found under the folder `packages/create-project`.
 
-#### Type
+To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `create-project` command.
 
-The title type must be one of the following:
+When the package is built from the `pnpm dev` command, you can attach a debugger and debug directly from the TypeScript files.
 
-- **build**: Changes that affect the build system or external dependencies
-- **chore**: Changes that don't affect the logic of the code (formatting, white spaces, missing semicolon)
-- **ci**: Modifications targeting configuration files or CI scripts
-- **docs**: Modifications to the documentation
-- **feat**: For new component or new feature
-- **fix**: Bug fix
-- **refactor**: Changes to the code base that don't fix a bug or add feature
-- **test**: Add missing tests or fix existing ones
-- 
-### Pull Request
+### Working in `@workleap/foundry`
 
-When you're finished with the changes, create a pull request, also known as a PR.
+This package can be found under the folder `packages/foundry`.
 
-- Run `pnpm changeset` and follow the steps to generate a changeset file (that needs to be committed with your PR).
-- Don't forget to [link PR to issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) if you are solving one.
-- Enable the checkbox to [allow maintainer edits](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so the branch can be updated for a merge.
+To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `foundry` command.
 
-Once you submit your PR, a Workleap team member will review your proposal. We may ask questions or request for additional information.
+When the package is built from the `pnpm dev` command, you can attach a debugger and debug directly from the TypeScript files.
 
-- We may ask for changes to be made before a PR can be merged, either using [suggested changes](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/incorporating-feedback-in-your-pull-request) or pull request comments. You can apply suggested changes directly through the UI. You can make any other changes in your fork, then commit them to your branch.
-- As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
-- If you run into any merge issues, checkout this [git tutorial](https://lab.github.com/githubtraining/managing-merge-conflicts) to help you resolve merge conflicts and other issues.
+### Linting
 
-### Your PR is merged!
+To run lint on the packages, call `pnpm lint` from the project root folder.
 
-Congratulations :tada::tada: The Workleap team thanks you.
+### Testing
 
+Once each package is built in dev mode (`pnpm dev`), you can run the unit test using `pnpm test`.
 
+To run manual tests, you also have access to the `create-project` and `foundry` commands once the step above is done.
 
+### Done developing
 
+#### Method 1:
 
+You can unlink the CLI packages from their folder (`packages/create-project` and `packages/foundry`) and using `pnpm unlink` 
 
-## Code conventions
+#### Method 2:
 
-We follow a few coding conventions to ensure consistency across the codebase. Here are some of the most important ones:
+By deleting the files `create-project`, `create-project.*`, `foundry` and `foundry.*` from `%LOCALAPPDATA%\pnpm`;
 
-- Use two spaces for indentation
-- Use single quotes for strings
-- Use camelCase for variable and function names
-- Use PascalCase for class names
-- Always use strict equality (`===`) instead of loose equality (`==`)
-- Add JSDoc comments to functions and classes
+Example in PowerShell:
+```ps1
+cd $env:LOCALAPPDATA\pnpm
+rm .\create-project .\create-project.CMD .\create-project.ps1 .\foundry .\foundry.CMD .\foundry.ps1
+```
 
-For a more detailed look at our coding conventions, check out the [style guide](https://github.com/wl-foundry/wl-foundry-cli/blob/main/STYLE_GUIDE.md).
+## Release the packages
 
-Thank you again for contributing to wl-foundry-cli! We appreciate your time and effort, and look forward to reviewing your contributions.
+When you are ready to release the packages, you must follow the following steps:
+1. Run `pnpm changeset` and follow the prompt. For versioning, always follow the [SemVer standard](https://semver.org/).
+2. Commit the newly generated file in your branch and submit a new Pull Request(PR). Changesets will automatically detect the changes and post a message in your pull request telling you that once the PR closes, the versions will be released.
+3. Find someone to review your PR.
+4. Merge the Pull request into master. A GitHub action will automatically trigger and update the version of the packages and publish them to [npm]https://www.npmjs.com/). A tag will also be created on GitHub tagging your PR merge commit.
+
+### Troubleshooting
+
+#### Github
+
+Make sure you're Git is clean (No pending changes).
+
+#### npm
+
+Make sure GitHub Action has **write access** to the selected npm packages.
+
+#### Compilation
+
+If the packages failed to compile, it's easier to debug without executing the full release flow every time. To do so, instead, execute the following command:
+
+```bash
+pnpm build
+```
+
+By default, packages compilation output will be in their respective *dist* directory.
+
+#### Linting errors
+
+If you got linting error, most of the time, they can be fixed automatically using `eslint . --fix`, if not, follow the report provided by `pnpm lint`.
+
+## Commands
+
+From the project root, you have access to many commands the main ones are:
+
+### dev
+
+Build the packages in development mode and link them to be called from the local terminal.
+
+```bash
+pnpm dev
+```
+
+### build
+
+Build the packages from TypeScript to JavaScript.
+
+```bash
+pnpm build
+```
+
+### changeset
+
+To use when you want to publish a new package version. Will display a prompt to fill in the information about your new release.
+
+```bash
+pnpm changeset
+```
+
+### clean
+
+Remove the packages `dist` folder.
+
+```bash
+pnpm clean
+```
+
+### lint
+
+Run the linting on the packages files.
+
+```bash
+pnpm lint
+```
+
+### reset
+
+Remove the packages `dist` and `node_modules` (including the root one) folders.
+
+```bash
+pnpm reset
+```
+
+### test
+
+Run the unit tests for the packages projects.
+
+```bash
+pnpm test
+```
+
+## CI
+
+We use [GitHub Actions]() for this repository.
+
+The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/workleap/wl-foundry-cli/actions).
+
+We currently have 2 builds configured:
+
+### Changesets
+
+This build run on a push on the `main` branch, and if theirs a file present in the `.changeset` folder, will publish the new package version on npm.
+
+### CI
+
+This build will trigger when a commit is done in a PR to `main` or after a push to `main` and will run `build`, `lint-ci` and `test` commands on the source code.
+
+## Add a new package to the monorepo
+
+There are a few steps to add new packages to the monorepo.
+
+Before you add a new package, please read the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name).
+
+### Create the package
+
+First, create a new folder matching the package name in the [packages](/packages) directory.
+
+Open a terminal, navigate to the newly created directory, and execute the following command:
+
+```bash
+pnpm init
+```
+
+Answer the CLI questions.
+
+Once the *package.json* is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
+
+Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) *"@workleap"* before the package name. For example, if the project name is "foo", your package name should be "@workleap/foo".
+
+Make sure the package publish access is *public* by adding the following to the *package.json* file:
+
+```json
+{
+  "publishConfig": {
+    "access": "public"
+  }
+}
+```
+
+### Dependencies
+
+npm *dependencies* and *peerDependencies* must be added to the package own *package.json* file.
+
+**However**, the *devDependencies* must be added to the [package.json](package.json) file at the root of the workspace, only if it is common with another package.
+
+Why?
+
+Because packages hoisting is dangerous! When multiple packages of the monorepo requires the same dependencies **but with different version** there is no guarantee on which version will be hoisted to the *node_modules* directory at the root of the workspace and which version will be installed locally. To prevent all kinds of problems, always install the *devDependencies* at the root of the workspace. This ensures that every package use the same version of the dependencies.
