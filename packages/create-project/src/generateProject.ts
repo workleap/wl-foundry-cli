@@ -16,17 +16,17 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
     switch (templateId) {
         case "host-application":
             commandName = "generate-host-application";
-            args.push("--package-scope", packageScope!);
+            args.push("--package-scope", `"${packageScope!}"`);
             break;
         case "remote-module":
             commandName = "generate-remote-module";
-            args.push("--host-scope", hostScope!);
-            args.push("--package-name", packageName!);
+            args.push("--host-scope", `"${hostScope!}"`);
+            args.push("--package-name", `"${packageName!}"`);
             break;
         case "static-module":
             commandName = "generate-static-module";
-            args.push("--host-scope", hostScope!);
-            args.push("--package-name", packageName!);
+            args.push("--host-scope", `"${hostScope!}"`);
+            args.push("--package-name", `"${packageName!}"`);
             break;
     }
 
