@@ -1,7 +1,7 @@
 {
     "name": "@workleap/create-project",
     "author": "Workleap",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Foundry-CLI Workleap project starter kit",
     "license": "Apache-2.0",
     "repository": {
