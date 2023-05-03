@@ -1,0 +1,10 @@
+node_modules
+dist
+*.tgz
+__MACOSX
+.DS_Store
+*.tsbuildinfo
+
+# Editor specific
+.vscode
+.idea

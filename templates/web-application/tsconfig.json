@@ -1,0 +1,14 @@
+{
+    "extends": "@workleap/typescript-configs/web-application",
+    "compilerOptions": {
+        "baseUrl": ".",
+    },
+    "ts-node": {
+      "compilerOptions": {
+        "module": "commonjs"
+      }
+    },
+    "paths": {
+        "@root/*": ["src/*"]
+    },
+}

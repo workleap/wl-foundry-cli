@@ -3,7 +3,7 @@ import { replaceTokens } from "./replaceTokens.ts";
 
 const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
-type TemplateId = "host-application" | "remote-module" | "static-module";
+type TemplateId = "host-application" | "remote-module" | "static-module" | "web-application";
 
 const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: Record<string, string>) => Promise<void>> = {
     "host-application": async (outputDirectory, options) => {
@@ -30,6 +30,13 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/static-module`);
 
         await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
+    },
+    "web-application": async (outputDirectory, options) => {
+        const packageName = options["packageName"];
+
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/web-application`);
+
+        await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
     }
 };
 
