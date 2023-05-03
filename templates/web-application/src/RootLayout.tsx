@@ -1,7 +1,7 @@
-import { Link, Outlet } from "react-router-dom";
+import { Suspense } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 
 import { Loading } from "@root/components/Loading.tsx";
-import { Suspense } from "react";
 
 export function RootLayout() {
     return (
@@ -9,7 +9,10 @@ export function RootLayout() {
             <nav style={{ maxWidth: "fit-content" }}>
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/office">Office</NavLink>
                     </li>
                 </ul>
             </nav>

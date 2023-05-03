@@ -2,13 +2,13 @@
     "extends": "@workleap/typescript-configs/web-application",
     "compilerOptions": {
         "baseUrl": ".",
+        "paths": {
+            "@root/*": ["src/*"]
+        }
     },
     "ts-node": {
       "compilerOptions": {
         "module": "commonjs"
       }
-    },
-    "paths": {
-        "@root/*": ["src/*"]
-    },
+    }
 }

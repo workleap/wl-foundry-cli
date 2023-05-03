@@ -15,7 +15,7 @@ export function RootErrorBoundary() {
 
     return (
         <p style={{ color: "red" }}>
-            An unmanaged error occured insisde a module. Still, other parts of the application are fully functional!
+            An unmanaged error occurred inside a module. Still, other parts of the application are fully functional!
             <br />
             <span role="img" aria-label="pointer">👉</span> {getErrorMessage(error)}
         </p>

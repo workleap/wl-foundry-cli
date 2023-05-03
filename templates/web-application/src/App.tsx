@@ -1,10 +1,12 @@
+import { useMemo } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { Home } from "./Home.tsx";
+import { Home } from "@root/Home.tsx";
+import { Office } from "@root/Office.tsx";
+import { NoMatch } from "@root/NoMatche.tsx";
 import { Loading } from "@root/components/Loading.tsx";
 import { RootErrorBoundary } from "./RootErrorBoundary.tsx";
 import { RootLayout } from "./RootLayout.tsx";
-import { useMemo } from "react";
 
 export function App() {
     const router = useMemo(() => {
@@ -19,6 +21,14 @@ export function App() {
                         {
                             index: true,
                             element: <Home />
+                        },
+                        {
+                            path: "office",
+                            element: <Office />
+                        },
+                        {
+                            path: "*",
+                            element: <NoMatch path={location.pathname} />
                         }
                     ]
                 }
