@@ -1,10 +1,10 @@
 // @ts-check
-
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import { fileURLToPath } from "url";
+
 import { loadSwcConfig } from "./loadSwcConfig.js";
-import path from "path";
 
 /** @type {import("webpack").Configuration} */
 
@@ -56,7 +56,7 @@ export default {
                 }
             },
             {
-                test: /\.(css)$/,
+                test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             },
             {

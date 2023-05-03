@@ -1,8 +1,9 @@
 // @ts-check
-
+import path from "node:path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+
 import { loadSwcConfig } from "./loadSwcConfig.js";
-import path from "path";
 
 /** @type {import("webpack").Configuration} */
 export default {
@@ -11,7 +12,7 @@ export default {
     entry: "./src/index.tsx",
     output: {
         path: path.resolve("dist"),
-        // The trailing / is very important, otherwise paths will ne be resolved correctly.
+        // The trailing / is very important, otherwise paths will not be resolved correctly.
         publicPath: "http://localhost:8080/",
         clean: true
     },
@@ -27,14 +28,13 @@ export default {
             },
             {
                 // https://stackoverflow.com/questions/69427025/programmatic-webpack-jest-esm-cant-resolve-module-without-js-file-exten
-                test: /\.(js)$/,
-                include: /node_modules/,
+                test: /\.js$/,
                 resolve: {
                     fullySpecified: false
                 }
             },
             {
-                test: /\.(css)$/,
+                test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             },
             {
@@ -56,5 +56,19 @@ export default {
         new HtmlWebpackPlugin({
             template: "./public/index.html"
         })
-    ]
+    ],
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                minify: TerserPlugin.swcMinify,
+                // `terserOptions` options will be passed to `swc` (`@swc/core`)
+                // Link to options - https://swc.rs/docs/config-js-minify
+                terserOptions: {
+                    compress: true,
+                    mangle: true
+                }
+            })
+        ]
+    }
 };

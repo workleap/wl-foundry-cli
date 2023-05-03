@@ -14,10 +14,8 @@ export default {
         transform: {
             react: {
                 // Use "react/jsx-runtime".
-                // TODO: Is it the default value? https://swc.rs/docs/configuration/compilation#jsctransformreactruntime
                 runtime: "automatic",
                 // Use the native "Object.assign()" instead of "_extends".
-                // TODO: Is it the default value? https://swc.rs/docs/configuration/compilation#jsctransformreactusebuiltins
                 useBuiltins: true,
                 // Enable React experimental "fast-refresh" feature.
                 // Also need to install @pmmmwh/react-refresh-webpack-plugin.

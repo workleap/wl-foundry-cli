@@ -11,18 +11,11 @@ export default {
         },
         // The output environment that the code will be compiled for.
         target: "es2022",
-        // View https://swc.rs/docs/configuration/minification for options.
-        minify: {
-            compress: true,
-            mangle: true
-        },
         transform: {
             react: {
                 // Use "react/jsx-runtime".
-                // TODO: Is it the default value? https://swc.rs/docs/configuration/compilation#jsctransformreactruntime
                 runtime: "automatic",
                 // Use the native "Object.assign()" instead of "_extends".
-                // TODO: Is it the default value? https://swc.rs/docs/configuration/compilation#jsctransformreactusebuiltins
                 useBuiltins: true
             }
         },

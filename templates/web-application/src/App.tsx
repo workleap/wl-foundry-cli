@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { Home } from "@root/Home.tsx";
 import { Office } from "@root/Office.tsx";
-import { NoMatch } from "@root/NoMatche.tsx";
+import { NoMatch } from "@root/NoMatch.tsx";
 import { Loading } from "@root/components/Loading.tsx";
 import { RootErrorBoundary } from "./RootErrorBoundary.tsx";
 import { RootLayout } from "./RootLayout.tsx";
