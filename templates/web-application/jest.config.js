@@ -5,5 +5,6 @@ export default {
         "^.+\\.(t|j)sx?$": ["@swc/jest", swcConfig]
     },
     testEnvironment: "jsdom",
+    testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     extensionsToTreatAsEsm: [".ts", ".tsx"]
 };
