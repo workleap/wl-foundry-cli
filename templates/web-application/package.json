@@ -10,6 +10,7 @@
     "serve-build": "pnpm http-server dist -p 8080 -P http://localhost:8080?",
     "reset": "pnpm dlx rimraf node_modules dist",
     "lint": "eslint .",
+    "analyze": "webpack --config webpack.build.js --analyze",
     "postinstall": "pnpm dlx rimraf node_modules/.cache"
   },
   "dependencies": {
@@ -26,9 +27,8 @@
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
-    "@types/webpack": "^5.28.1",
     "@workleap/browserslist-config": "latest",
-    "@workleap/eslint-plugin": "^1.2.0",
+    "@workleap/eslint-plugin": "latest",
     "@workleap/postcss-plugin": "latest",
     "@workleap/stylelint-config": "latest",
     "@workleap/typescript-configs": "latest",
@@ -43,9 +43,9 @@
     "style-loader": "^3.3.2",
     "swc-loader": "^0.2.3",
     "terser-webpack-plugin": "^5.3.7",
-    "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "webpack": "^5.82.0",
+    "webpack-bundle-analyzer": "^4.8.0",
     "webpack-cli": "^5.0.2",
     "webpack-dev-server": "^4.13.3"
   }

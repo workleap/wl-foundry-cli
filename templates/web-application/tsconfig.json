@@ -5,10 +5,5 @@
         "paths": {
             "@root/*": ["src/*"]
         }
-    },
-    "ts-node": {
-      "compilerOptions": {
-        "module": "commonjs"
-      }
     }
 }

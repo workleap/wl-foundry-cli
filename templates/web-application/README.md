@@ -44,12 +44,20 @@ Delete all build results and `pnpm` installed packages in this project.
 pnpm reset
 ```
 
-run linting on {{PACKAGE-NAME}} files.
+Run linting on {{PACKAGE-NAME}} files.
 
 ### lint
 
 ```bash
 pnpm lint
+```
+
+### analyze
+
+Run Webpack with bundle analyzer on the result of a production-ready build.
+
+```bash
+pnpm analyze
 ```
 
 ---
