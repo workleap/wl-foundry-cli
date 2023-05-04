@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import open from "open";
 
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
@@ -16,7 +17,7 @@ class OpenBrowser {
             if (this.isFirstCompile) {
                 console.log("\nOpening browser at: \"http://localhost:8080/\"");
 
-                // openBrowser(process.env.GATEWAY_URL);
+                await open("http://localhost:8080/");
             }
             this.isFirstCompile = false;
         });
@@ -26,7 +27,7 @@ class OpenBrowser {
 export default {
     mode: "development",
     target: "web",
-    devtool: "inline-source-map",
+    devtool: "eval-cheap-module-source-map",
     devServer: {
         port: 8080,
         historyApiFallback: true,
@@ -48,19 +49,22 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(js|ts|tsx)$/,
+                test: /\.(js|ts|tsx)$/i,
                 exclude: /node_modules/,
+                include: path.resolve("src"),
                 use: {
                     loader: "swc-loader",
                     options: await loadSwcConfig("./swc.dev.js")
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
+                include: path.resolve("src"),
                 use: ["style-loader", "css-loader"]
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
+                include: path.resolve("src"),
                 type: "asset/resource"
             }
         ]
@@ -75,5 +79,11 @@ export default {
         }),
         new ReactRefreshWebpackPlugin(),
         new OpenBrowser()
-    ]
+    ],
+    optimization: {
+        runtimeChunk: true,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false
+    }
 };

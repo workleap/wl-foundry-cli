@@ -6,6 +6,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
 /** @type {import("webpack").Configuration} */
+
 export default {
     mode: "production",
     target: "web",
@@ -19,8 +20,9 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(js|ts|tsx)$/,
+                test: /\.(js|ts|tsx)$/i,
                 exclude: /node_modules/,
+                include: path.resolve("src"),
                 use: {
                     loader: "swc-loader",
                     options: await loadSwcConfig("./swc.build.js")
@@ -28,17 +30,20 @@ export default {
             },
             {
                 // https://stackoverflow.com/questions/69427025/programmatic-webpack-jest-esm-cant-resolve-module-without-js-file-exten
-                test: /\.js$/,
+                test: /\.js$/i,
+                include: path.resolve("src"),
                 resolve: {
                     fullySpecified: false
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
+                include: path.resolve("src"),
                 use: ["style-loader", "css-loader"]
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
+                include: path.resolve("src"),
                 type: "asset/resource"
             }
         ]
