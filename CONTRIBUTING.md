@@ -3,6 +3,7 @@
 The following documentation is only for the maintainers of this repository.
 
 - [Monorepo setup](#monorepo-setup)
+- [Project Overview](#project-overview)
 - [Installation](#installation)
 - [Develop the CLI packages](#Develop-the-CLI-packages)
 - [Release the packages](#release-the-packages)
@@ -24,7 +25,23 @@ For more information on monorepo:
 
 This monorepo is using PNPM workspace feature to handle the installation of the npm dependencies and manage the packages interdependencies.
 
-It's important to note that PNPM workspace will **hoist** the npm dependencies at the root of the workspace. This means that there might not be a *node_modules* directory nested in the packages directories. The npm dependencies are installed in a *node_modules* directory at the root of the workspace and a single *pnpm-lock.yaml* file is generated at the root of the workspace.
+It's important to note that PNPM workspace will **link** the npm dependencies at the root of the workspace. This means that there might not be a *node_modules* directory nested in the packages directories. The npm dependencies are installed in a *node_modules* directory at the root of the workspace and a single *pnpm-lock.yaml* file is generated at the root of the workspace.
+
+## Project Overview
+
+### Packages
+
+This project is split into two major sections, `packages/` and `templates/`.
+
+Under `packages/` we have two tools that are deployed on [NPM](https://www.npmjs.com/).
+
+`@workleap/create-project` is a prompt that will call `@workleap/foundry` once each question is answered. It can be called using `npm create @worklead/project` and will prompt the user about template information. It will then call `@workleap/foundry`, using `npx`. More information about this project can be read from [the project README](packages/create-project/README.md).
+
+`@workleap/foundry` is a basic CLI. It can be called using `npx @workleap/foundry`, or `foundry` if installed globally. This tool, depending on the command used, will clone the requested template (from the main `/templates` folder) using [degit](https://github.com/Rich-Harris/degit) and apply transformation in files by replacing tokens with the option provided when calling it. More information about this project can be read from [the project README](packages/foundry/README.md).
+
+### Templates
+
+Under `templates/`, are the templates that the `@workleap/foundry` command will clone from. `@workleap/foundry` will always clone the latest version of a template from the `main` branch.
 
 ## Installation
 
@@ -40,13 +57,15 @@ pnpm i
 
 The following documentation is a brief overview of the tools and processes involved in the development of the CLI packages.
 
-> To develop for each package, you can run `pnpm dev` from the project root folder. This will build all the content of the `packages` folder.
+> To develop for each package, you can either run `pnpm dev` from the project root folder. This will build all the content of the `packages` folder.
+> 
+> You can also individually run the command `pnpm dev` from a project folder (example `packages/foundry/`). This will only start the automatic build and link the tool to be called from the terminal.
 
 ### Working in `@workleap/create-project`
 
 This package can be found under the folder `packages/create-project`.
 
-To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `create-project` command.
+To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `create-project` command. For example: `create-project hello` ; will start a prompt about creating a template in the `hello` folder.
 
 When the package is built from the `pnpm dev` command, you can attach a debugger and debug directly from the TypeScript files.
 
@@ -54,7 +73,7 @@ When the package is built from the `pnpm dev` command, you can attach a debugger
 
 This package can be found under the folder `packages/foundry`.
 
-To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `foundry` command.
+To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `foundry` command. For example: `foundry --help` ; will show the help in the terminal.
 
 When the package is built from the `pnpm dev` command, you can attach a debugger and debug directly from the TypeScript files.
 
@@ -64,15 +83,15 @@ To run lint on the packages, call `pnpm lint` from the project root folder.
 
 ### Testing
 
-Once each package is built in dev mode (`pnpm dev`), you can run the unit test using `pnpm test`.
+To run the automated tests, call `pnpm test`. The tests are run using [Jest](https://jestjs.io/) and the result will be displayed on the terminal.
 
-To run manual tests, you also have access to the `create-project` and `foundry` commands once the step above is done.
+To run manual tests, call `pnpm dev`, then you will have access to the `create-project` and `foundry` commands from a terminal.
 
 ### Done developing
 
 #### Method 1:
 
-You can unlink the CLI packages from their folder (`packages/create-project` and `packages/foundry`) and using `pnpm unlink` 
+You can unlink the CLI packages from their folder (`packages/create-project` and `packages/foundry`) by using `pnpm unlink` 
 
 #### Method 2:
 
@@ -232,4 +251,4 @@ npm *dependencies* and *peerDependencies* must be added to the package own *pack
 
 Why?
 
-Because packages hoisting is dangerous! When multiple packages of the monorepo requires the same dependencies **but with different version** there is no guarantee on which version will be hoisted to the *node_modules* directory at the root of the workspace and which version will be installed locally. To prevent all kinds of problems, always install the *devDependencies* at the root of the workspace. This ensures that every package use the same version of the dependencies.
+Because packages hoisting is dangerous! When multiple packages of the monorepo requires the same dependencies **but with different version** there is no guarantee on which version will be hoisted to the *node_modules* directory at the root of the workspace and which version will be installed locally. To prevent all kinds of problems, always install the *devDependencies* at the root of the workspace. This ensures that every package uses the same version of the dependencies.
