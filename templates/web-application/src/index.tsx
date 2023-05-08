@@ -8,6 +8,12 @@ import { createRoot } from "react-dom/client";
 
 const root = createRoot(document.getElementById("root")!);
 
+// Mock Service Worker
+if (process.env.NODE_ENV === "development") {
+    const { worker } = require("./mocks/browser");
+    worker.start();
+}
+
 root.render(
     <StrictMode>
         <Suspense fallback={<Loading />}>

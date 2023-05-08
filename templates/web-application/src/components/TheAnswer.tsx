@@ -15,6 +15,6 @@ export function TheAnswer() {
     });
 
     return (
-        <div>{response}</div>
+        <div>This is the response to THE question: {response}</div>
     );
 }
