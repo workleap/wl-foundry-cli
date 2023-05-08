@@ -1,3 +1,5 @@
+import { TheAnswer } from "@root/components/TheAnswer.ts";
+
 export interface OfficeProps {
     title?: string;
 }
@@ -11,6 +13,7 @@ export function Office({ title = "Welcome to Office!" }: OfficeProps) {
                 Office is the place where you can collaborate with your colleagues to achieve greatness.<br />
                 Office is the place where you can turn your ideas into reality, one project at a time.<br />
             </div>
+            <TheAnswer />
         </>
     );
 }
