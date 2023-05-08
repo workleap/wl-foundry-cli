@@ -251,4 +251,4 @@ npm *dependencies* and *peerDependencies* must be added to the package own *pack
 
 Why?
 
-Because packages hoisting is dangerous! When multiple packages of the monorepo requires the same dependencies **but with different version** there is no guarantee on which version will be hoisted to the *node_modules* directory at the root of the workspace and which version will be installed locally. To prevent all kinds of problems, always install the *devDependencies* at the root of the workspace. This ensures that every package uses the same version of the dependencies.
+Because it's easier to maintain, update, and keep track of common tooling dependencies, all in one file.
