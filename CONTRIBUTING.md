@@ -246,9 +246,3 @@ Make sure the package publish access is *public* by adding the following to the 
 ### Dependencies
 
 npm *dependencies* and *peerDependencies* must be added to the package own *package.json* file.
-
-**However**, the *devDependencies* must be added to the [package.json](package.json) file at the root of the workspace, only if it is common with another package.
-
-Why?
-
-Because it's easier to maintain, update, and keep track of common tooling dependencies, all in one file.
