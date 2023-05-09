@@ -2,18 +2,18 @@ import { render, screen } from "@testing-library/react";
 
 import { Loading } from "./Loading.tsx";
 
-it("Default text is \"Loading...\"", async () => {
+it("Default text is \"Loading...\"", () => {
     render(<Loading />);
 
-    const element = await screen.getByText("Loading...");
+    const element = screen.getByText("Loading...");
 
     expect(element).not.toBeNull();
 });
 
-it("Text can be overrided", async () => {
+it("Text can be overrided", () => {
     render(<Loading message="Processing..." />);
 
-    const element = await screen.getByText("Processing...");
+    const element = screen.getByText("Processing...");
 
     expect(element).not.toBeNull();
 });

@@ -10,8 +10,9 @@ const root = createRoot(document.getElementById("root")!);
 
 // Mock Service Worker
 if (process.env.NODE_ENV === "development") {
-    const { worker } = require("./mocks/browser");
-    worker.start();
+    import("./mocks/browser.ts").then(({ worker }) => {
+        worker.start();
+    });
 }
 
 root.render(
