@@ -2,7 +2,7 @@ export interface NoMatchProps {
     path?: string;
 }
 
-export function NoMatch({ path = "Welcome Home!" }: NoMatchProps) {
+export function NoMatch({ path }: NoMatchProps) {
     return (
         <>
             <h1>404</h1>

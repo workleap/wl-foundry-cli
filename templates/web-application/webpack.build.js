@@ -6,7 +6,6 @@ import TerserPlugin from "terser-webpack-plugin";
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
 /** @type {import("webpack").Configuration} */
-
 export default {
     mode: "production",
     target: "web",

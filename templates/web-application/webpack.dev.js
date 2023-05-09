@@ -7,8 +7,6 @@ import open from "open";
 
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
-/** @type {import("webpack").Configuration} */
-
 class OpenBrowser {
     isFirstCompile = true;
 
@@ -24,6 +22,7 @@ class OpenBrowser {
     }
 }
 
+/** @type {import("webpack").Configuration} */
 export default {
     mode: "development",
     target: "web",
