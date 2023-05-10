@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
-import { Loading } from "@root/components/Loading.tsx";
+import { Loading } from "./components/Loading.tsx";
 
 export function RootLayout() {
     return (

@@ -19,8 +19,7 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(js|ts|tsx)$/i,
-                exclude: /node_modules/,
+                test: /\.(ts|tsx)$/i,
                 include: path.resolve("src"),
                 use: {
                     loader: "swc-loader",
@@ -48,11 +47,6 @@ export default {
         ]
     },
     resolve: {
-        // So Webpack can map ".js" extension files in import to their original file.
-        // For more info, view https://github.com/webpack/webpack/issues/13252
-        extensionAlias: {
-            ".js": [".ts", ".tsx", ".js"]
-        },
         // Must add ".js" for files imported from node_modules.
         extensions: [".js", ".ts", ".tsx", ".css"]
     },
@@ -64,6 +58,7 @@ export default {
     optimization: {
         minimize: true,
         minimizer: [
+            // Allow us to use SWC for package optimization, which is way faster than the default minimizer
             new TerserPlugin({
                 minify: TerserPlugin.swcMinify,
                 // `terserOptions` options will be passed to `swc` (`@swc/core`)

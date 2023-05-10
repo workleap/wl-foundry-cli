@@ -1,9 +1,9 @@
 {
     "extends": "@workleap/typescript-configs/web-application",
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@root/*": ["src/*"]
-        }
-    }
+    },
+    "exclude": [
+        "public/mockServiceWorker.js",
+        "./*.js"
+    ]
 }

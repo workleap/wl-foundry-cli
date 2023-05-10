@@ -29,7 +29,6 @@ export default {
         baseUrl: ".",
         // Same as TS paths to register aliases.
         paths: {
-            "@root/*": ["src/*"]
         }
     },
     module: {

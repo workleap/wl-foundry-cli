@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { Home } from "@root/Home.tsx";
-import { Office } from "@root/Office.tsx";
-import { NoMatch } from "@root/NoMatch.tsx";
-import { Loading } from "@root/components/Loading.tsx";
+import { Home } from "./Home.tsx";
+import { Office } from "./Office.tsx";
+import { NoMatch } from "./NoMatch.tsx";
+import { Loading } from "./components/Loading.tsx";
 import { RootErrorBoundary } from "./RootErrorBoundary.tsx";
 import { RootLayout } from "./RootLayout.tsx";
 

@@ -3,34 +3,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import open from "open";
 
 import { loadSwcConfig } from "./loadSwcConfig.js";
-
-class OpenBrowser {
-    isFirstCompile = true;
-
-    apply(compiler) {
-        compiler.hooks.done.tap("done", async () => {
-            if (this.isFirstCompile) {
-                console.log("\nOpening browser at: \"http://localhost:8080/\"");
-
-                await open("http://localhost:8080/");
-            }
-            this.isFirstCompile = false;
-        });
-    }
-}
 
 /** @type {import("webpack").Configuration} */
 export default {
     mode: "development",
     target: "web",
+    // For optimization reasons see: https://webpack.js.org/guides/build-performance/#devtool
     devtool: "eval-cheap-module-source-map",
     devServer: {
         port: 8080,
         historyApiFallback: true,
-        hot: true
+        hot: true,
+        open: true
     },
     entry: "./src/index.tsx",
     output: {
@@ -48,8 +34,8 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(js|ts|tsx)$/i,
-                exclude: /node_modules/,
+                test: /\.(ts|tsx)$/i,
+                // Use include for optimization reason, see: https://webpack.js.org/guides/build-performance/#loaders
                 include: path.resolve("src"),
                 use: {
                     loader: "swc-loader",
@@ -76,10 +62,10 @@ export default {
         new HtmlWebpackPlugin({
             template: "./public/index.html"
         }),
-        new ReactRefreshWebpackPlugin(),
-        new OpenBrowser()
+        new ReactRefreshWebpackPlugin()
     ],
     optimization: {
+        // For optimization reasons see: https://webpack.js.org/guides/build-performance/#avoid-extra-optimization-steps
         runtimeChunk: true,
         removeAvailableModules: false,
         removeEmptyChunks: false,

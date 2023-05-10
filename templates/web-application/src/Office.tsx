@@ -1,4 +1,4 @@
-import { TheAnswer } from "@root/components/TheAnswer.ts";
+import { TheAnswer } from "./components/TheAnswer.tsx";
 
 export interface OfficeProps {
     title?: string;

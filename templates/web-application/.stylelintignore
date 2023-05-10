@@ -1,1 +1,11 @@
-*
+# Stylelint ignore don't support ! (not) expressions
+*.scss
+*.sass
+*.less
+*.md
+*.js
+*.jsx
+*.ts
+*.tsx
+*.json
+*.yaml
