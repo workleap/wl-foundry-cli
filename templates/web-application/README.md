@@ -56,6 +56,8 @@ pnpm lint
 
 Run Webpack with bundle analyzer on the result of a production-ready build.
 
+To learn how to analyze the result, you can look at [this article](https://blog.jakoblind.no/webpack-bundle-analyzer/#what-should-i-look-for-in-the-reports).
+
 ```bash
 pnpm analyze
 ```
