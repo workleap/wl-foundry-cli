@@ -1,0 +1,2 @@
+# sprecific files to ignoe in templates folders
+pnpm-lock.yaml

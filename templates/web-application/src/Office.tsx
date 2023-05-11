@@ -1,4 +1,5 @@
 import { TheAnswer } from "./components/TheAnswer.tsx";
+import { PngExample } from "./assets/index.tsx";
 
 export interface OfficeProps {
     title?: string;
@@ -15,6 +16,7 @@ export function Office({ title = "Welcome to Office!" }: OfficeProps) {
             </div>
             <br />
             <TheAnswer />
+            <img src={PngExample} alt="Something went wrong..." title="Don't forget your towel" />
         </>
     );
 }
