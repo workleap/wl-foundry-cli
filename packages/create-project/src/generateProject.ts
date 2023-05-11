@@ -28,6 +28,10 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
             args.push("--host-scope", `"${hostScope!}"`);
             args.push("--package-name", `"${packageName!}"`);
             break;
+        case "web-application":
+            commandName = "generate-web-application";
+            args.push("--package-name", `"${packageName!}"`);
+            break;
     }
 
     const childProcess = child_process.exec(`npx --yes @workleap/foundry@latest ${commandName} ${args.join(" ")}`);

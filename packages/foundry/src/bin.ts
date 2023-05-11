@@ -64,4 +64,18 @@ program.command("generate-static-module")
         await create("remote-module", resolve(options["outDir"]), options);
     });
 
+program.command("generate-web-application")
+    .description("use the web-application template")
+    .requiredOption(
+        "-o, --out-dir <string>",
+        "where to create the template (required)"
+    )
+    .requiredOption(
+        "-n, --package-name <string>",
+        "package name (required)"
+    )
+    .action(async options => {
+        await create("web-application", resolve(options["outDir"]), options);
+    });
+
 program.parse(argv);

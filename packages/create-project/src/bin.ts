@@ -61,6 +61,10 @@ const templateId = await select({
         {
             value: "static-module",
             label: "Static module"
+        },
+        {
+            value: "web-application",
+            label: "Web Application"
         }
     ]
 });
@@ -96,6 +100,20 @@ if (templateId === "host-application") {
     if (isCancel(packageScopeValue)) { process.exit(1); }
 
     packageScope = packageScopeValue;
+} else if (templateId === "web-application") {
+    const packageNameValue = await text({
+        message: "What should be the package name?",
+        placeholder: "ex: my-package",
+        validate: value => {
+            if (!ValidNpmPackageNameRegex.test(value)) {
+                return "The package name is not valid";
+            }
+        }
+    });
+
+    if (isCancel(packageNameValue)) { process.exit(1); }
+
+    packageName = packageNameValue;
 } else {
     const groupValue = await group({
         packageName: () => text({

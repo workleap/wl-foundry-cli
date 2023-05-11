@@ -17,6 +17,7 @@ Commands:
   generate-host-application [options]  use the host-application template
   generate-remote-module [options]     use the remote-module template
   generate-static-module [options]     use the static-module template
+  generate-web-application [options]   use the web-application template
   help [command]                       display help for command
 ```
 
@@ -51,6 +52,16 @@ Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/tem
 |-----------------------------|------------------------------|----------|
 | -o, --out-dir <string>      | where to create the template | ✔        |
 | --host-scope <string>       | host scope                   | ✔        |
+| -n, --package-name <string> | package name                 | ✔        |
+| -h, --help                  | display help for command     |          |
+
+### generate-web-application
+
+Use the [web-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) template as a base to customize with these options:
+
+| option                      | description                  | required |
+|-----------------------------|------------------------------|----------|
+| -o, --out-dir <string>      | where to create the template | ✔        |
 | -n, --package-name <string> | package name                 | ✔        |
 | -h, --help                  | display help for command     |          |
 

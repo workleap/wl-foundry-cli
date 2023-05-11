@@ -1,0 +1,9 @@
+{
+    "extends": "@workleap/typescript-configs/web-application",
+    "compilerOptions": {
+    },
+    "exclude": [
+        "public/mockServiceWorker.js",
+        "./*.js"
+    ]
+}
