@@ -1,5 +1,6 @@
 import { cloneProjectTemplate } from "./cloneProjectTemplate.ts";
 import { replaceTokens } from "./replaceTokens.ts";
+import { mswInit } from "./mswInit.js";
 
 const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
@@ -37,6 +38,8 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/web-application`);
 
         await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
+
+        await mswInit("public/");
     }
 };
 
