@@ -15,6 +15,7 @@ export function Office({ title = "Welcome to Office!" }: OfficeProps) {
                 Office is the place where you can turn your ideas into reality, one project at a time.<br />
             </div>
             <br />
+            <h2>FAQ</h2>
             <TheAnswer />
             <img src={PngExample} alt="Something went wrong..." title="Don't forget your towel" />
         </>

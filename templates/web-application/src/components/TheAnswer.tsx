@@ -15,6 +15,6 @@ export function TheAnswer() {
     });
 
     return (
-        <div>This is the response to THE question: {response}</div>
+        <div><em>What is the answer to life the universe and everything?</em>: {response}</div>
     );
 }
