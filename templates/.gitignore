@@ -1,2 +1,3 @@
-# sprecific files to ignoe in templates folders
+# specific files to ignore in templates folders
 pnpm-lock.yaml
+mockServiceWorker.js
