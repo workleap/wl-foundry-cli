@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function TheAnswer() {
-    const [response, setResponse] = useState("We don't have the response");
+    const [response, setResponse] = useState("Deep Thought still processing the question...");
 
     useEffect(() => {
         fetch("/response-to-the-question")
@@ -15,6 +15,6 @@ export function TheAnswer() {
     });
 
     return (
-        <div>This is the response to THE question: {response}</div>
+        <div><em>What is the answer to life the universe and everything?</em>: {response}</div>
     );
 }
