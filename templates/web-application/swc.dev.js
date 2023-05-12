@@ -35,9 +35,7 @@ export default {
         // The output module resolution system that the code will be compiled for.
         type: "es6",
         // Prevent SWC from exporting the `__esModule` property.
-        strict: true,
-        // Preserve dynamic imports.
-        ignoreDynamic: true
+        strict: true
     },
     sourceMaps: true,
     inlineSourcesContent: true
