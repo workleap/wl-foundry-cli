@@ -1,5 +1,5 @@
 import { TheAnswer } from "./components/TheAnswer.tsx";
-import { PngExample } from "./assets/index.tsx";
+import { PngExample } from "./assets/PngExample.tsx";
 
 export interface OfficeProps {
     title?: string;
