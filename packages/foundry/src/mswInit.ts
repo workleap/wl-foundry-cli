@@ -1,7 +1,7 @@
 import child_process from "child_process";
 
-export async function mswInit(publicDirPath: string) {
-    const childProcess = child_process.exec(`pnpm dlx msw init ${publicDirPath} --save`);
+export async function mswInit(publicDirPath: string, outputDirectory: string) {
+    const childProcess = child_process.exec(`pnpm dlx msw init ${publicDirPath} --save`, { cwd: outputDirectory });
 
     return new Promise<number>(resolve => {
         childProcess.on("error", error => {

@@ -39,7 +39,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
 
         await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
 
-        await mswInit("public/");
+        await mswInit("public/", outputDirectory);
     }
 };
 
