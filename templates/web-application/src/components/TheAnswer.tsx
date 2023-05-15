@@ -12,7 +12,7 @@ export function TheAnswer() {
             .catch(() => {
                 setResponse("We can't find the response");
             }) ;
-    });
+    }, []);
 
     return (
         <div><em>What is the answer to life the universe and everything?</em>: {response}</div>
