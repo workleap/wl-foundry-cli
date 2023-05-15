@@ -18,12 +18,12 @@ const config = async env => {
             port: 8080,
             historyApiFallback: true,
             hot: true,
-        open: true
+            open: true
         },
         entry: "./src/index.tsx",
         output: {
             // The trailing / is very important, otherwise paths will not be resolved correctly.
-        publicPath: "http://localhost:8080/"
+            publicPath: "http://localhost:8080/"
         },
         cache: {
             type: "filesystem",
