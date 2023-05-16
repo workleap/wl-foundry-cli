@@ -24,7 +24,7 @@
     "test": "jest",
 
     "storybook": "storybook dev -p 6006",
-    "chromatic": "pnpm dlx chromatic --project-token <your-project-token> --only-changed"
+    "chromatic": "pnpm dlx chromatic --only-changed"
   },
   "dependencies": {
     "react": "18.2.0",
