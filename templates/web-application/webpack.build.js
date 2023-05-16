@@ -43,6 +43,12 @@ export default {
                 test: /\.(png|jpe?g|gif)$/i,
                 include: path.resolve("src"),
                 type: "asset/resource"
+            },
+            {
+                test: /\.svg$/i,
+                include: path.resolve("src"),
+                issuer: /\.(ts|tsx)$/i,
+                use: ["@svgr/webpack"]
             }
         ]
     },
