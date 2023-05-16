@@ -1,4 +1,4 @@
-import { rest, RestHandler } from "msw";
+import { rest, type RestHandler } from "msw";
 
 export const handlers: RestHandler[] = [
     rest.get("/response-to-the-question", (req, res, ctx) => {
