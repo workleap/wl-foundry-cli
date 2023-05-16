@@ -12,13 +12,13 @@ const config = async env => {
     return {
         mode: "development",
         target: "web",
+        stats: "minimal",
         // For optimization reasons see: https://webpack.js.org/guides/build-performance/#devtool
         devtool: "eval-cheap-module-source-map",
         devServer: {
             port: 8080,
             historyApiFallback: true,
-            hot: true,
-            open: true
+            hot: true
         },
         entry: "./src/index.tsx",
         output: {
@@ -53,6 +53,12 @@ const config = async env => {
                     test: /\.(png|jpe?g|gif)$/i,
                     include: path.resolve("src"),
                     type: "asset/resource"
+                },
+                {
+                    test: /\.svg$/i,
+                    include: path.resolve("src"),
+                    issuer: /\.(ts|tsx)$/i,
+                    use: ["@svgr/webpack"]
                 }
             ]
         },
@@ -66,7 +72,7 @@ const config = async env => {
             }),
             new ReactRefreshWebpackPlugin(),
             new webpack.DefinePlugin({
-                MOCK: JSON.stringify(env.mock)
+                USE_MSW: JSON.stringify(env["use-msw"])
             })
         ],
         optimization: {

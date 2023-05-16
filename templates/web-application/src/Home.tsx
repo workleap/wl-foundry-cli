@@ -1,3 +1,5 @@
+import HomeIcon from "./assets/Home.svg";
+
 export interface HomeProps {
     title?: string;
 }
@@ -11,6 +13,7 @@ export function Home({ title = "Welcome Home!" }: HomeProps) {
                 Home is the place where you hang with your loved ones.<br />
                 Home is the place where you wear sweatpants all day!<br />
             </div>
+            <HomeIcon />
         </>
     );
 }
