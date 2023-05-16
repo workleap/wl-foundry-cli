@@ -5,7 +5,7 @@ import { Home } from "./Home.tsx";
 import { Office } from "./Office.tsx";
 import { NoMatch } from "./NoMatch.tsx";
 import { Loading } from "./components/Loading.tsx";
-import { RootErrorBoundary } from "./RootErrorBoundary.tsx";
+import { RootRoutingErrorBoundary } from "./RootRoutingErrorBoundary.tsx";
 import { RootLayout } from "./RootLayout.tsx";
 
 export function App() {
@@ -16,7 +16,7 @@ export function App() {
                 {
                     // Pathless route to set an error boundary inside the layout instead of outside.
                     // It's quite useful to prevent losing the layout when an unmanaged error occurs.
-                    errorElement: <RootErrorBoundary />,
+                    errorElement: <RootRoutingErrorBoundary />,
                     children: [
                         {
                             index: true,

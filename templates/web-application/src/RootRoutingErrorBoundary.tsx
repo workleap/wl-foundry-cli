@@ -10,14 +10,26 @@ function getErrorMessage(error: unknown) {
         : JSON.stringify(error);
 }
 
-export function RootErrorBoundary() {
+export function RootRoutingErrorBoundary() {
     const error = useRouteError();
+    const message = getErrorMessage(error);
 
+    return (
+        <RootErrorBoundary message={message} />
+    );
+}
+
+
+export interface RootErrorBoundaryProps {
+    message: string;
+}
+
+export function RootErrorBoundary({ message }: RootErrorBoundaryProps) {
     return (
         <p style={{ color: "red" }}>
             An unmanaged error occurred inside a module. Still, other parts of the application are fully functional!
             <br />
-            <span role="img" aria-label="pointer">👉</span> {getErrorMessage(error)}
+            <span role="img" aria-label="pointer">👉</span> {message}
         </p>
     );
 }
