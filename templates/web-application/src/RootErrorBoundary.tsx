@@ -10,21 +10,21 @@ function getErrorMessage(error: unknown) {
         : JSON.stringify(error);
 }
 
-export function RootRoutingErrorBoundary() {
+export function RootErrorBoundary() {
     const error = useRouteError();
     const message = getErrorMessage(error);
 
     return (
-        <RootErrorBoundary message={message} />
+        <UnmanagedError message={message} />
     );
 }
 
 
-export interface RootErrorBoundaryProps {
+export interface UnmanagedErrorProps {
     message: string;
 }
 
-export function RootErrorBoundary({ message }: RootErrorBoundaryProps) {
+export function UnmanagedError({ message }: UnmanagedErrorProps) {
     return (
         <p style={{ color: "red" }}>
             An unmanaged error occurred inside a module. Still, other parts of the application are fully functional!
