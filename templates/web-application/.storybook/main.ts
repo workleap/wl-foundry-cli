@@ -42,7 +42,7 @@ function configureSvgrWebpack(config: Configuration) {
       })
 
     // Configure .svg files to be loaded with @svgr/webpack
-    config.module?.rules?.push({
+    config.module.rules.push({
         test: /\.svg$/,
         issuer: /\.(ts|tsx)$/i,
         use: ['@svgr/webpack'],
