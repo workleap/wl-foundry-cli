@@ -63,7 +63,7 @@ pnpm storybook
 ### chromatic
 
 This requires a [Chromatic](https://www.chromatic.com/) account and a Chromatic token in the `CHROMATIC_TOKEN` environment variable.
-Make sure to also specify the `CHROMATIC_PROJECT_TOKEN` either in environment variable or via the --project-token CLI flag.
+Make sure to also specify the `CHROMATIC_PROJECT_TOKEN` either in an environment variable or via the `--project-token` CLI flag.
 
 ```bash
 pnpm chromatic
