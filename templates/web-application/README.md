@@ -64,3 +64,9 @@ pnpm analyze
 
 ---
 Build with [wl-foundry-cli](https://github.com/workleap/wl-foundry-cli) from [web-application template](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) 🚀
+
+## VSCode settings and extensions
+
+This template comes with a `.vscode` folder with some settings and extensions to help you develop. Should you want to share new settings or extensions once your project is started, feel free to update those files.
+
+Read the documentation on [settings](https://code.visualstudio.com/docs/getstarted/settings) and [extensions](https://code.visualstudio.com/docs/editor/extension-gallery) for more information.
