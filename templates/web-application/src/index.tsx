@@ -3,7 +3,7 @@ import "./index.css";
 import { StrictMode, Suspense } from "react";
 
 import { App } from "./App.tsx";
-import { Loading } from "./components/Loading.tsx";
+import { Loading } from "./Loading.tsx";
 import { createRoot } from "react-dom/client";
 
 // Mock Service Worker
