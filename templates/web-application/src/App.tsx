@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home } from "./Home.tsx";
 import { Office } from "./Office.tsx";
 import { NoMatch } from "./NoMatch.tsx";
-import { Loading } from "./components/Loading.tsx";
+import { Loading } from "./Loading.tsx";
 import { RootErrorBoundary } from "./RootErrorBoundary.tsx";
 import { RootLayout } from "./RootLayout.tsx";
 

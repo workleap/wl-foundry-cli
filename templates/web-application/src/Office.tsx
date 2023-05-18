@@ -1,4 +1,4 @@
-import { TheAnswer } from "./components/TheAnswer.tsx";
+import { TheAnswer } from "./TheAnswer.tsx";
 import { PngExample } from "./assets/PngExample.tsx";
 
 export interface OfficeProps {
