@@ -77,6 +77,14 @@ To build it for development, from the folder, run `pnpm dev`. This will build th
 
 When the package is built from the `pnpm dev` command, you can attach a debugger and debug directly from the TypeScript files.
 
+### Working with Storybook in `templates`
+
+First, navigate to the folder of the template you want to work with powershell. After, run the command `pnpm i --ignore-workspace` to locally install all the dependencies needed.
+
+You will also want to configure MSW for local testing, without affecting the template. `pnpm dlx msw init public` will automatically generate the `generatedServiceWorker.js` file in the `public` folder.
+
+To start the Storybook server, run `pnpm storybook`. This will start the Storybook server and will allow you to see the components in action.
+
 ### Linting
 
 To run lint on the packages, call `pnpm lint` from the project root folder.

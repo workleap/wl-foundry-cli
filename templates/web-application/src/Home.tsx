@@ -1,4 +1,4 @@
-import HomeIcon from "./assets/Home.svg";
+import HomeIcon from "./assets/home.svg";
 
 export interface HomeProps {
     title?: string;
