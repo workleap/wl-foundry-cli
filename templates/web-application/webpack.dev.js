@@ -3,9 +3,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-
-import { loadSwcConfig } from "./loadSwcConfig.js";
 import webpack from "webpack";
+
+import swcConfig from "./swc.dev.js";
+import { loadSwcConfig } from "./loadSwcConfig.js";
 
 /** @type {(env: {mock: boolean}) => Promise<import("webpack").Configuration>} */
 const config = async env => {
@@ -41,7 +42,7 @@ const config = async env => {
                     include: path.resolve("src"),
                     use: {
                         loader: "swc-loader",
-                        options: await loadSwcConfig("./swc.dev.js")
+                        options: await loadSwcConfig(swcConfig)
                     }
                 },
                 {

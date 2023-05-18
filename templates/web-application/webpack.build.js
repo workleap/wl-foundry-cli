@@ -3,6 +3,7 @@ import path from "node:path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 
+import swcConfig from "./swc.build.js";
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
 /** @type {import("webpack").Configuration} */
@@ -23,7 +24,7 @@ export default {
                 include: path.resolve("src"),
                 use: {
                     loader: "swc-loader",
-                    options: await loadSwcConfig("./swc.build.js")
+                    options: await loadSwcConfig(swcConfig)
                 }
             },
             {
