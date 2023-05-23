@@ -16,8 +16,9 @@
     "type": "module",
     "bin": "./dist/bin.js",
     "scripts": {
-        "dev": "pnpm run build && pnpm link --global && pnpm run dev:watch",
-        "dev:watch": "tsup --config tsup.dev.ts",
+        "dev": "pnpm run build && pnpm run dev:watch",
+        "dev:link": "pnpm link --global",
+        "dev:tsup": "tsup --config tsup.dev.ts",
         "build": "tsup --config tsup.build.ts"
     },
     "dependencies": {
