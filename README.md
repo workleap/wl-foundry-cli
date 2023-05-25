@@ -1,4 +1,4 @@
-# @foundry-cli
+# wl-foundry-cli
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![CI](https://github.com/workleap/wl-foundry-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/workleap/wl-foundry-cli/actions/workflows/ci.yml)
