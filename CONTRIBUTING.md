@@ -15,17 +15,17 @@ The following documentation is only for the maintainers of this repository.
 
 This repository is managed as a monorepo with [PNPM workspace](https://pnpm.io/workspaces) to handle the installation of the npm dependencies and manage the packages interdependencies.
 
-It's important to note that PNPM workspace doesn't hoist the npm dependencies at the root of the workspace as most package manager does. Instead, it use an advanced [symlinked node_modules structure](https://pnpm.io/symlinked-node-modules-structure). This means that you'll find a `node_modules` directory inside the packages folders as well as at the root of the repository.
+It's important to note that PNPM workspace doesn't hoist the npm dependencies at the root of the workspace as most package manager does. Instead, it uses an advanced [symlinked node_modules structure](https://pnpm.io/symlinked-node-modules-structure). This means that you'll find a `node_modules` directory inside the packages folders as well as at the root of the repository.
 
 The main difference to account for is that the `devDependencies` must now be installed locally in every package `package.json` file rather than in the root `package.json` file.
 
 ## Project overview
 
-This project is split into two major sections, [packages/][packages/] and [templates/](templates/).
+This project is split into two major sections, [packages/](packages/) and [templates/](templates/).
 
 ### Packages
 
-Under [packages/][packages/] we have two tools that are deployed on [NPM](https://www.npmjs.com/).
+Under [packages/](packages/) we have two tools that are deployed on [NPM](https://www.npmjs.com/).
 
 [@workleap/create-project](packages/create-project/) is a prompt that will call `@workleap/foundry` once each question is answered. It can be called using `npm create @worklead/project` and will prompt the user about template information. It will then call `@workleap/foundry`, using `npx`. More information about this project can be read from [the project README](packages/create-project/README.md).
 
@@ -231,7 +231,7 @@ Answer the CLI questions.
 
 Once the `package.json` file is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
 
-Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo.
+Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo`.
 
 Make sure the package publish access is *public* by adding the following to the `package.json` file:
 
