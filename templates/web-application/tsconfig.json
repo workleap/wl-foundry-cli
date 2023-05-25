@@ -3,7 +3,6 @@
     "compilerOptions": {
     },
     "exclude": [
-        "public/mockServiceWorker.js",
-        "./*.js"
+        "public/mockServiceWorker.js"
     ]
 }
