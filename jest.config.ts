@@ -1,12 +1,14 @@
 import type { Config } from "jest";
 
 const config: Config = {
-    testEnvironment: "node",
+    projects: [
+        "<rootDir>/packages/*"
+    ],
     testRegex: "/tests/*/.*\\.test\\.ts$",
     testPathIgnorePatterns: ["/node_modules/", "/dist/", "/templates/"],
-    transform: {
-        "^.+\\.ts$": "@swc/jest"
-    }
+    cacheDirectory: "./node_modules/.cache/jest",
+    clearMocks: true,
+    verbose: true
 };
 
 export default config;
