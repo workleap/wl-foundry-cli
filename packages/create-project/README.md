@@ -1,4 +1,4 @@
-# Create-Workleap-Project
+# @workleap/create-project
 
 A CLI to create new Workleap projects using prompts and your favourite package manager `create` command.
 

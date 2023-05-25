@@ -7,8 +7,8 @@
 
 | Package                 | Type        | Version                                                                                                                                     |
 |-------------------------| ----------- |---------------------------------------------------------------------------------------------------------------------------------------------|
-| @workleap/foundry       | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/foundry.svg?style=flat)](https://www.npmjs.org/package/@workleap/foundry)             |
-| @workleap/create-project | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/create-project.svg?style=flat)](https://www.npmjs.org/package/@workleap/create-project) |
+| [@workleap/create-project](./packages/create-project/README.md) | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/create-project.svg?style=flat)](https://www.npmjs.org/package/@workleap/create-project) |
+| [@workleap/foundry](./packages/foundry/README.md)       | application | [![NPM Version](http://img.shields.io/npm/v/@workleap/foundry.svg?style=flat)](https://www.npmjs.org/package/@workleap/foundry)             |
 
 ## Usage
 
