@@ -3,7 +3,7 @@
 The following documentation is only for the maintainers of this repository.
 
 - [Monorepo setup](#monorepo-setup)
-- [Project Overview](#project-overview)
+- [Project overview](#project-overview)
 - [Installation](#installation)
 - [Develop the CLI packages](#Develop-the-CLI-packages)
 - [Release the packages](#release-the-packages)
@@ -13,44 +13,36 @@ The following documentation is only for the maintainers of this repository.
 
 ## Monorepo setup
 
-This repository is managed as a monorepo that is composed of many npm packages.
+This repository is managed as a monorepo with [PNPM workspace](https://pnpm.io/workspaces) to handle the installation of the npm dependencies and manage the packages interdependencies.
 
-For more information on monorepo:
+It's important to note that PNPM workspace doesn't hoist the npm dependencies at the root of the workspace as most package manager does. Instead, it use an advanced [symlinked node_modules structure](https://pnpm.io/symlinked-node-modules-structure). This means that you'll find a `node_modules` directory inside the packages folders as well as at the root of the repository.
 
-- [Babel GitHub](https://github.com/babel/babel/blob/master/doc/design/monorepo.md)
-- [Shopify GitHub](https://github.com/Shopify/quilt/blob/master/Decision%20records/00%20-%20Use%20a%20Lerna%20monorepo.md)
-- [Google](https://www.google.com/search?q=monorepo)
+The main difference to account for is that the `devDependencies` must now be installed locally in every package `package.json` file rather than in the root `package.json` file.
 
-### PNPM workspace
+## Project overview
 
-This monorepo is using PNPM workspace feature to handle the installation of the npm dependencies and manage the packages interdependencies.
-
-It's important to note that PNPM workspace will **link** the npm dependencies at the root of the workspace. This means that there might not be a *node_modules* directory nested in the packages directories. The npm dependencies are installed in a *node_modules* directory at the root of the workspace and a single *pnpm-lock.yaml* file is generated at the root of the workspace.
-
-## Project Overview
+This project is split into two major sections, [packages/][packages/] and [templates/](templates/).
 
 ### Packages
 
-This project is split into two major sections, `packages/` and `templates/`.
+Under [packages/][packages/] we have two tools that are deployed on [NPM](https://www.npmjs.com/).
 
-Under `packages/` we have two tools that are deployed on [NPM](https://www.npmjs.com/).
+[@workleap/create-project](packages/create-project/) is a prompt that will call `@workleap/foundry` once each question is answered. It can be called using `npm create @worklead/project` and will prompt the user about template information. It will then call `@workleap/foundry`, using `npx`. More information about this project can be read from [the project README](packages/create-project/README.md).
 
-`@workleap/create-project` is a prompt that will call `@workleap/foundry` once each question is answered. It can be called using `npm create @worklead/project` and will prompt the user about template information. It will then call `@workleap/foundry`, using `npx`. More information about this project can be read from [the project README](packages/create-project/README.md).
-
-`@workleap/foundry` is a basic CLI. It can be called using `npx @workleap/foundry`, or `foundry` if installed globally. This tool, depending on the command used, will clone the requested template (from the main `/templates` folder) using [degit](https://github.com/Rich-Harris/degit) and apply transformation in files by replacing tokens with the option provided when calling it. More information about this project can be read from [the project README](packages/foundry/README.md).
+[@workleap/foundry](packages/foundry/) is a basic CLI. It can be called using `npx @workleap/foundry`, or `foundry` if installed globally. This tool, depending on the command used, will clone the requested template (from the main `/templates` folder) using [degit](https://github.com/Rich-Harris/degit) and apply transformation in files by replacing tokens with the option provided when calling it. More information about this project can be read from [the project README](packages/foundry/README.md).
 
 ### Templates
 
-Under `templates/`, are the templates that the `@workleap/foundry` command will clone from. `@workleap/foundry` will always clone the latest version of a template from the `main` branch.
+Under [templates/](templates/), are the templates that the `@workleap/foundry` command will clone from. `@workleap/foundry` will always clone the latest version of a template from the `main` branch.
 
 ## Installation
 
-This project uses PNPM workspace. Therefore, you must [install PNPM](https://pnpm.io/installation):
+This project uses PNPM, therefore, you must [install PNPM](https://pnpm.io/installation):
 
 To install the project, open a terminal at the root of the workspace and execute the following command:
 
 ```bash
-pnpm i
+pnpm install
 ```
 
 ## Develop the CLI packages
@@ -63,7 +55,7 @@ The following documentation is a brief overview of the tools and processes invol
 
 ### Working in `@workleap/create-project`
 
-This package can be found under the folder `packages/create-project`.
+This package can be found under the folder [packages/create-project](packages/create-project/).
 
 To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `create-project` command. For example: `create-project hello` ; will start a prompt about creating a template in the `hello` folder.
 
@@ -71,7 +63,7 @@ When the package is built from the `pnpm dev` command, you can attach a debugger
 
 ### Working in `@workleap/foundry`
 
-This package can be found under the folder `packages/foundry`.
+This package can be found under the folder [packages/foundry](packages/foundry/).
 
 To build it for development, from the folder, run `pnpm dev`. This will build the project in development mode and link the binary locally. Once done, you will be able to run it from a terminal by using the `foundry` command. For example: `foundry --help` ; will show the help in the terminal.
 
@@ -79,7 +71,7 @@ When the package is built from the `pnpm dev` command, you can attach a debugger
 
 ### Working with Storybook in `templates`
 
-First, navigate to the folder of the template you want to work with powershell. After, run the command `pnpm i --ignore-workspace` to locally install all the dependencies needed.
+First, navigate to the folder of the template you want to work with a command line tool. After, run the command `pnpm install --ignore-workspace` to locally install all the dependencies needed.
 
 You will also want to configure MSW for local testing, without affecting the template. `pnpm dlx msw init public` will automatically generate the `generatedServiceWorker.js` file in the `public` folder.
 
@@ -87,7 +79,7 @@ To start the Storybook server, run `pnpm storybook`. This will start the Storybo
 
 ### Linting
 
-To run lint on the packages, call `pnpm lint` from the project root folder.
+To lint the packages, call `pnpm lint` from the project root folder.
 
 ### Testing
 
@@ -145,11 +137,11 @@ If you got linting error, most of the time, they can be fixed automatically usin
 
 ## Commands
 
-From the project root, you have access to many commands the main ones are:
+From the project root, you have access to many commands, the main ones are:
 
 ### dev
 
-Build the packages in development mode and link them to be called from the local terminal.
+Build the packages for development and link them to be called from the local terminal.
 
 ```bash
 pnpm dev
@@ -157,10 +149,26 @@ pnpm dev
 
 ### build
 
-Build the packages from TypeScript to JavaScript.
+Build the packages for release.
 
 ```bash
 pnpm build
+```
+
+### test
+
+Run the packages unit tests.
+
+```bash
+pnpm test
+```
+
+### lint
+
+Lint the packages files.
+
+```bash
+pnpm lint
 ```
 
 ### changeset
@@ -173,39 +181,23 @@ pnpm changeset
 
 ### clean
 
-Remove the packages `dist` folder.
+Clean the packages (delete `dist` folders, clear caches, etc..)
 
 ```bash
 pnpm clean
 ```
 
-### lint
-
-Run the linting on the packages files.
-
-```bash
-pnpm lint
-```
-
 ### reset
 
-Remove the packages `dist` and `node_modules` (including the root one) folders.
+Reset the monorepo installation (delete `dist` folders, clear caches, delete `node_modules` folders, etc..)
 
 ```bash
 pnpm reset
 ```
 
-### test
-
-Run the unit tests for the packages projects.
-
-```bash
-pnpm test
-```
-
 ## CI
 
-We use [GitHub Actions]() for this repository.
+We use [GitHub Actions](https://github.com/features/actions) for this repository.
 
 The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/workleap/wl-foundry-cli/actions).
 
@@ -227,9 +219,9 @@ Before you add a new package, please read the [GSoft GitHub guidelines](https://
 
 ### Create the package
 
-First, create a new folder matching the package name in the [packages](/packages) directory.
+First, create a new folder matching the package name in the [packages](/packages) folder.
 
-Open a terminal, navigate to the newly created directory, and execute the following command:
+Open a terminal, navigate to the newly created folder, and execute the following command:
 
 ```bash
 pnpm init
@@ -237,11 +229,11 @@ pnpm init
 
 Answer the CLI questions.
 
-Once the *package.json* is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
+Once the `package.json` file is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
 
-Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) *"@workleap"* before the package name. For example, if the project name is "foo", your package name should be "@workleap/foo".
+Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo.
 
-Make sure the package publish access is *public* by adding the following to the *package.json* file:
+Make sure the package publish access is *public* by adding the following to the `package.json` file:
 
 ```json
 {
