@@ -22,4 +22,4 @@ Using [@workleap/foundry](packages/foundry/README.md), you can also pass command
 
 ## 🤝 Contributing
 
-View the [contributors documentation](./CONTRIBUTING.md).
+View the [contributor's documentation](./CONTRIBUTING.md).
