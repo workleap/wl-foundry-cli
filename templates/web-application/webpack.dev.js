@@ -1,4 +1,3 @@
-// @ts-check
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
@@ -8,7 +7,8 @@ import webpack from "webpack";
 import swcConfig from "./swc.dev.js";
 import { loadSwcConfig } from "./loadSwcConfig.js";
 
-/** @type {(env: {mock: boolean}) => Promise<import("webpack").Configuration>} */
+/** @typedef {import("webpack-dev-server")}*/ // This ensure that the devServer portion of the config is type checked.
+/** @type {(env: Record<string,unknown>) => Promise<import("webpack").Configuration>} */
 const config = async env => {
     return {
         mode: "development",
