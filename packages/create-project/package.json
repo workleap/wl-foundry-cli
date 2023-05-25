@@ -19,6 +19,7 @@
         "dev": "pnpm run build && pnpm run dev:link && pnpm run dev:tsup",
         "dev:link": "pnpm link --global",
         "dev:tsup": "tsup --config tsup.dev.ts",
+
         "build": "tsup --config tsup.build.ts"
     },
     "dependencies": {
@@ -27,7 +28,11 @@
         "picocolors": "1.0.0"
     },
     "devDependencies": {
-        "tsup": "6.7.0",
-        "@workleap/tsup-configs": "1.0.0"
+        "@types/node": "18.16.10",
+        "@workleap/tsup-configs": "1.0.0",
+        "tsup": "6.7.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     }
 }

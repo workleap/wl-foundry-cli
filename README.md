@@ -22,4 +22,4 @@ Using [@workleap/foundry](packages/foundry/README.md), you can also pass command
 
 ## 🤝 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+View the [contributors documentation](./CONTRIBUTING.md).
