@@ -25,7 +25,7 @@ This project is split into two major sections, [packages/][packages/] and [templ
 
 ### Packages
 
-Under [packages/][packages/] we have two tools that are deployed on [NPM](https://www.npmjs.com/).
+Under [packages/](packages/) we have two tools that are deployed on [NPM](https://www.npmjs.com/).
 
 [@workleap/create-project](packages/create-project/) is a prompt that will call `@workleap/foundry` once each question is answered. It can be called using `npm create @worklead/project` and will prompt the user about template information. It will then call `@workleap/foundry`, using `npx`. More information about this project can be read from [the project README](packages/create-project/README.md).
 
