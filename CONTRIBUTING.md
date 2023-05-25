@@ -231,7 +231,7 @@ Answer the CLI questions.
 
 Once the `package.json` file is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
 
-Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo.
+Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo`.
 
 Make sure the package publish access is *public* by adding the following to the `package.json` file:
 
