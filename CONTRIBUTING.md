@@ -21,7 +21,7 @@ The main difference to account for is that the `devDependencies` must now be ins
 
 ## Project overview
 
-This project is split into two major sections, [packages/][packages/] and [templates/](templates/).
+This project is split into two major sections, [packages/](packages/) and [templates/](templates/).
 
 ### Packages
 
