@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
+import { isBinary } from "istextorbinary";
 
 export async function replaceTokens(globPatterns: string[], values: Record<string, string>, outputDirectory: string) {
     const targets = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
@@ -10,9 +11,17 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
 
         const content = await readFile(targetPath);
 
-        const newContent = replaceTokensInFile(content.toString(), values);
+        if (isBinary(targetPath, content)) {
+            return;
+        }
 
-        await writeFile(targetPath, newContent);
+        const oldContent = content.toString();
+        const newContent = replaceTokensInFile(oldContent, values);
+
+        // only write the file if it has changed
+        if (oldContent !== newContent) {
+            await writeFile(targetPath, newContent);
+        }
     }
 }
 

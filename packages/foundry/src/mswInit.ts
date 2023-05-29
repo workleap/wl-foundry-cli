@@ -9,7 +9,7 @@ export async function mswInit(publicDirPath: string, outputDirectory: string) {
             resolve(1);
         });
         childProcess.stderr?.on("data", (x: string): void => {
-            console.error(x);
+            console.log(x);
             resolve(1);
         });
         childProcess.on("exit", code => {

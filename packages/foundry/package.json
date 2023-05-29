@@ -24,6 +24,7 @@
         "commander": "10.0.1",
         "degit": "2.8.4",
         "glob": "10.2.4",
+        "istextorbinary": "6.0.0",
         "npm-check-updates": "16.10.12"
     },
     "devDependencies": {
