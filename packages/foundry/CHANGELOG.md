@@ -1,5 +1,11 @@
 # @workleap/foundry
 
+## 0.4.0
+
+### Minor Changes
+
+- [#42](https://github.com/workleap/wl-foundry-cli/pull/42) [`926e139`](https://github.com/workleap/wl-foundry-cli/commit/926e139ef26cb0675a42da2a2a3b5b72622a972d) Thanks [@ofrogon](https://github.com/ofrogon)! - Add new step to update the dependencies of templates
+
 ## 0.3.0
 
 ### Minor Changes
