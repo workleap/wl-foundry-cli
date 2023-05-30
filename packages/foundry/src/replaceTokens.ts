@@ -10,16 +10,14 @@ export async function replaceTokens(globPatterns: string[], values: Record<strin
         const targetPath = join(outputDirectory, target);
         const fileType = await fileTypeFromFile(targetPath);
 
-        if (fileType?.mime.match(/^image\/.*/)) {
-            continue;
-        }
+        if (!fileType?.mime.match(/^image\/.*/)) {
+            const oldContent = (await readFile(targetPath)).toString();
+            const newContent = replaceTokensInFile(oldContent, values);
 
-        const oldContent = (await readFile(targetPath)).toString();
-        const newContent = replaceTokensInFile(oldContent, values);
-
-        // only write the file if it has changed
-        if (oldContent !== newContent) {
-            await writeFile(targetPath, newContent);
+            // only write the file if it has changed
+            if (oldContent !== newContent) {
+                await writeFile(targetPath, newContent);
+            }
         }
     }
 }
