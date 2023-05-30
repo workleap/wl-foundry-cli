@@ -1,11 +1,15 @@
 import * as fs from "node:fs/promises";
 import * as glob from "glob";
+import * as filetype from "file-type";
 import { replaceTokens } from "../src/replaceTokens.ts";
 
 import { join } from "path";
 
 jest.mock("node:fs/promises");
 jest.mock("glob");
+jest.mock("file-type", () => ({
+    fileTypeFromFile: jest.fn()
+}));
 
 const fakeFilePatternList = ["foo.bar", "hello/**"];
 const fakeFileList = ["foo.bar", "hello/world.txt", "hello/mr/anderson.txt"];
@@ -63,9 +67,7 @@ test("when files detected with no variables inside, content stays the same", asy
 
     await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
-    expect(fs.writeFile).toHaveBeenCalledWith("foo.bar", content);
-    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "world.txt"), content);
-    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), content);
+    expect(fs.writeFile).not.toHaveBeenCalled();
 });
 
 test("when files detected with unknown variable, content stays the same", async () => {
@@ -81,7 +83,16 @@ test("when files detected with unknown variable, content stays the same", async 
 
     await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
 
-    expect(fs.writeFile).toHaveBeenCalledWith("foo.bar", content);
-    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "world.txt"), content);
-    expect(fs.writeFile).toHaveBeenCalledWith(join("hello", "mr", "anderson.txt"), content);
+    expect(fs.writeFile).not.toHaveBeenCalled();
+});
+
+test("when file is a binary, do nothing", async () => {
+    const content = "0xSomeBin4ryVal43s";
+    jest.spyOn(glob, "glob").mockImplementation(async () => ["bob.png"]);
+    jest.spyOn(fs, "readFile").mockImplementation(async () => content);
+    jest.spyOn(filetype, "fileTypeFromFile").mockImplementation(async () => {return { ext: "png", mime: "image/png" };});
+
+    await replaceTokens(fakeFilePatternList, fakeReplaceValueList, ".");
+
+    expect(fs.writeFile).not.toHaveBeenCalled();
 });
