@@ -1,7 +1,7 @@
 {
     "name": "@workleap/create-project",
     "author": "Workleap",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Foundry-CLI Workleap project starter kit",
     "license": "Apache-2.0",
     "repository": {
@@ -19,7 +19,6 @@
         "dev": "pnpm run build && pnpm run dev:link && pnpm run dev:tsup",
         "dev:link": "pnpm link --global",
         "dev:tsup": "tsup --config tsup.dev.ts",
-
         "build": "tsup --config tsup.build.ts"
     },
     "dependencies": {
