@@ -1,18 +1,24 @@
 import { join } from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
 import { glob } from "glob";
+import { fileTypeFromFile } from "file-type";
 
 export async function replaceTokens(globPatterns: string[], values: Record<string, string>, outputDirectory: string) {
     const targets = await glob(globPatterns, { cwd: outputDirectory, nodir: true });
 
     for (const target of targets) {
         const targetPath = join(outputDirectory, target);
+        const fileType = await fileTypeFromFile(targetPath);
 
-        const content = await readFile(targetPath);
+        if (!fileType?.mime.match(/^image\/.*/)) {
+            const oldContent = (await readFile(targetPath)).toString();
+            const newContent = replaceTokensInFile(oldContent, values);
 
-        const newContent = replaceTokensInFile(content.toString(), values);
-
-        await writeFile(targetPath, newContent);
+            // only write the file if it has changed
+            if (oldContent !== newContent) {
+                await writeFile(targetPath, newContent);
+            }
+        }
     }
 }
 
