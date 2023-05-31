@@ -1,5 +1,11 @@
 # @workleap/create-project
 
+## 0.3.1
+
+### Patch Changes
+
+- [#66](https://github.com/workleap/wl-foundry-cli/pull/66) [`68cebb0`](https://github.com/workleap/wl-foundry-cli/commit/68cebb0deee7a977a7b4c05c2953e60b44bbaf24) Thanks [@ofrogon](https://github.com/ofrogon)! - Fix text replacement running on binaries files bug and `pnpm dlx` warning bubbling up to create-workleap level
+
 ## 0.3.0
 
 ### Minor Changes
