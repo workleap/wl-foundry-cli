@@ -6,5 +6,14 @@ export default {
     },
     testEnvironment: "jsdom",
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
-    extensionsToTreatAsEsm: [".ts", ".tsx"]
+    extensionsToTreatAsEsm: [".ts", ".tsx"],
+    reporters: ["default", ["jest-junit", {
+        outputDirectory: "reports",
+        outputName: "jest-junit.xml",
+        ancestorSeparator: " › ",
+        uniqueOutputName: "false",
+        suiteNameTemplate: "{filepath}",
+        classNameTemplate: "{classname}",
+        titleTemplate: "{title}"
+    }]]
 };

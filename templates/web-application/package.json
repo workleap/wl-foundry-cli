@@ -18,7 +18,7 @@
         "reset:modules": "pnpm dlx rimraf node_modules pnpm-lock.yaml",
         "analyze": "webpack --config webpack.build.js --analyze",
         "test": "jest",
-        "test-ci": "jest --ci --coverage --reporters='jest-junit'",
+        "test-ci": "jest --ci",
         "storybook": "storybook dev -p 6006",
         "chromatic": "pnpm dlx chromatic --only-changed"
     },
@@ -73,14 +73,5 @@
     },
     "msw": {
         "workerDirectory": "public"
-    },
-    "jest-junit": {
-        "outputDirectory": "reports",
-        "outputName": "jest-junit.xml",
-        "ancestorSeparator": " › ",
-        "uniqueOutputName": "false",
-        "suiteNameTemplate": "{filepath}",
-        "classNameTemplate": "{classname}",
-        "titleTemplate": "{title}"
     }
 }
