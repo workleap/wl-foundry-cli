@@ -7,7 +7,7 @@ const config = {
     testEnvironment: "jsdom",
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     extensionsToTreatAsEsm: [".ts", ".tsx"],
-    reporters: ["default" ]
+    reporters: ["default"] || [[]]
 };
 
 if (process.argv.includes("--ci")) {
