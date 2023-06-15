@@ -1,0 +1,125 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: 'Build'
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+
+      - name: 'Install Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: 'Install dependencies'
+        run: pnpm install --frozen-lockfile
+
+      - name: 'Lint'
+        run: pnpm lint
+
+      - name: 'Build'
+        run: pnpm build
+
+      - name: 'Test'
+        run: pnpm test-ci
+
+      - name: 'Publish Test Results'
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'JEST Tests'
+          path: 'reports/jest-*.xml'
+          reporter: 'jest-junit'
+
+      - name: 'Upload Artifacts'
+        uses: actions/upload-artifact@v3
+        with:
+          name: 'dist'
+          path: 'dist'
+
+  deployPreview:
+    needs: build
+    if: ${{ github.ref != 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    name: 'Preview Deploy'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: 'Extract branch name'
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: 'Download build artifacts'
+        uses: actions/download-artifact@v3
+        with:
+          name: 'dist'
+          path: 'dist'
+
+      - name: 'Publish to Cloudflare Pages'
+        uses: cloudflare/pages-action@v1
+        id: cloudflare
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: '{{PROJECT-NAME}}'
+          directory: 'dist'
+          wranglerVersion: '3'
+          branch: ${{ steps.extract_branch.outputs.branch }}
+
+      - name: 'Set Comment on Pull Request'
+        uses: mshick/add-pr-comment@v2
+        if: always()
+        with:
+          message-success: |
+            # ✔ Build successful
+            Website preview for branch `${{ steps.extract_branch.outputs.branch }}` is available at [${{ steps.cloudflare.outputs.url }}](${{ steps.cloudflare.outputs.url }}).
+            [🛠 Last build result](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          message-failure: |
+            # ❌ Build failed
+            [🛠 Last build result](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          message-cancelled: |
+            # ⚠ Build cancelled
+            [🛠 Last build result](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+  deployProduction:
+    needs: build
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    name: 'Production Deploy'
+    steps:
+      - name: 'Download build artifacts'
+        uses: actions/download-artifact@v3
+        with:
+          name: 'dist'
+          path: 'dist'
+
+      - name: 'Publish to Cloudflare Pages'
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: '{{PROJECT-NAME}}'
+          directory: 'dist'
+          wranglerVersion: '3'

@@ -74,6 +74,14 @@ program.command("generate-web-application")
         "-n, --package-name <string>",
         "package name (required)"
     )
+    .requiredOption(
+        "-b, --build-pipeline <string>",
+        "build pipeline (required)"
+    )
+    .option(
+        "-p, --project-name <string>",
+        "project name"
+    )
     .action(async options => {
         await create("web-application", resolve(options["outDir"]), options);
     });

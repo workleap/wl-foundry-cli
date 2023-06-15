@@ -36,7 +36,6 @@ export default {
             },
             {
                 test: /\.css$/i,
-                include: path.resolve("src"),
                 use: ["style-loader", "css-loader"]
             },
             {

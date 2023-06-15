@@ -1,3 +1,5 @@
+import { join } from "node:path";
+
 import { cloneProjectTemplate } from "./cloneProjectTemplate.ts";
 import { replaceTokens } from "./replaceTokens.ts";
 import { mswInit } from "./mswInit.ts";
@@ -12,6 +14,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         const scope = options["packageScope"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/host-application`);
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
 
         await replaceTokens(["**/package.json", "**/@apps/host", "README.md"], {
             "PACKAGE-SCOPE": scope
@@ -22,6 +25,7 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         const packageName = options["packageName"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/remote-module`);
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
 
         await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
     },
@@ -30,19 +34,36 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         const packageName = options["packageName"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/static-module`);
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
 
         await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
     },
     "web-application": async (outputDirectory, options) => {
         const packageName = options["packageName"];
+        const projectName = options["projectName"];
+        const buildPipeline = options["buildPipeline"];
 
         await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/web-application`);
+        await cloneProjectTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
+
+        if (buildPipeline !== "none") {
+            if (buildPipeline === "azure") {
+                await cloneProjectTemplate(join(outputDirectory, ".ado"), `${BaseRepositoryAddress}/ado-resources`);
+            } else if (buildPipeline === "github") {
+                await cloneProjectTemplate(join(outputDirectory, ".github"), `${BaseRepositoryAddress}/github-resources`);
+            } else {
+                throw new Error(`Invalid build pipeline: ${options["buildPipeline"]}`);
+            }
+        }
 
         await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
+        await replaceTokens([".ado/**", ".github/**"], { "PROJECT-NAME": projectName }, outputDirectory);
 
         await mswInit("public/", outputDirectory);
 
         await updateDependencies(outputDirectory);
+
+        // TODO add step to inform about CI/CD configuration steps to be performed next
     }
 };
 

@@ -5,9 +5,11 @@ export interface GenerateProjectOptionalArguments {
     packageScope?: string;
     hostScope?: string;
     packageName?: string;
+    buildPipeline?: "github" | "azure" | "none";
+    projectName?: string;
 }
 
-export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope, packageName }: GenerateProjectOptionalArguments) {
+export async function generateProject(templateId: TemplateId, outputDirectory: string, { packageScope, hostScope, packageName, buildPipeline, projectName }: GenerateProjectOptionalArguments) {
     let commandName;
     const args: string[] = [];
 
@@ -31,10 +33,13 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
         case "web-application":
             commandName = "generate-web-application";
             args.push("--package-name", `"${packageName!}"`);
+            args.push("--build-pipeline", `"${buildPipeline!}"`);
+            if (projectName) {args.push("--project-name", `"${projectName!}"`);}
             break;
     }
 
-    const childProcess = child_process.exec(`npx --yes @workleap/foundry@latest ${commandName} ${args.join(" ")}`);
+    // const childProcess = child_process.exec(`npx --yes @workleap/foundry@latest ${commandName} ${args.join(" ")}`);
+    const childProcess = child_process.exec(`foundry ${commandName} ${args.join(" ")}`);
 
     return new Promise<number>(resolve => {
         childProcess.on("error", error => {
