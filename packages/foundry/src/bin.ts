@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { resolve } from "node:path";
 import { argv } from "node:process";
-import { Command } from "commander";
+import { Command, Option } from "commander";
 
 import { create } from "./create.ts";
 
-import packageJson from "../package.json" assert { type: "json" };
+import packageJson from "../package.json" assert {type: "json"};
 
 const program = new Command();
 
@@ -74,15 +74,22 @@ program.command("generate-web-application")
         "-n, --package-name <string>",
         "package name (required)"
     )
-    .requiredOption(
-        "-b, --build-pipeline <string>",
-        "build pipeline (required)"
+    .addOption(
+        new Option(
+            "-b, --build-pipeline <string>",
+            "build pipeline (required)")
+            .choices(["github", "azure", "none"])
+            .makeOptionMandatory()
     )
     .option(
         "-p, --project-name <string>",
         "project name"
     )
     .action(async options => {
+        if (options["buildPipeline"] !== "none" && !options["projectName"]) {
+            program.error("error: project-name is required when '-b, --build-pipeline <string>' is not 'none'");
+        }
+
         await create("web-application", resolve(options["outDir"]), options);
     });
 
