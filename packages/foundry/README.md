@@ -59,11 +59,13 @@ Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/tem
 
 Use the [web-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) template as a base to customize with these options:
 
-| option                      | description                  | required |
-|-----------------------------|------------------------------|----------|
-| -o, --out-dir <string>      | where to create the template | ✔        |
-| -n, --package-name <string> | package name                 | ✔        |
-| -h, --help                  | display help for command     |          |
+| option                        | description                                         | required |
+|-------------------------------|-----------------------------------------------------|----------|
+| -o, --out-dir <string>        | where to create the template                        | ✔        |
+| -n, --package-name <string>   | package name                                        | ✔        |
+| -b, --build-pipeline <string> | build pipeline (choices: "github", "azure", "none") | ✔        |
+| -p, --project-name <string>   | project name                                        |          |
+| -h, --help                    | display help for command                            |          |
 
 ## Develop
 

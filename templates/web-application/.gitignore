@@ -18,6 +18,10 @@ build
 .DS_Store
 *.pem
 
+# temporary template files
+.ado/TODO.md
+.github/TODO.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*
