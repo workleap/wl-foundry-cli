@@ -217,9 +217,9 @@ if (status === 0) {
     nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
 
     if (buildPipeline === "github") {
-        nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the GitHub Action, follow the instructions in the README.md file")}`); //TODO create this readme
+        nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the GitHub Action, follow the instructions in the .github/TODO.md file")}`);
     } else if (buildPipeline === "azure") {
-        nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the Azure DevOps Pipeline, follow the instructions in the README.md file")}`); //TODO create this readme
+        nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the Azure DevOps Pipeline, follow the instructions in the .ado/TODO.md file")}`);
     }
 
     note(
