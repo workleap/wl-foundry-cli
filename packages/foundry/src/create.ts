@@ -48,9 +48,9 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
 
         if (buildPipeline !== "none") {
             if (buildPipeline === "azure") {
-                await cloneProjectTemplate(join(outputDirectory, ".ado"), `${BaseRepositoryAddress}/ado-resources`);
+                await cloneProjectTemplate(join(outputDirectory, ".ado"), `${BaseRepositoryAddress}/ado-config`);
             } else if (buildPipeline === "github") {
-                await cloneProjectTemplate(join(outputDirectory, ".github"), `${BaseRepositoryAddress}/github-resources`);
+                await cloneProjectTemplate(join(outputDirectory, ".github"), `${BaseRepositoryAddress}/github-config`);
             } else {
                 throw new Error(`Invalid build pipeline: ${options["buildPipeline"]}`);
             }
