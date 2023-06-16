@@ -8,7 +8,7 @@ Once you have created this template, to activate the pipeline in Azure DevOps, y
       1. `CLOUDFLARE_ACCOUNT_ID` : the Cloudflare account ID. Must be set as `secret`.
       2. `CLOUDFLARE_API_TOKEN` : the Cloudflare API token. Must be set as `secret`.
 2. For the pipeline to work, you also need to install the extension `PR Messenger` in your Azure DevOps organization.
-   1. Install the extension `PR Messenger` from the [marketplace](https://marketplace.visualstudio.com/items?itemName=abeaudoin.pr-messenger).
+   1. Install the extension `PR Messenger` from the [marketplace](https://marketplace.visualstudio.com/items?itemName=Workleap.pr-messenger).
    2. Give your build user the right to comment on pull requests. `Project Settings > Repositories > Security > <your project> Build Service (<your organisation>) > Contribute to pull requests > Allow > Save`.
 3. Push this to an Azure DevOps repository.
 4. Add the pipeline to your Azure DevOps project.

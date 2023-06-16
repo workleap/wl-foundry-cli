@@ -76,7 +76,7 @@ const ValidNpmPackageNameRegex = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a
 let packageScope: string | undefined;
 let hostScope: string | undefined;
 let packageName: string | undefined;
-let buildPipeline: "github" | "azure" | "none" | undefined;
+let provider: "github" | "azure" | "none" | undefined;
 let projectName: string | undefined;
 
 // Ask for other arguments
@@ -117,7 +117,7 @@ if (templateId === "host-application") {
 
     packageName = packageNameValue;
 
-    const buildPipelineValue = await select({
+    const providerValue = await select({
         message: "Should we add CI/CD pipeline?",
         initialValue: "github" as "github" | "azure" | "none",
         options: [
@@ -136,11 +136,11 @@ if (templateId === "host-application") {
         ]
     });
 
-    if (isCancel(buildPipelineValue)) { process.exit(1); }
+    if (isCancel(providerValue)) { process.exit(1); }
 
-    buildPipeline = buildPipelineValue;
+    provider = providerValue;
 
-    if (buildPipelineValue !== "none") {
+    if (providerValue !== "none") {
         const projectNameValue = await text({
             message: "What should be the name of the project?",
             placeholder: "ex: my-project"
@@ -199,7 +199,7 @@ const status = await generateProject(
         hostScope,
         packageScope,
         packageName,
-        buildPipeline,
+        provider,
         projectName
     }
 );
@@ -216,9 +216,9 @@ if (status === 0) {
     }
     nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("pnpm install")}`);
 
-    if (buildPipeline === "github") {
+    if (provider === "github") {
         nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the GitHub Action, follow the instructions in the .github/TODO.md file")}`);
-    } else if (buildPipeline === "azure") {
+    } else if (provider === "azure") {
         nextStepsInstructions.push(`  ${stepNumber++}: ${colors.cyan("To configure the Azure DevOps Pipeline, follow the instructions in the .ado/TODO.md file")}`);
     }
 

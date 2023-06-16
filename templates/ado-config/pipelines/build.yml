@@ -10,71 +10,71 @@ variables:
   pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
 
 stages:
-- stage: 'Build'
-  displayName: 'Build'
+- stage: "Build"
+  displayName: "Build"
   jobs:
-  - job: 'ConfigureAndBuild'
-    displayName: 'Configure And Build'
+  - job: "ConfigureAndBuild"
+    displayName: "Configure And Build"
     steps:
     - checkout: self
       clean: true
       fetchDepth: 1
 
     - task: NodeTool@0
-      displayName: 'Install Node.js'
+      displayName: "Install Node.js"
       inputs:
-        versionSpec: '18.x'
+        versionSpec: "18.x"
 
     - task: Cache@2
-      displayName: 'Prepare pnpm Cache'
+      displayName: "Prepare pnpm Cache"
       inputs:
-        key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+        key: "pnpm | '$(Agent.OS)' | pnpm-lock.yaml"
         path: $(pnpm_config_cache)
 
     - script: |
         corepack enable
         corepack prepare pnpm@latest-8 --activate
         pnpm config set store-dir $(pnpm_config_cache)
-      displayName: 'Setup pnpm'
+      displayName: "Setup pnpm"
 
     - script: pnpm install --frozen-lockfile
-      displayName: 'Install dependencies'
+      displayName: "Install dependencies"
 
     - script: pnpm lint
-      displayName: 'Lint'
+      displayName: "Lint"
 
     - script: pnpm build
-      displayName: 'Build'
+      displayName: "Build"
 
     - script: pnpm test-ci
-      displayName: 'Test'
+      displayName: "Test"
 
     - task: PublishTestResults@2
-      displayName: 'Publish Test Results'
+      displayName: "Publish Test Results"
       inputs:
         testResultsFiles: reports/jest-junit.xml
       condition: succeededOrFailed()
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Upload Artifacts'
+      displayName: "Upload Artifacts"
       inputs:
-        PathtoPublish: 'dist'
-        ArtifactName: 'dist'
+        PathtoPublish: "dist"
+        ArtifactName: "dist"
 
-- stage: 'DeployPR'
-  displayName: 'Preview Deploy'
-  dependsOn: 'Build'
-  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
+- stage: "DeployPR"
+  displayName: "Preview Deploy"
+  dependsOn: "Build"
+  condition: and(succeeded(), ne(variables["Build.SourceBranch"], "refs/heads/main"))
   jobs:
   - template: deploy.yml
     parameters:
-      environment: 'Preview'
+      environment: "Preview"
 
-- stage: 'DeployProd'
-  displayName: 'Production Deploy'
-  dependsOn: 'Build'
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+- stage: "DeployProd"
+  displayName: "Production Deploy"
+  dependsOn: "Build"
+  condition: and(succeeded(), eq(variables["Build.SourceBranch"], "refs/heads/main"))
   jobs:
   - template: deploy.yml
     parameters:
-      environment: 'Production'
+      environment: "Production"

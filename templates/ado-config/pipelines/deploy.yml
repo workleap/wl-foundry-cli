@@ -1,45 +1,45 @@
 parameters:
 - name: environment
   values:
-  - 'Preview'
-  - 'Production'
+  - "Preview"
+  - "Production"
 
 jobs:
-- job: 'Deploy'
+- job: "Deploy"
   pool:
     vmImage: ubuntu-latest
   variables:
-  - group: 'CloudflarePages'
-  - name: 'pnpm_config_cache'
+  - group: "CloudflarePages"
+  - name: "pnpm_config_cache"
     value: $(Pipeline.Workspace)/.pnpm-store
   steps:
   - checkout: none
 
   - task: PowerShell@2
-    displayName: 'Extract branch name'
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-    name: 'formatBranchName'
+    displayName: "Extract branch name"
+    condition: and(succeeded(), eq(variables["Build.Reason"], "PullRequest"))
+    name: "formatBranchName"
     inputs:
-      targetType: 'inline'
+      targetType: "inline"
       script: |
         $sourceBranchName = "$(System.PullRequest.SourceBranch)"
-        $sourceBranchName = $sourceBranchName.Replace('refs/heads/', '')
+        $sourceBranchName = $sourceBranchName.Replace("refs/heads/", "")
         Write-Host "##vso[task.setvariable variable=sourceBranchName;isOutput=true]$sourceBranchName"
 
   - download: current
-    artifact: 'dist'
-    displayName: 'Download build artifacts'
+    artifact: "dist"
+    displayName: "Download build artifacts"
 
   - task: NodeTool@0
-    displayName: 'Install Node.js'
+    displayName: "Install Node.js"
     inputs:
-      versionSpec: '18.x'
+      versionSpec: "18.x"
 
   - task: PowerShell@2
-    displayName: 'Publish to Cloudflare Pages'
-    name: 'publishToCloudflarePages'
+    displayName: "Publish to Cloudflare Pages"
+    name: "publishToCloudflarePages"
     inputs:
-      targetType: 'inline'
+      targetType: "inline"
       script: |
         $output = npx wrangler pages deploy "../dist" --project-name "{{PROJECT-NAME}}" --branch $(formatBranchName.sourceBranchName)
         $output
@@ -50,8 +50,8 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: $(CLOUDFLARE_ACCOUNT_ID)
 
   - task: PrMessenger@0
-    displayName: 'Set Comment on Pull Request'
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    displayName: "Set Comment on Pull Request"
+    condition: and(succeeded(), eq(variables["Build.Reason"], "PullRequest"))
     inputs:
       messageSuccess: |
         # ✔ Build successful

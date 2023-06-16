@@ -1,6 +1,6 @@
 import { mkdir } from "node:fs/promises";
 
-import { cloneProjectTemplate } from "../src/cloneProjectTemplate.ts";
+import { cloneTemplate } from "../src/cloneTemplate.ts";
 
 jest.mock("node:fs/promises");
 
@@ -18,7 +18,7 @@ test("when called with valid argument, template is cloned", async () => {
     const outputDirectory = "./test";
     const repositoryUrl = "foo/bar";
 
-    await cloneProjectTemplate(outputDirectory, repositoryUrl);
+    await cloneTemplate(outputDirectory, repositoryUrl);
 
     expect(mkdir).toHaveBeenCalledWith(outputDirectory, expect.anything());
     expect(cloneMock).toHaveBeenCalledWith(outputDirectory);
