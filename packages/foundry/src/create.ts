@@ -49,8 +49,10 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         if (buildPipeline !== "none") {
             if (buildPipeline === "azure") {
                 await cloneProjectTemplate(join(outputDirectory, ".ado"), `${BaseRepositoryAddress}/ado-config`);
+                console.log("To configure your Azure DevOps pipeline, read the TODO.md file in the .ado directory.");
             } else if (buildPipeline === "github") {
                 await cloneProjectTemplate(join(outputDirectory, ".github"), `${BaseRepositoryAddress}/github-config`);
+                console.log("To configure your GitHub Actions pipeline, read the TODO.md file in the .github directory.");
             } else {
                 throw new Error(`Invalid build pipeline: ${options["buildPipeline"]}`);
             }
@@ -62,8 +64,6 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await mswInit("public/", outputDirectory);
 
         await updateDependencies(outputDirectory);
-
-        // TODO add step to inform about CI/CD configuration steps to be performed next
     }
 };
 
