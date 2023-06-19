@@ -29,7 +29,7 @@ Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/
 
 | option                   | description                  | required |
 |--------------------------|------------------------------|----------|
-| -o, --out-dir <string>   | where to create the template | ✔        |
+| --out-dir <string>       | where to create the template | ✔        |
 | --package-scope <string> | package scope                | ✔        |
 | -h, --help               | display help for command     |          |
 
@@ -37,33 +37,35 @@ Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/
 
 Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module) template as a base to customize with these options:
 
-| option                      | description                  | required |
-|-----------------------------|------------------------------|----------|
-| -o, --out-dir <string>      | where to create the template | ✔        |
-| --host-scope <string>       | host scope                   | ✔        |
-| -n, --package-name <string> | package name                 | ✔        |
-| -h, --help                  | display help for command     |          |
+| option                  | description                  | required |
+|-------------------------|------------------------------|----------|
+| --out-dir <string>      | where to create the template | ✔        |
+| --host-scope <string>   | host scope                   | ✔        |
+| --package-name <string> | package name                 | ✔        |
+| -h, --help              | display help for command     |          |
 
 ### generate-static-module
 
 Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module) template as a base to customize with these options:
 
-| option                      | description                  | required |
-|-----------------------------|------------------------------|----------|
-| -o, --out-dir <string>      | where to create the template | ✔        |
-| --host-scope <string>       | host scope                   | ✔        |
-| -n, --package-name <string> | package name                 | ✔        |
-| -h, --help                  | display help for command     |          |
+| option                  | description                  | required |
+|-------------------------|------------------------------|----------|
+| --out-dir <string>      | where to create the template | ✔        |
+| --host-scope <string>   | host scope                   | ✔        |
+| --package-name <string> | package name                 | ✔        |
+| -h, --help              | display help for command     |          |
 
 ### generate-web-application
 
 Use the [web-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) template as a base to customize with these options:
 
-| option                      | description                  | required |
-|-----------------------------|------------------------------|----------|
-| -o, --out-dir <string>      | where to create the template | ✔        |
-| -n, --package-name <string> | package name                 | ✔        |
-| -h, --help                  | display help for command     |          |
+| option                  | description                                         | required |
+|-------------------------|-----------------------------------------------------|----------|
+| --out-dir <string>      | where to create the template                        | ✔        |
+| --package-name <string> | package name                                        | ✔        |
+| --provider <string>     | build provider (choices: "github", "azure", "none") | ✔        |
+| --project-name <string> | project name                                        |          |
+| -h, --help              | display help for command                            |          |
 
 ## Develop
 
