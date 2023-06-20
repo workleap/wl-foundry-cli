@@ -64,7 +64,11 @@ const templateId = await select({
         },
         {
             value: "web-application",
-            label: "Web Application"
+            label: "Web application"
+        },
+        {
+            value: "typescript-library",
+            label: "TypeScript library"
         }
     ]
 });
@@ -151,6 +155,7 @@ if (templateId === "host-application") {
         projectName = projectNameValue;
     }
 } else {
+    // For static-module, remote-module and typescript-library
     const groupValue = await group({
         packageName: () => text({
             message: "What should be the package name?",
