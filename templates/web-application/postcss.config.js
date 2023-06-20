@@ -1,4 +1,8 @@
-/** @type {import("postcss").Postcss} */
-export default {
-    plugins: ["@workleap/postcss-plugin"]
+/** @type {import('postcss-load-config').Config} */
+const config = {
+    plugins: {
+        "@workleap/postcss-plugin": {}
+    }
 };
+
+export default config;
