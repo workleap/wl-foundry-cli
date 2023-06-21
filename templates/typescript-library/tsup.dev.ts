@@ -1,5 +1,3 @@
 import { defineDevConfig } from "@workleap/tsup-configs";
 
-export default defineDevConfig({
-    clean: true
-});
+export default defineDevConfig();
