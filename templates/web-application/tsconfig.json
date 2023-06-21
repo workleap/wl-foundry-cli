@@ -3,6 +3,7 @@
     "compilerOptions": {
     },
     "exclude": [
-        "public/mockServiceWorker.js"
+        "public/mockServiceWorker.js",
+        "dist"
     ]
 }
