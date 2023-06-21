@@ -60,7 +60,6 @@
         "lodash-es": "4.17.21",
         "msw": "1.2.2",
         "postcss": "8.4.24",
-        "postcss-load-config": "4.0.1",
         "postcss-loader": "7.3.3",
         "storybook": "7.0.22",
         "storybook-addon-swc": "1.2.0",
