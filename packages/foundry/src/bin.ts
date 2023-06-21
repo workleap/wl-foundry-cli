@@ -100,10 +100,6 @@ program.command("generate-typescript-library")
         "where to create the template (required)"
     )
     .requiredOption(
-        "--host-scope <string>",
-        "host scope (required)"
-    )
-    .requiredOption(
         "--package-name <string>",
         "package name (required)"
     )

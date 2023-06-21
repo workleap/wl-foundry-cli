@@ -38,7 +38,6 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
             break;
         case "typescript-library":
             commandName = "generate-typescript-library";
-            args.push("--host-scope", `"${hostScope!}"`);
             args.push("--package-name", `"${packageName!}"`);
             break;
     }

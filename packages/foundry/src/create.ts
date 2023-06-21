@@ -66,13 +66,12 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await updateDependencies(outputDirectory);
     },
     "typescript-library": async (outputDirectory, options) => {
-        const scope = options["hostScope"];
         const packageName = options["packageName"];
 
         await cloneTemplate(outputDirectory, `${BaseRepositoryAddress}/typescript-library`);
         await cloneTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
 
-        await replaceTokens(["**"], { "HOST-SCOPE": scope, "PACKAGE-NAME": packageName }, outputDirectory);
+        await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
     }
 };
 
