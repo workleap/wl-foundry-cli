@@ -1,5 +1,15 @@
 # @workleap/create-project
 
+## 0.4.0
+
+### Minor Changes
+
+- [#71](https://github.com/workleap/wl-foundry-cli/pull/71) [`186554d`](https://github.com/workleap/wl-foundry-cli/commit/186554dfb6f8b091cd9cdc8bb43694cfe0e5f2c9) Thanks [@ofrogon](https://github.com/ofrogon)! - Add CI/CD template support and extract vscode config in it's own template
+
+### Patch Changes
+
+- [#73](https://github.com/workleap/wl-foundry-cli/pull/73) [`f37b240`](https://github.com/workleap/wl-foundry-cli/commit/f37b2401095fade66e54077fdea9277170060693) Thanks [@ofrogon](https://github.com/ofrogon)! - Update dependencies
+
 ## 0.3.1
 
 ### Patch Changes
