@@ -13,7 +13,7 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
     let commandName;
     const args: string[] = [];
 
-    args.push("-o", outputDirectory);
+    args.push("--out-dir", outputDirectory);
 
     switch (templateId) {
         case "host-application":
