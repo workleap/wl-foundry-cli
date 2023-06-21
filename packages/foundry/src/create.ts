@@ -7,7 +7,7 @@ import { updateDependencies } from "./updateDependencies.ts";
 
 const BaseRepositoryAddress = "workleap/wl-foundry-cli/templates";
 
-type TemplateId = "host-application" | "remote-module" | "static-module" | "web-application";
+type TemplateId = "host-application" | "remote-module" | "static-module" | "web-application" | "typescript-library";
 
 const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: Record<string, string>) => Promise<void>> = {
     "host-application": async (outputDirectory, options) => {
@@ -64,6 +64,14 @@ const TemplateGenerators: Record<TemplateId, (outputDirectory: string, options: 
         await mswInit("public/", outputDirectory);
 
         await updateDependencies(outputDirectory);
+    },
+    "typescript-library": async (outputDirectory, options) => {
+        const packageName = options["packageName"];
+
+        await cloneTemplate(outputDirectory, `${BaseRepositoryAddress}/typescript-library`);
+        await cloneTemplate(outputDirectory, `${BaseRepositoryAddress}/vscode-config`);
+
+        await replaceTokens(["**"], { "PACKAGE-NAME": packageName }, outputDirectory);
     }
 };
 

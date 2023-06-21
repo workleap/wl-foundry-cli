@@ -64,7 +64,11 @@ const templateId = await select({
         },
         {
             value: "web-application",
-            label: "Web Application"
+            label: "Web application"
+        },
+        {
+            value: "typescript-library",
+            label: "TypeScript library"
         }
     ]
 });
@@ -150,7 +154,26 @@ if (templateId === "host-application") {
 
         projectName = projectNameValue;
     }
+} else if (templateId === "typescript-library") {
+    const groupValue = await group({
+        packageName: () => text({
+            message: "What should be the package name?",
+            placeholder: "ex: my-package",
+            validate: value => {
+                if (!ValidNpmPackageNameRegex.test(value)) {
+                    return "The package name is not valid";
+                }
+            }
+        })
+    }, {
+        onCancel: () => {
+            process.exit(1);
+        }
+    });
+
+    packageName = groupValue.packageName;
 } else {
+    // For static-module and remote-module
     const groupValue = await group({
         packageName: () => text({
             message: "What should be the package name?",

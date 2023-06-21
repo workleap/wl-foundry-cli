@@ -13,7 +13,7 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
     let commandName;
     const args: string[] = [];
 
-    args.push("-o", outputDirectory);
+    args.push("--out-dir", outputDirectory);
 
     switch (templateId) {
         case "host-application":
@@ -36,10 +36,13 @@ export async function generateProject(templateId: TemplateId, outputDirectory: s
             args.push("--provider", `"${provider!}"`);
             if (projectName) {args.push("--project-name", `"${projectName!}"`);}
             break;
+        case "typescript-library":
+            commandName = "generate-typescript-library";
+            args.push("--package-name", `"${packageName!}"`);
+            break;
     }
 
-    // const childProcess = child_process.exec(`npx --yes @workleap/foundry@latest ${commandName} ${args.join(" ")}`);
-    const childProcess = child_process.exec(`foundry ${commandName} ${args.join(" ")}`);
+    const childProcess = child_process.exec(`npx --yes @workleap/foundry@latest ${commandName} ${args.join(" ")}`);
 
     return new Promise<number>(resolve => {
         childProcess.on("error", error => {

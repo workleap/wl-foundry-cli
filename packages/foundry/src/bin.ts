@@ -93,4 +93,18 @@ program.command("generate-web-application")
         await create("web-application", resolve(options["outDir"]), options);
     });
 
+program.command("generate-typescript-library")
+    .description("use the typescript-library template")
+    .requiredOption(
+        "--out-dir <string>",
+        "where to create the template (required)"
+    )
+    .requiredOption(
+        "--package-name <string>",
+        "package name (required)"
+    )
+    .action(async options => {
+        await create("typescript-library", resolve(options["outDir"]), options);
+    });
+
 program.parse(argv);
