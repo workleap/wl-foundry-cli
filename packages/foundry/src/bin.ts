@@ -107,5 +107,4 @@ program.command("generate-typescript-library")
         await create("typescript-library", resolve(options["outDir"]), options);
     });
 
-
 program.parse(argv);
