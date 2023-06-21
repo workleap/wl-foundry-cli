@@ -1,7 +1,9 @@
 {
     "name": "{{PACKAGE-NAME}}",
+    "author": "Workleap",
     "version": "0.0.0",
     "description": "",
+    "license": "Apache-2.0",
     "type": "module",
     "scripts": {
         "postinstall": "pnpm dlx rimraf node_modules/.cache",
@@ -34,9 +36,9 @@
         "@storybook/blocks": "7.0.22",
         "@storybook/react": "7.0.22",
         "@storybook/react-webpack5": "7.0.22",
-        "@storybook/testing-library": "0.1.0",
+        "@storybook/testing-library": "0.2.0",
         "@svgr/webpack": "8.0.1",
-        "@swc/core": "1.3.65",
+        "@swc/core": "1.3.66",
         "@swc/helpers": "0.5.1",
         "@swc/jest": "0.2.26",
         "@testing-library/react": "14.0.0",

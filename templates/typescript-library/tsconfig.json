@@ -1,0 +1,7 @@
+{
+    "extends": "@workleap/typescript-configs/library",
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
