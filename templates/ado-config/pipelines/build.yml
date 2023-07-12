@@ -43,9 +43,6 @@ stages:
     - script: pnpm lint
       displayName: "Lint"
 
-    - script: pnpm build
-      displayName: "Build"
-
     - script: pnpm test-ci
       displayName: "Test"
 
@@ -54,27 +51,3 @@ stages:
       inputs:
         testResultsFiles: reports/jest-junit.xml
       condition: succeededOrFailed()
-
-    - task: PublishBuildArtifacts@1
-      displayName: "Upload Artifacts"
-      inputs:
-        PathtoPublish: "dist"
-        ArtifactName: "dist"
-
-- stage: "DeployPR"
-  displayName: "Preview Deploy"
-  dependsOn: "Build"
-  condition: and(succeeded(), ne(variables["Build.SourceBranch"], "refs/heads/main"))
-  jobs:
-  - template: deploy.yml
-    parameters:
-      environment: "Preview"
-
-- stage: "DeployProd"
-  displayName: "Production Deploy"
-  dependsOn: "Build"
-  condition: and(succeeded(), eq(variables["Build.SourceBranch"], "refs/heads/main"))
-  jobs:
-  - template: deploy.yml
-    parameters:
-      environment: "Production"

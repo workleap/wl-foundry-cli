@@ -39,3 +39,6 @@ yarn-error.log*
 
 # project
 dist
+
+# local Netlify folder
+.netlify
