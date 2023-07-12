@@ -27,9 +27,9 @@
         "picocolors": "1.0.0"
     },
     "devDependencies": {
-        "@types/node": "18.16.18",
+        "@types/node": "18.16.19",
         "@workleap/tsup-configs": "2.0.0",
-        "tsup": "7.0.0"
+        "tsup": "7.1.0"
     },
     "engines": {
         "node": ">=18.0.0"
