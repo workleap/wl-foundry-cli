@@ -1,5 +1,13 @@
 # @workleap/foundry
 
+## 0.5.1
+
+### Patch Changes
+
+- [#77](https://github.com/gsoft-inc/wl-foundry-cli/pull/77) [`d732f2e`](https://github.com/gsoft-inc/wl-foundry-cli/commit/d732f2edfb9cd7e7f48a439a9bd74b7c163e0d6a) Thanks [@ofrogon](https://github.com/ofrogon)! - Update dependencies
+
+- [#79](https://github.com/gsoft-inc/wl-foundry-cli/pull/79) [`4c235fc`](https://github.com/gsoft-inc/wl-foundry-cli/commit/4c235fc870f0b8fd220572fa8e9e7329602e490b) Thanks [@ofrogon](https://github.com/ofrogon)! - Migrate project from GitHub organization
+
 ## 0.5.0
 
 ### Minor Changes
