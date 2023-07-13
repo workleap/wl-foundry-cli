@@ -79,7 +79,7 @@ pnpm analyze
 ```
 
 ---
-Build with [wl-foundry-cli](https://github.com/workleap/wl-foundry-cli) from [web-application template](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) 🚀
+Build with [wl-foundry-cli](https://github.com/gsoft-inc/wl-foundry-cli) from [web-application template](https://github.com/gsoft-inc/wl-foundry-cli/tree/main/templates/web-application) 🚀
 
 ## VSCode settings and extensions
 

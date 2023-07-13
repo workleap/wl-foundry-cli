@@ -25,7 +25,7 @@ Commands:
 
 ### generate-host-application
 
-Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/host-application) template as a base to customize with these options:
+Use the [host-application](https://github.com/gsoft-inc/wl-foundry-cli/tree/main/templates/host-application) template as a base to customize with these options:
 
 | option                   | description                  | required |
 |--------------------------|------------------------------|----------|
@@ -35,7 +35,7 @@ Use the [host-application](https://github.com/workleap/wl-foundry-cli/tree/main/
 
 ### generate-remote-module
 
-Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/remote-module) template as a base to customize with these options:
+Use the [remote-module](https://github.com/gsoft-inc/wl-foundry-cli/tree/main/templates/remote-module) template as a base to customize with these options:
 
 | option                  | description                  | required |
 |-------------------------|------------------------------|----------|
@@ -46,7 +46,7 @@ Use the [remote-module](https://github.com/workleap/wl-foundry-cli/tree/main/tem
 
 ### generate-static-module
 
-Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/templates/static-module) template as a base to customize with these options:
+Use the [static-module](https://github.com/gsoft-inc/wl-foundry-cli/tree/main/templates/static-module) template as a base to customize with these options:
 
 | option                  | description                  | required |
 |-------------------------|------------------------------|----------|
@@ -57,7 +57,7 @@ Use the [static-module](https://github.com/workleap/wl-foundry-cli/tree/main/tem
 
 ### generate-web-application
 
-Use the [web-application](https://github.com/workleap/wl-foundry-cli/tree/main/templates/web-application) template as a base to customize with these options:
+Use the [web-application](https://github.com/gsoft-inc/wl-foundry-cli/tree/main/templates/web-application) template as a base to customize with these options:
 
 | option                  | description                                         | required |
 |-------------------------|-----------------------------------------------------|----------|
