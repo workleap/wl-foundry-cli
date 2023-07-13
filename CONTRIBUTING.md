@@ -199,7 +199,7 @@ pnpm reset
 
 We use [GitHub Actions](https://github.com/features/actions) for this repository.
 
-The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/workleap/wl-foundry-cli/actions).
+The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/gsoft-inc/wl-foundry-cli/actions).
 
 We currently have 2 builds configured:
 
