@@ -2,40 +2,41 @@
 
 Once you have created this template, to activate the pipeline in Azure DevOps, you will need to:
 
-1. Validate that a variable group name `CloudflarePages` exists in the Azure DevOps project.
-   1. Go to `Pipelines > Library`. From there you can create or edit the variable group `CloudflarePages`.
-   2. Add the following variables (more details on how to get the values [here](https://developers.cloudflare.com/workers/wrangler/ci-cd/)):
-      1. `CLOUDFLARE_ACCOUNT_ID` : the Cloudflare account ID. Must be set as `secret`.
-      2. `CLOUDFLARE_API_TOKEN` : the Cloudflare API token. Must be set as `secret`.
-2. For the pipeline to work, you also need to install the extension `PR Messenger` in your Azure DevOps organization.
-   1. Install the extension `PR Messenger` from the [marketplace](https://marketplace.visualstudio.com/items?itemName=Workleap.pr-messenger).
-   2. Give your build user the right to comment on pull requests. `Project Settings > Repositories > Security > <your project> Build Service (<your organisation>) > Contribute to pull requests > Allow > Save`.
-3. Push this to an Azure DevOps repository.
-4. Add the pipeline to your Azure DevOps project.
-   1. In Azure DevOps, go to `Pipelines > Pipelines` and click on `New pipeline`.
-   2. Select `Azure Repos Git` as the source.
-   3. Select the repository you just pushed.
-   4. Select `Existing Azure Pipelines YAML file`.
-   5. Select `main` as the branch.
-   6. Select `/.ado/pipelines/build.yml` as the path.
-   7. Click on `Continue`.
-   8. Click on `Save` to save the pipeline.
-   9. Click on `Rename/move` to rename the pipeline to something more useful.
-5. Add the branch policy to your Azure DevOps project.
-   1. In Azure DevOps, go to `Repos > Branches`.
-   2. Click on the `...` next to `main` and select `Branch policies`.
-   3. Select `Policies`.
-   4. Enable `Require a minimum number of reviewers`.
-      1. Set the number of reviewers to `2`.
-      2. Check `When new changes are pushed`.
-         1. Select `Reset all approval votes (does not reset votes to reject or wait)`.
-   5. Enable `Check for comment resolution`
-      1. Select `Required`
-   6. Enable `Limit merge types`
-      1. Only check `Squash merge`.
-   7. Enable `Build Validation`.
-      1. Select the pipeline you just created.
-      2. For `Trigger` select `Automatic`.
-      3. For `Policy requirement` select `Required`.
-      4. For `Build expiration` select `24 hours`.
-6. Your CI/CD pipeline is now ready to be used. You can now delete this file.
+## Initial Setup
+
+The first time you will be using Netlify in Azure DevOps, you will need to:
+
+1. Create a new Azure DevOps service account.
+    1. Set this account as a `Project Administrator`.
+2. Log in with this account and create a new `Personal access token`.
+    1. Set a relevant name, like `Netlify`.
+    2. Set the `Packaging - Read` scope.
+    3. Set the `Expiration` as long as possible. Put in place a reminder to renew it. when the token change, you will need to update all the Netlify projects.
+    4. Set the `Code - Read & Write` scope.
+    5. Click on `Create`.
+
+## By project Setup
+
+> The next steps will be easier if you are connected with the service account in Azure DevOps or a Private Browser window.
+
+1. Connect to Netlify.
+2. Click on `Sites > Add new site > Import an existing project`.
+3. Click on `Deploy Azure DevOps`. During this step, you will see quickly a window that will ask you to connect to Azure DevOps (don't forget to connect with the service account) or if you are already connected, will close automatically.
+4. Select the `organization` then the `repository`.
+5. Fill out the form. Normally the information will look like this:
+    1. **Team**: \<your Netlify team\>
+    2. **Branch**: `main`
+    3. **Base directory**: \<path to your project package.json file in your repository\> (empty if the package.json file is at the root of your repository)
+    4. **Build command**: `pnpm build`
+    5. **Publish directory**: `dist`
+    6. **Function directory**: \<Empty\>
+6. Click on `Deploy <your repo name>` button.
+7. Click on `Site Configuration > Build & deploy > Deploy notifications > Add notification > Azure DevOps pull request comment`.
+    1. **Event to listen for**: `Deploy Preview started`
+    2. **Personal access token**: \<your service account personal access token\>
+    3. **Custom context message (optional)**: \<Empty\>
+    4. Click on `Save`.
+    5. Do it again for `Deploy Preview succeeded` and `Deploy Preview failed`.
+8. From there everything should be automatic.
+
+> It is also possible to accomplish part of the steps above using the `Netlify CLI` using the `netlify init` command. However, it is not possible to set the `Azure DevOps pull request comment` notification using the CLI.
