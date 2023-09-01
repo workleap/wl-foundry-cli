@@ -35,6 +35,11 @@ jobs:
       - name: "Install dependencies"
         run: pnpm install --frozen-lockfile
 
+      - name: "Webpack Cache"
+        uses: actions/cache@v3
+        with:
+          path: "node_modules/.cache/webpack"
+
       - name: "Lint"
         run: pnpm lint
 

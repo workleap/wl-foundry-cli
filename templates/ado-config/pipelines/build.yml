@@ -40,6 +40,12 @@ stages:
     - script: pnpm install --frozen-lockfile
       displayName: "Install dependencies"
 
+    - task: Cache@2
+      displayName: "Webpack Cache"
+      inputs:
+          key: "webpack | '$(Agent.OS)' | webpack.config.js"
+          path: "node_modules/.cache/webpack"
+
     - script: pnpm lint
       displayName: "Lint"
 
