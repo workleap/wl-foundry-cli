@@ -43,7 +43,7 @@ stages:
     - task: Cache@2
       displayName: "Webpack Cache"
       inputs:
-          key: "webpack | '$(Agent.OS)' | webpack.config.js"
+          key: "webpack | '$(Agent.OS)' | webpack.build.js"
           path: "node_modules/.cache/webpack"
 
     - script: pnpm lint
