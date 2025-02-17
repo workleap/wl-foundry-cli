@@ -199,7 +199,7 @@ pnpm reset
 
 We use [GitHub Actions](https://github.com/features/actions) for this repository.
 
-The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/gsoft-inc/wl-foundry-cli/actions).
+The configuration is in the `.github/workflows` folder and the build results available [here](https://github.com/workleap/wl-foundry-cli/actions).
 
 We currently have 2 builds configured:
 
@@ -215,7 +215,7 @@ This build will trigger when a commit is done in a PR to `main` or after a push 
 
 There are a few steps to add new packages to the monorepo.
 
-Before you add a new package, please read the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name).
+Before you add a new package, please read the [GSoft GitHub guidelines](https://github.com/workleap/github-guidelines#npm-package-name).
 
 ### Create the package
 
@@ -229,7 +229,7 @@ pnpm init
 
 Answer the CLI questions.
 
-Once the `package.json` file is generated, please read again the [GSoft GitHub guidelines](https://github.com/gsoft-inc/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
+Once the `package.json` file is generated, please read again the [GSoft GitHub guidelines](https://github.com/workleap/github-guidelines#npm-package-name) and make sure the package name, author and license are valid.
 
 Don't forget to add the [npm scope](https://docs.npmjs.com/about-scopes) `"@workleap"` before the package name. For example, if the project name is "foo", your package name should be `@workleap/foo`.
 
