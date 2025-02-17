@@ -7,7 +7,7 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/gsoft-inc/wl-foundry-cli.git"
+        "url": "git+https://github.com/workleap/wl-foundry-cli.git"
     },
     "scripts": {
         "postinstall": "pnpm -r --parallel --include-workspace-root exec pnpm dlx rimraf node_modules/.cache",
